@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="member_view" modification_key="wrxt_portfolio_profile_button" description="Kullanıcı profiline portfolyo bağlantısı ekler" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:action_top_start]-->]]></find>
+    <replace><![CDATA[<!--[XF:action_top_start]-->
+<xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'view')">
+    <xf:button href="{{ link('portfolyo/kullanici', $user) }}" class="button--link">
+        {{ phrase('wrxt_portfolio_profile_button') }}
+    </xf:button>
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

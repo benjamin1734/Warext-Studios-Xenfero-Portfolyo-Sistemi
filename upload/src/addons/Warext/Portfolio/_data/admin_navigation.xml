@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="wrxtPortfolioAdmin" parent_navigation_id="content" display_order="850" link="wrxt-portfolyo" icon="fa-images" admin_permission_id="wrxtPortfolioManage" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="wrxtPortfolioModeration" parent_navigation_id="wrxtPortfolioAdmin" display_order="10" link="wrxt-portfolyo/reports" icon="fa-flag" admin_permission_id="wrxtPortfolioModerate" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="wrxtPortfolioSecurity" parent_navigation_id="wrxtPortfolioAdmin" display_order="20" link="wrxt-portfolyo/security" icon="fa-shield" admin_permission_id="wrxtPortfolioSecurity" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="wrxt_portfolio_quarantine_cleanup" cron_class="Warext\Portfolio\Cron\CleanupQuarantine" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[3],"minutes":[35]}]]></entry>
+  <entry entry_id="wrxt_portfolio_security_queue" cron_class="Warext\Portfolio\Cron\SecurityQueue" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[0,5,10,15,20,25,30,35,40,45,50,55]}]]></entry>
+  <entry entry_id="wrxt_portfolio_processing_queue" cron_class="Warext\Portfolio\Cron\ProcessingQueue" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[1,6,11,16,21,26,31,36,41,46,51,56]}]]></entry>
+  <entry entry_id="wrxt_portfolio_blob_maintenance" cron_class="Warext\Portfolio\Cron\BlobMaintenance" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[17]}]]></entry>
+  <entry entry_id="wrxt_portfolio_community_maintenance" cron_class="Warext\Portfolio\Cron\CommunityMaintenance" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[27]}]]></entry>
+  <entry entry_id="wrxt_portfolio_periodic_rescan" cron_class="Warext\Portfolio\Cron\PeriodicRescan" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[4],"minutes":[10]}]]></entry>
+</cron>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="public" route_prefix="portfolyo" controller="Warext\Portfolio:Portfolio" context="wrxtPortfolio"/>
+  <route route_type="public" route_prefix="portfolyo" sub_name="calisma" format=":int&lt;portfolio_id,title&gt;/" controller="Warext\Portfolio:Item" context="wrxtPortfolio"/>
+  <route route_type="public" route_prefix="portfolyo" sub_name="kullanici" format=":int&lt;user_id,username&gt;/" controller="Warext\Portfolio:UserPortfolio" context="wrxtPortfolio"/>
+  <route route_type="admin" route_prefix="wrxt-portfolyo" controller="Warext\Portfolio:Portfolio" context="wrxtPortfolioAdmin"/>
+</routes>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_permissions>
+  <admin_permission admin_permission_id="wrxtPortfolioManage" display_order="800"/>
+  <admin_permission admin_permission_id="wrxtPortfolioModerate" display_order="810"/>
+  <admin_permission admin_permission_id="wrxtPortfolioSecurity" display_order="820"/>
+</admin_permissions>

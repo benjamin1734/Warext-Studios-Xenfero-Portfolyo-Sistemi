@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="wrxtPortfolioDiskReserveMb" edit_format="spinbox" data_type="integer" advanced="0"><default_value>2048</default_value><edit_format_params>min=256
+max=1048576</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="10"/></option>
+  <option option_id="wrxtPortfolioUploadSessionMinutes" edit_format="spinbox" data_type="integer" advanced="0"><default_value>30</default_value><edit_format_params>min=15
+max=1440</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="20"/></option>
+  <option option_id="wrxtPortfolioQuarantineHours" edit_format="spinbox" data_type="integer" advanced="0"><default_value>24</default_value><edit_format_params>min=1
+max=168</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="30"/></option>
+  <option option_id="wrxtPortfolioMaxImageWidth" edit_format="spinbox" data_type="integer" advanced="0"><default_value>12000</default_value><edit_format_params>min=512
+max=50000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="40"/></option>
+  <option option_id="wrxtPortfolioMaxImageHeight" edit_format="spinbox" data_type="integer" advanced="0"><default_value>12000</default_value><edit_format_params>min=512
+max=50000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="50"/></option>
+  <option option_id="wrxtPortfolioMaxImageMegapixels" edit_format="spinbox" data_type="integer" advanced="0"><default_value>50</default_value><edit_format_params>min=1
+max=500</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="60"/></option>
+  <option option_id="wrxtPortfolioClamAvMode" edit_format="select" data_type="string" advanced="0"><default_value>unix</default_value><edit_format_params>unix=Unix socket
+tcp=Local TCP</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="70"/></option>
+  <option option_id="wrxtPortfolioClamAvSocket" edit_format="textbox" data_type="string" advanced="0"><default_value>/run/clamav/clamd.ctl</default_value><edit_format_params></edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="80"/></option>
+  <option option_id="wrxtPortfolioClamAvHost" edit_format="textbox" data_type="string" advanced="1"><default_value>127.0.0.1</default_value><edit_format_params></edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="90"/></option>
+  <option option_id="wrxtPortfolioClamAvPort" edit_format="spinbox" data_type="integer" advanced="1"><default_value>3310</default_value><edit_format_params>min=1
+max=65535</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="100"/></option>
+  <option option_id="wrxtPortfolioClamAvConnectTimeout" edit_format="spinbox" data_type="integer" advanced="1"><default_value>3</default_value><edit_format_params>min=1
+max=15</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="110"/></option>
+  <option option_id="wrxtPortfolioClamAvReadTimeout" edit_format="spinbox" data_type="integer" advanced="1"><default_value>30</default_value><edit_format_params>min=5
+max=120</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="120"/></option>
+  <option option_id="wrxtPortfolioWorkerPhpPath" edit_format="textbox" data_type="string" advanced="1"><default_value></default_value><edit_format_params></edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="130"/></option>
+  <option option_id="wrxtPortfolioWorkerMemoryMb" edit_format="spinbox" data_type="integer" advanced="0"><default_value>256</default_value><edit_format_params>min=64
+max=1024</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="140"/></option>
+  <option option_id="wrxtPortfolioWorkerTimeoutSeconds" edit_format="spinbox" data_type="integer" advanced="0"><default_value>20</default_value><edit_format_params>min=5
+max=120</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="150"/></option>
+  <option option_id="wrxtPortfolioDisplayMaxDimension" edit_format="spinbox" data_type="integer" advanced="0"><default_value>2560</default_value><edit_format_params>min=512
+max=8192</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="160"/></option>
+  <option option_id="wrxtPortfolioThumbnailMaxDimension" edit_format="spinbox" data_type="integer" advanced="0"><default_value>480</default_value><edit_format_params>min=128
+max=2048</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="170"/></option>
+  <option option_id="wrxtPortfolioWebpQuality" edit_format="spinbox" data_type="integer" advanced="0"><default_value>86</default_value><edit_format_params>min=50
+max=95</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="180"/></option>
+  <option option_id="wrxtPortfolioProcessingRetryMinutes" edit_format="spinbox" data_type="integer" advanced="1"><default_value>5</default_value><edit_format_params>min=1
+max=60</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="190"/></option>
+  <option option_id="wrxtPortfolioMaxModelVertices" edit_format="spinbox" data_type="integer" advanced="0"><default_value>1000000</default_value><edit_format_params>min=1000
+max=10000000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="200"/></option>
+  <option option_id="wrxtPortfolioMaxModelTriangles" edit_format="spinbox" data_type="integer" advanced="0"><default_value>1500000</default_value><edit_format_params>min=1000
+max=15000000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="210"/></option>
+  <option option_id="wrxtPortfolioMaxModelMeshes" edit_format="spinbox" data_type="integer" advanced="0"><default_value>500</default_value><edit_format_params>min=1
+max=5000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="220"/></option>
+  <option option_id="wrxtPortfolioMaxModelPrimitives" edit_format="spinbox" data_type="integer" advanced="0"><default_value>1000</default_value><edit_format_params>min=1
+max=10000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="230"/></option>
+  <option option_id="wrxtPortfolioMaxModelNodes" edit_format="spinbox" data_type="integer" advanced="0"><default_value>2000</default_value><edit_format_params>min=1
+max=20000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="240"/></option>
+  <option option_id="wrxtPortfolioMaxModelMaterials" edit_format="spinbox" data_type="integer" advanced="0"><default_value>250</default_value><edit_format_params>min=1
+max=2000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="250"/></option>
+  <option option_id="wrxtPortfolioMaxModelTextures" edit_format="spinbox" data_type="integer" advanced="0"><default_value>50</default_value><edit_format_params>min=0
+max=500</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="260"/></option>
+  <option option_id="wrxtPortfolioMaxModelAnimations" edit_format="spinbox" data_type="integer" advanced="0"><default_value>50</default_value><edit_format_params>min=0
+max=500</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="270"/></option>
+  <option option_id="wrxtPortfolioMaxModelSkins" edit_format="spinbox" data_type="integer" advanced="0"><default_value>20</default_value><edit_format_params>min=0
+max=100</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="280"/></option>
+  <option option_id="wrxtPortfolioMaxModelJoints" edit_format="spinbox" data_type="integer" advanced="0"><default_value>48</default_value><edit_format_params>min=0
+max=48</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="290"/></option>
+  <option option_id="wrxtPortfolioMaxModelAccessors" edit_format="spinbox" data_type="integer" advanced="1"><default_value>5000</default_value><edit_format_params>min=1
+max=50000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="300"/></option>
+  <option option_id="wrxtPortfolioMaxModelBufferViews" edit_format="spinbox" data_type="integer" advanced="1"><default_value>5000</default_value><edit_format_params>min=1
+max=50000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="310"/></option>
+  <option option_id="wrxtPortfolioMaxModelAccessorElements" edit_format="spinbox" data_type="integer" advanced="1"><default_value>2000000</default_value><edit_format_params>min=1000
+max=20000000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="320"/></option>
+  <option option_id="wrxtPortfolioMaxModelTextureDimension" edit_format="spinbox" data_type="integer" advanced="0"><default_value>4096</default_value><edit_format_params>min=128
+max=8192</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="330"/></option>
+  <option option_id="wrxtPortfolioMaxModelTextureBytes" edit_format="spinbox" data_type="integer" advanced="0"><default_value>16777216</default_value><edit_format_params>min=1048576
+max=67108864</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="340"/></option>
+  <option option_id="wrxtPortfolioMaxModelAnimationKeyframes" edit_format="spinbox" data_type="integer" advanced="1"><default_value>100000</default_value><edit_format_params>min=100
+max=1000000</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="350"/></option>
+  <option option_id="wrxtPortfolioMaxModelNodeDepth" edit_format="spinbox" data_type="integer" advanced="1"><default_value>64</default_value><edit_format_params>min=8
+max=256</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="360"/></option>
+  <option option_id="wrxtPortfolioBlobGcGraceHours" edit_format="spinbox" data_type="integer" advanced="1"><default_value>24</default_value><edit_format_params>min=1
+max=720</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="370"/></option>
+  <option option_id="wrxtPortfolioRescanDays" edit_format="spinbox" data_type="integer" advanced="0"><default_value>30</default_value><edit_format_params>min=1
+max=365</edit_format_params><sub_options></sub_options><relation group_id="wrxtPortfolioSettings" display_order="380"/></option>
+</options>

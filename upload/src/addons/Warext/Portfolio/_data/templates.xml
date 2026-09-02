@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+  <template type="public" title="wrxt_portfolio_list" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Portfolyo</xf:title>
+<xf:macro template="metadata_macros" name="metadata" arg-description="Topluluk üyelerinin görsel ve 3D portfolyo çalışmaları." />
+<div class="block"><div class="block-container">
+<h2 class="block-header">Topluluk Portfolyosu</h2>
+<div class="block-body"><div class="block-row">
+<xf:form action="{{ link('portfolyo') }}" method="get">
+<div class="inputGroup inputGroup--auto"><select name="category_id" class="input"><option value="0">Tüm kategoriler</option><xf:foreach loop="$categories" value="$category"><option value="{$category.category_id}" {{ $filters.category_id == $category.category_id ? 'selected' : '' }}>{$category.title}</option></xf:foreach></select>
+<select name="portfolio_type" class="input"><option value="">Tüm türler</option><option value="image" {{ $filters.portfolio_type == 'image' ? 'selected' : '' }}>Görsel</option><option value="model3d" {{ $filters.portfolio_type == 'model3d' ? 'selected' : '' }}>3D</option></select>
+<select name="sort" class="input"><option value="latest">En yeni</option><option value="popular" {{ $filters.sort == 'popular' ? 'selected' : '' }}>En beğenilen</option><option value="viewed" {{ $filters.sort == 'viewed' ? 'selected' : '' }}>En çok görüntülenen</option><option value="discussed" {{ $filters.sort == 'discussed' ? 'selected' : '' }}>En çok yorumlanan</option><option value="oldest" {{ $filters.sort == 'oldest' ? 'selected' : '' }}>En eski</option></select><xf:button type="submit">Filtrele</xf:button></div></xf:form>
+</div><xf:if is="$items is not empty"><xf:datalist><xf:foreach loop="$items" value="$item"><xf:datarow rowclass="dataList-row--noHover"><xf:main label="{$item.title}" href="{{ link('portfolyo/calisma', $item) }}"><xf:if is="$item.CoverFile"><img src="{{ link('portfolyo/calisma/media', $item, {'file_id': $item.CoverFile.file_id, 'thumb': 1}) }}" alt="{$item.title}" loading="lazy" style="width:120px;max-height:80px;object-fit:cover;border-radius:6px;float:left;margin-right:12px" /></xf:if><div class="dataList-subRow"><a href="{{ link('portfolyo/kullanici', $item.User) }}">{$item.username}</a> · {$item.Category.title} · {{ date_time($item.published_date) }}</div><div class="dataList-subRow">❤ {$item.like_count} · 👁 {$item.view_count} · 💬 {$item.comment_count}</div><xf:if is="$item.tags_cache"><div class="dataList-subRow">{$item.tags_cache}</div></xf:if></xf:main></xf:datarow></xf:foreach></xf:datalist><xf:else /><div class="block-row">Bu filtrelerle eşleşen çalışma bulunmuyor.</div></xf:if></div>
+<xf:if is="$xf.visitor.user_id"><div class="block-footer"><xf:if is="$xf.visitor.hasPermission('wrxtPortfolio','create')"><xf:button href="{{ link('portfolyo/add') }}" class="button--primary">Çalışma ekle</xf:button><xf:button href="{{ link('portfolyo/mine') }}">Çalışmalarım</xf:button></xf:if><xf:if is="$xf.visitor.hasPermission('wrxtPortfolio','save')"><xf:button href="{{ link('portfolyo/saved') }}">Kaydedilenler</xf:button></xf:if></div></xf:if>
+</div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="portfolyo" params="{$filters}" />]]></template>
+
+  <template type="public" title="wrxt_portfolio_view" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>{$portfolio.title}</xf:title>
+<xf:macro template="metadata_macros" name="metadata" arg-description="{{ snippet($portfolio.description, 160) }}" arg-shareUrl="{$canonicalUrl}" />
+<xf:js src="warext/portfolio/community.js" min="1" />
+<div class="block"><div class="block-container"><h2 class="block-header">{$portfolio.title}</h2><div class="block-body"><div class="block-row">
+<div class="contentRow"><div class="contentRow-main"><div class="contentRow-minor"><a href="{{ link('portfolyo/kullanici',$portfolio.User) }}">{$portfolio.username}</a> · {$portfolio.Category.title} · 👁 {$portfolio.view_count}</div>
+<xf:if is="$portfolio.CoverFile"><img src="{{ link('portfolyo/calisma/media',$portfolio,{'file_id':$portfolio.CoverFile.file_id}) }}" alt="{$portfolio.title}" style="display:block;max-width:100%;max-height:720px;margin:12px auto;border-radius:8px" /></xf:if>
+<xf:if is="$portfolio.programs"><div class="contentRow-minor">Kullanılan programlar: {$portfolio.programs}</div></xf:if><xf:if is="$tags is not empty"><div class="contentRow-minor">Etiketler: {{ implode(', ', $tags) }}</div></xf:if>
+<xf:if is="$modelFile"><div style="margin:12px 0;border-radius:8px;overflow:hidden;background:#15171a;aspect-ratio:16/9;min-height:320px"><iframe src="{{ link('portfolyo/calisma/model-frame',$portfolio) }}" title="{$portfolio.title} 3D model" sandbox="allow-scripts" allow="fullscreen" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0;display:block"></iframe></div><div class="contentRow-minor">3D: {$modelFile.model_vertex_count} vertex · {$modelFile.model_triangle_count} üçgen · {$modelFile.model_mesh_count} mesh · {$modelFile.model_texture_count} texture · {$modelFile.model_animation_count} animasyon</div></xf:if>
+<div class="contentRow-snippet">{{ bb_code($portfolio.description,'wrxt_portfolio',$portfolio) }}</div></div></div></div>
+<xf:if is="$galleryFiles is not empty"><div class="block-row"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px"><xf:foreach loop="$galleryFiles" value="$file"><img src="{{ link('portfolyo/calisma/media',$portfolio,{'file_id':$file.file_id}) }}" alt="{$portfolio.title}" loading="lazy" style="width:100%;border-radius:7px" /></xf:foreach></div></div></xf:if>
+</div>
+<div class="block-footer"><xf:if is="$xf.visitor.user_id AND $xf.visitor.hasPermission('wrxtPortfolio','like')"><xf:form action="{{ link('portfolyo/calisma/like',$portfolio) }}" ajax="true" style="display:inline"><xf:button type="submit">{{ $communityState.liked ? 'Beğeniyi kaldır' : 'Beğen' }} · {$portfolio.like_count}</xf:button></xf:form></xf:if>
+<xf:if is="$xf.visitor.user_id AND $xf.visitor.hasPermission('wrxtPortfolio','save')"><xf:form action="{{ link('portfolyo/calisma/save-item',$portfolio) }}" ajax="true" style="display:inline"><xf:button type="submit">{{ $communityState.saved ? 'Kaydı kaldır' : 'Kaydet' }} · {$portfolio.save_count}</xf:button></xf:form></xf:if>
+<xf:button type="button" data-wrxt-copy="{$canonicalUrl}">Paylaş</xf:button><xf:if is="$portfolio.canReport()"><xf:button href="{{ link('portfolyo/calisma/report',$portfolio) }}" overlay="true">Raporla</xf:button></xf:if><xf:if is="$portfolio.canEdit()"><xf:button href="{{ link('portfolyo/calisma/edit',$portfolio) }}">Düzenle</xf:button></xf:if><xf:if is="$portfolio.canDelete()"><xf:button href="{{ link('portfolyo/calisma/delete',$portfolio) }}" overlay="true">Sil</xf:button></xf:if></div></div></div>
+<div class="block"><div class="block-container"><h2 class="block-header">Yorumlar ({$portfolio.comment_count})</h2><div class="block-body"><xf:if is="$comments is not empty"><xf:foreach loop="$comments" value="$comment"><div class="block-row"><div class="contentRow"><div class="contentRow-main"><div class="contentRow-header"><a href="{{ link('members',$comment.User) }}">{$comment.username}</a></div><div class="contentRow-minor">{{ date_time($comment.created_date) }}</div><div class="contentRow-snippet">{$comment.message}</div><xf:if is="$comment.canDelete()"><xf:form action="{{ link('portfolyo/calisma/comment-delete',$portfolio) }}" ajax="true"><input type="hidden" name="comment_id" value="{$comment.comment_id}"/><xf:button type="submit" class="button--link">Yorumu sil</xf:button></xf:form></xf:if></div></div></div></xf:foreach><xf:else /><div class="block-row">Henüz yorum yok.</div></xf:if></div>
+<xf:if is="$xf.visitor.user_id AND $xf.visitor.hasPermission('wrxtPortfolio','comment')"><xf:form action="{{ link('portfolyo/calisma/comment',$portfolio) }}" ajax="true"><div class="block-body"><xf:textarearow name="message" rows="3" maxlength="1000" label="Yorumunuz" /></div><xf:submitrow submit="Yorum gönder" /></xf:form></xf:if></div></div>]]></template>
+
+  <template type="public" title="wrxt_portfolio_add" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Portfolyo çalışması ekle</xf:title>
+<xf:form action="{{ link('portfolyo/save') }}" ajax="true" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Yeni çalışma</h2>
+        <div class="block-body">
+            <xf:textboxrow name="title" maxlength="150" label="Başlık" />
+            <xf:selectrow name="category_id" label="Kategori">
+                <xf:option value="0">Kategori seçin</xf:option>
+                <xf:foreach loop="$categories" value="$category"><xf:option value="{$category.category_id}">{$category.title}</xf:option></xf:foreach>
+            </xf:selectrow>
+            <xf:selectrow name="portfolio_type" label="Çalışma türü"><xf:option value="image">Görsel</xf:option><xf:option value="model3d">3D model</xf:option></xf:selectrow>
+            <xf:textboxrow name="programs" maxlength="255" label="Kullanılan programlar" explain="Örnek: Blockbench, Blender, Photoshop" />
+            <xf:textboxrow name="tags" maxlength="500" label="Etiketler" explain="Virgülle ayırın. En fazla 10 etiket." />
+            <xf:textarearow name="description" rows="8" autosize="true" label="Açıklama" />
+        </div>
+        <xf:submitrow submit="Taslağı oluştur" />
+    </div>
+</xf:form>]]></template>
+
+  <template type="public" title="wrxt_portfolio_edit" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>{$portfolio.title} - Düzenle</xf:title>
+<xf:form action="{{ link('portfolyo/calisma/save', $portfolio) }}" ajax="true" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Çalışmayı düzenle</h2>
+        <div class="block-body">
+            <xf:textboxrow name="title" value="{$portfolio.title}" maxlength="150" label="Başlık" />
+            <xf:selectrow name="category_id" value="{$portfolio.category_id}" label="Kategori">
+                <xf:foreach loop="$categories" value="$category"><xf:option value="{$category.category_id}">{$category.title}</xf:option></xf:foreach>
+            </xf:selectrow>
+            <xf:selectrow name="portfolio_type" value="{$portfolio.portfolio_type}" label="Çalışma türü"><xf:option value="image">Görsel</xf:option><xf:option value="model3d">3D model</xf:option></xf:selectrow>
+            <xf:textboxrow name="programs" value="{$portfolio.programs}" maxlength="255" label="Kullanılan programlar" />
+            <xf:textboxrow name="tags" value="{$portfolio.tags_cache}" maxlength="500" label="Etiketler" explain="Virgülle ayırın. En fazla 10 etiket." />
+            <xf:textarearow name="description" value="{$portfolio.description}" rows="8" autosize="true" label="Açıklama" />
+        </div>
+        <xf:submitrow submit="Değişiklikleri kaydet" />
+    </div>
+</xf:form>
+
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Dosyalar</h2>
+        <div class="block-body">
+            <div class="block-row">Yüklenen dosyalar önce private karantinaya alınır. Güvenlik taraması tamamlanmadan ziyaretçilere sunulmaz.</div>
+            <xf:if is="$files is not empty">
+                <xf:datalist>
+                    <xf:foreach loop="$files" value="$file">
+                        <xf:datarow>
+                            <xf:main label="{$file.original_name}"><div class="dataList-subRow">{$file.file_role} · {{ file_size($file.file_size) }} · {$file.state} · doğrulama: {$file.validation_status} · tarama: {$file.scan_status} · işleme: {$file.processing_status}</div></xf:main>
+                            <xf:action>
+                                <xf:form action="{{ link('portfolyo/calisma/file-delete', $portfolio) }}" ajax="true">
+                                    <input type="hidden" name="file_id" value="{$file.file_id}" />
+                                    <xf:button type="submit" icon="delete">Kaldır</xf:button>
+                                </xf:form>
+                            </xf:action>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            </xf:if>
+        </div>
+    </div>
+</div>
+
+<xf:form action="{{ link('portfolyo/calisma/upload', $portfolio) }}" method="post" upload="true" ajax="true" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Dosya yükle</h2>
+        <div class="block-body">
+            <xf:selectrow name="file_role" label="Dosya görevi">
+                <xf:option value="cover">Kapak görseli</xf:option>
+                <xf:option value="gallery">Galeri görseli</xf:option>
+                <xf:if is="$portfolio.portfolio_type == 'model3d' AND $quota.allow_model3d"><xf:option value="model">3D model (GLB)</xf:option></xf:if>
+            </xf:selectrow>
+            <xf:uploadrow name="portfolio_file" accept=".jpg,.jpeg,.png,.webp,.glb" label="Dosya" explain="JPG, PNG, WebP veya GLB. Görseller yeniden kodlanır; GLB dosyaları ayrı worker içinde geometri, texture, animasyon, skin ve kaynak limitlerinden geçirilir." />
+        </div>
+        <xf:submitrow submit="Karantinaya yükle" />
+    </div>
+</xf:form>]]></template>
+
+  <template type="public" title="wrxt_portfolio_delete" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Çalışmayı sil</xf:title>
+<xf:form action="{{ link('portfolyo/calisma/delete', $portfolio) }}" ajax="true" class="block">
+    <div class="block-container">
+        <h2 class="block-header">Çalışmayı sil</h2>
+        <div class="block-body"><div class="block-row">“{$portfolio.title}” çalışmasını silmek istediğinize emin misiniz?</div></div>
+        <xf:submitrow submit="Sil" />
+    </div>
+</xf:form>]]></template>
+
+  <template type="public" title="wrxt_portfolio_mine" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Çalışmalarım</xf:title>
+<div class="block">
+    <div class="block-container">
+        <h2 class="block-header">Portfolyo çalışmalarım</h2>
+        <div class="block-body">
+            <xf:if is="$items is not empty">
+                <xf:datalist>
+                    <xf:foreach loop="$items" value="$item">
+                        <xf:datarow>
+                            <xf:main label="{$item.title}" href="{{ link('portfolyo/calisma', $item) }}"><div class="dataList-subRow">{$item.Category.title} · Durum: {$item.status} · Güvenlik: {$item.security_status}</div></xf:main>
+                            <xf:action href="{{ link('portfolyo/calisma/edit', $item) }}">Düzenle</xf:action>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            <xf:else /><div class="block-row">Henüz bir çalışmanız yok.</div></xf:if>
+        </div>
+        <div class="block-footer"><xf:button href="{{ link('portfolyo/add') }}" class="button--primary">Yeni çalışma</xf:button></div>
+    </div>
+</div>
+<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="portfolyo/mine" />]]></template>
+
+  <template type="public" title="wrxt_portfolio_user" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>{$user.username} - Portfolyo</xf:title><xf:macro template="metadata_macros" name="metadata" arg-description="{$user.username} kullanıcısının portfolyo çalışmaları." />
+<div class="block"><div class="block-container"><h2 class="block-header">{$user.username} portfolyosu</h2><div class="block-body"><div class="block-row">{$followStats.followers} takipçi · {$followStats.following} takip</div>
+<xf:if is="$xf.visitor.user_id AND $xf.visitor.user_id != $user.user_id AND $xf.visitor.hasPermission('wrxtPortfolio','follow')"><div class="block-row"><xf:form action="{{ link('portfolyo/kullanici/follow',$user) }}" ajax="true"><xf:button type="submit" class="button--primary">{{ $isFollowing ? 'Takibi bırak' : 'Takip et' }}</xf:button></xf:form></div></xf:if>
+<xf:if is="$items is not empty"><xf:datalist><xf:foreach loop="$items" value="$item"><xf:datarow><xf:main label="{$item.title}" href="{{ link('portfolyo/calisma',$item) }}"><div class="dataList-subRow">{$item.Category.title} · ❤ {$item.like_count} · 👁 {$item.view_count} · 💬 {$item.comment_count} · {{ date_time($item.published_date) }}</div></xf:main></xf:datarow></xf:foreach></xf:datalist><xf:else /><div class="block-row">Bu kullanıcının yayınlanmış portfolyo çalışması bulunmuyor.</div></xf:if></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="portfolyo/kullanici" data="{$user}" />]]></template>
+
+  <template type="admin" title="wrxt_portfolio_admin_list" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Portfolyo</xf:title>
+<div class="block"><div class="block-container"><div class="block-body"><xf:datalist data-xf-init="responsive-data-list"><xf:datarow rowtype="header"><xf:cell>Çalışma</xf:cell><xf:cell>Kullanıcı</xf:cell><xf:cell>Durum</xf:cell><xf:cell>Güvenlik</xf:cell><xf:cell>Tarih</xf:cell></xf:datarow><xf:foreach loop="$items" value="$item"><xf:datarow><xf:cell>{$item.title}</xf:cell><xf:cell>{$item.username}</xf:cell><xf:cell>{$item.status}</xf:cell><xf:cell>{$item.security_status}</xf:cell><xf:cell>{{ date_time($item.created_date) }}</xf:cell><xf:cell><xf:if is="$item.status == 'moderation'"><xf:form action="{{ link('wrxt-portfolyo/approve') }}" ajax="true" style="display:inline"><input type="hidden" name="portfolio_id" value="{$item.portfolio_id}"/><xf:button type="submit">Onayla</xf:button></xf:form></xf:if></xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div>
+<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo" />]]></template>
+<template type="public" title="wrxt_portfolio_saved" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Kaydedilen portfolyolar</xf:title><div class="block"><div class="block-container"><h2 class="block-header">Kaydedilenler</h2><div class="block-body"><xf:if is="$items is not empty"><xf:datalist><xf:foreach loop="$items" value="$item"><xf:datarow><xf:main label="{$item.title}" href="{{ link('portfolyo/calisma',$item) }}"><div class="dataList-subRow">{$item.username} · {$item.Category.title} · ❤ {$item.like_count} · 👁 {$item.view_count}</div></xf:main></xf:datarow></xf:foreach></xf:datalist><xf:else /><div class="block-row">Kaydettiğiniz çalışma bulunmuyor.</div></xf:if></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="portfolyo/saved" />]]></template>
+<template type="public" title="alert_user_wrxt_portfolio_like" version_id="1000100" version_string="1.0.0"><![CDATA[<a href="{$alert.extra.portfolio_url}">{$alert.FromUser.username}</a> “{$alert.extra.portfolio_title}” çalışmanızı beğendi.]]></template>
+<template type="public" title="alert_user_wrxt_portfolio_comment" version_id="1000100" version_string="1.0.0"><![CDATA[<a href="{$alert.extra.portfolio_url}">{$alert.FromUser.username}</a> “{$alert.extra.portfolio_title}” çalışmanıza yorum yaptı.]]></template>
+<template type="public" title="alert_user_wrxt_portfolio_follow" version_id="1000100" version_string="1.0.0"><![CDATA[<a href="{$alert.extra.profile_url}">{$alert.FromUser.username}</a> portfolyonuzu takip etmeye başladı.]]></template>
+<template type="public" title="alert_user_wrxt_portfolio_new" version_id="1000100" version_string="1.0.0"><![CDATA[<a href="{$alert.extra.portfolio_url}">{$alert.FromUser.username}</a> yeni bir portfolyo çalışması yayınladı: {$alert.extra.portfolio_title}]]></template>
+
+  <template type="public" title="wrxt_portfolio_report" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>{$portfolio.title} - Raporla</xf:title>
+<xf:form action="{{ link('portfolyo/calisma/report',$portfolio) }}" class="block" ajax="true">
+<div class="block-container"><h2 class="block-header">Çalışmayı raporla</h2><div class="block-body">
+<xf:selectrow name="reason_code" label="Neden"><xf:option value="stolen_work">Çalıntı çalışma</xf:option><xf:option value="copyright">Telif hakkı</xf:option><xf:option value="inappropriate">Uygunsuz içerik</xf:option><xf:option value="suspected_malicious">Şüpheli / zararlı dosya</xf:option><xf:option value="spam">Spam</xf:option><xf:option value="wrong_category">Yanlış kategori</xf:option><xf:option value="other">Diğer</xf:option></xf:selectrow>
+<xf:textarearow name="message" maxlength="1500" rows="5" label="Açıklama" hint="Teknik güvenlik ayrıntılarını tahmin etmeye çalışmayın; yalnız gözlemlediğiniz sorunu yazın." />
+</div><xf:submitrow submit="Raporu gönder" /></div></xf:form>]]></template>
+  <template type="public" title="approval_item_wrxt_portfolio" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:macro template="approval_queue_macros" name="item_message_type" arg-content="{$content}" arg-user="{$content.User}" arg-messageHtml="{{ bb_code($content.ModerationDescription,'wrxt_portfolio',$content) }}" arg-typePhraseHtml="Portfolyo · {$content.ModerationTitle}" arg-unapprovedItem="{$unapprovedItem}" arg-handler="{$handler}" />]]></template>
+  <template type="admin" title="wrxt_portfolio_security_dashboard" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Portfolyo Güvenlik Merkezi</xf:title><div class="block"><div class="block-container"><h2 class="block-header">Güvenlik özeti</h2><div class="block-body"><div class="block-row">Karantina/işleniyor: <b>{$summary.quarantine}</b> · Engellenen: <b>{$summary.blocked}</b> · Açık rapor: <b>{$summary.open_reports}</b> · Aktif hash engeli: <b>{$summary.blocked_hashes}</b> · Son 24 saat kritik olay: <b>{$summary.critical_24h}</b></div></div><div class="block-footer"><a href="{{ link('wrxt-portfolyo/quarantine') }}">Karantina</a> · <a href="{{ link('wrxt-portfolyo/blocked') }}">Engellenenler</a> · <a href="{{ link('wrxt-portfolyo/hashes') }}">Hash blacklist</a> · <a href="{{ link('wrxt-portfolyo/events') }}">Güvenlik olayları</a> · <a href="{{ link('wrxt-portfolyo/audit') }}">Audit log</a> · <a href="{{ link('wrxt-portfolyo/reports') }}">Raporlar</a></div></div></div>
+<div class="block"><div class="block-container"><h2 class="block-header">Son güvenlik olayları</h2><div class="block-body"><xf:datalist><xf:foreach loop="$events" value="$event"><xf:datarow><xf:cell>{$event.severity}</xf:cell><xf:cell>{$event.event}</xf:cell><xf:cell>{$event.reason_code}</xf:cell><xf:cell>{{ date_time($event.created_date) }}</xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div>]]></template>
+  <template type="admin" title="wrxt_portfolio_security_reports" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Portfolyo raporları</xf:title><div class="block"><div class="block-container"><div class="block-body"><xf:datalist><xf:datarow rowtype="header"><xf:cell>Çalışma</xf:cell><xf:cell>Bildiren</xf:cell><xf:cell>Neden</xf:cell><xf:cell>Durum</xf:cell><xf:cell>İşlem</xf:cell></xf:datarow><xf:foreach loop="$reports" value="$report"><xf:datarow><xf:cell>{$report.Portfolio.title}</xf:cell><xf:cell>{$report.reporter_username}</xf:cell><xf:cell>{$report.reason_code}<xf:if is="$report.security_rescan_requested"> · güvenlik taraması istendi</xf:if><div class="dataList-subRow">{$report.message}</div></xf:cell><xf:cell>{$report.state}</xf:cell><xf:cell><xf:if is="$report.state == 'open' OR $report.state == 'reviewing'"><xf:form action="{{ link('wrxt-portfolyo/report-update') }}" ajax="true"><input type="hidden" name="report_id" value="{$report.report_id}"/><select name="state" class="input"><option value="resolved">Çözüldü</option><option value="rejected">Geçersiz</option></select><input type="text" name="note" class="input" placeholder="Not"/><xf:button type="submit">Kaydet</xf:button></xf:form></xf:if></xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo/reports" params="{{ {'state':$state} }}" />]]></template>
+  <template type="admin" title="wrxt_portfolio_security_quarantine" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Karantina</xf:title><div class="block"><div class="block-container"><div class="block-body"><p class="block-row">Güvenlik nedeniyle karantinadaki ham dosyalar burada önizlenmez veya indirilemez.</p><xf:datalist><xf:foreach loop="$files" value="$file"><xf:datarow><xf:cell>{$file.original_name}</xf:cell><xf:cell>{$file.username}</xf:cell><xf:cell>{$file.state}</xf:cell><xf:cell>{$file.detected_mime}</xf:cell><xf:cell>{$file.file_size} bayt</xf:cell><xf:cell>{{ date_time($file.created_date) }}</xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo/quarantine" />]]></template>
+  <template type="admin" title="wrxt_portfolio_security_blocked" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Engellenen dosyalar</xf:title><div class="block"><div class="block-container"><div class="block-body"><xf:datalist><xf:foreach loop="$files" value="$file"><xf:datarow><xf:cell>{$file.original_name}</xf:cell><xf:cell>{$file.username}</xf:cell><xf:cell>{$file.reason_code}</xf:cell><xf:cell>{$file.sha256}</xf:cell><xf:cell>{{ date_time($file.checked_date) }}</xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo/blocked" />]]></template>
+  <template type="admin" title="wrxt_portfolio_security_hashes" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Hash Blacklist</xf:title><xf:form action="{{ link('wrxt-portfolyo/hash-save') }}" class="block" ajax="true"><div class="block-container"><h2 class="block-header">SHA-256 engelle</h2><div class="block-body"><xf:textboxrow name="sha256" label="SHA-256" maxlength="64"/><xf:textboxrow name="reason_code" label="Neden" value="manual_block"/><xf:textboxrow name="note" label="Not"/></div><xf:submitrow submit="Ekle / güncelle"/></div></xf:form><div class="block"><div class="block-container"><div class="block-body"><xf:datalist><xf:foreach loop="$rows" value="$row"><xf:datarow><xf:cell>{$row.sha256}</xf:cell><xf:cell>{$row.reason_code}</xf:cell><xf:cell>{$row.note}</xf:cell><xf:cell>{{ $row.is_active ? 'Aktif' : 'Pasif' }}</xf:cell><xf:cell><xf:form action="{{ link('wrxt-portfolyo/hash-toggle') }}" ajax="true"><input type="hidden" name="sha256" value="{$row.sha256}"/><xf:button type="submit">{{ $row.is_active ? 'Devre dışı' : 'Etkinleştir' }}</xf:button></xf:form></xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo/hashes" />]]></template>
+  <template type="admin" title="wrxt_portfolio_security_events" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Güvenlik olayları</xf:title><div class="block"><div class="block-container"><div class="block-body"><xf:datalist><xf:foreach loop="$events" value="$event"><xf:datarow><xf:cell>{$event.severity}</xf:cell><xf:cell>{$event.event}</xf:cell><xf:cell>{$event.reason_code}</xf:cell><xf:cell>Portfolyo #{$event.portfolio_id} / Dosya #{$event.file_id}</xf:cell><xf:cell>{{ date_time($event.created_date) }}</xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo/events" />]]></template>
+  <template type="admin" title="wrxt_portfolio_security_audit" version_id="1000100" version_string="1.0.0"><![CDATA[<xf:title>Portfolyo Audit Log</xf:title><div class="block"><div class="block-container"><div class="block-body"><xf:datalist><xf:foreach loop="$logs" value="$log"><xf:datarow><xf:cell>{$log.actor_username}</xf:cell><xf:cell>{$log.action}</xf:cell><xf:cell>{$log.target_type} #{$log.target_id}</xf:cell><xf:cell>{$log.reason_code}</xf:cell><xf:cell>{{ date_time($log.created_date) }}</xf:cell></xf:datarow></xf:foreach></xf:datalist></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="wrxt-portfolyo/audit" />]]></template>
+</templates>
