@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="wrxtPortfolio" permission_id="view" permission_type="flag" interface_group_id="generalPermissions" display_order="800"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="create" permission_type="flag" interface_group_id="generalPermissions" display_order="810"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="editOwn" permission_type="flag" interface_group_id="generalPermissions" display_order="820"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="deleteOwn" permission_type="flag" interface_group_id="generalPermissions" display_order="830"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="like" permission_type="flag" interface_group_id="generalPermissions" display_order="835"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="comment" permission_type="flag" interface_group_id="generalPermissions" display_order="836"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="save" permission_type="flag" interface_group_id="generalPermissions" display_order="837"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="follow" permission_type="flag" interface_group_id="generalPermissions" display_order="838"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="deleteOwnComment" permission_type="flag" interface_group_id="generalPermissions" display_order="839"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="report" permission_type="flag" interface_group_id="generalPermissions" display_order="839"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="moderate" permission_type="flag" interface_group_id="generalPermissions" display_order="839"/>
+  <permission permission_group_id="wrxtPortfolio" permission_id="manage" permission_type="flag" interface_group_id="generalPermissions" display_order="840"/>
+</permissions>

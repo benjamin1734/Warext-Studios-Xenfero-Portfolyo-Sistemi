@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="wrxt_portfolio" field_name="entity">Warext\Portfolio:Portfolio</field>
+  <field content_type="wrxt_portfolio" field_name="approval_queue_handler_class">Warext\Portfolio\ApprovalQueue\Portfolio</field>
+  <field content_type="wrxt_portfolio" field_name="report_handler_class">Warext\Portfolio\Report\Portfolio</field>
+</content_type_fields>
