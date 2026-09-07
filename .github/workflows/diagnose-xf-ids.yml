@@ -1,0 +1,27 @@
+name: diagnose-xf-ids
+on:
+  push:
+    branches: [diagnose-1.0.1]
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan XenForo master-data identifiers
+        run: |
+          python3 - <<'PY'
+          import os,xml.etree.ElementTree as ET
+          root='upload/src/addons/Warext/Portfolio/_data'
+          idish={'addon_id','admin_permission_id','navigation_id','parent_navigation_id','entry_id','permission_group_id','permission_id','interface_group_id','content_type','field_name','group_id','option_id','route_prefix','sub_name','context','modification_key','template','type','action'}
+          for fn in sorted(os.listdir(root)):
+              if not fn.endswith('.xml'): continue
+              p=os.path.join(root,fn)
+              try: tree=ET.parse(p)
+              except Exception as e:
+                  print('PARSE_ERROR',fn,e); continue
+              for el in tree.iter():
+                  for k,v in el.attrib.items():
+                      if k in idish or k.endswith('_id') or k.endswith('_key'):
+                          flag=' OVER25' if len(v)>25 else ''
+                          print(f'{fn}: <{el.tag}> {k}={v!r} len={len(v)}{flag}')
+          PY
