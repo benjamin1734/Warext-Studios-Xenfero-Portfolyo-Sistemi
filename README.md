@@ -2,13 +2,13 @@
 
 XenForo 2.3+ için üyelerin görsel ve 3D çalışmalarını güvenli biçimde yayınlayabildiği kapsamlı portfolyo sistemidir.
 
-**Sürüm:** 1.0.1  
+**Sürüm:** 1.0.2  
 **Geliştirici:** Warext Studios  
 **Add-on ID:** `Warext/Portfolio`
 
 ## Kurulum ZIP'i
 
-**[Warext Studios | XenForo Portfolyo Sistemi 1.0.1 - Kurulum ZIP'ini indir](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/download/v1.0.1/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.1.zip)**
+**[Warext Studios | XenForo Portfolyo Sistemi 1.0.2 - Kurulum ZIP'ini indir](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/download/v1.0.2/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip)**
 
 Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır.
 
@@ -59,14 +59,14 @@ Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır
 
 ## Kurulum
 
-1. Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.1.zip` dosyasını indirin.
+1. Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip` dosyasını indirin.
 2. XenForo Admin CP → **Add-ons → Install/upgrade from archive** bölümünü açın.
 3. ZIP dosyasını seçip kurulumu başlatın.
 4. Kurulumdan sonra kullanıcı grubu ve Admin CP izinlerini düzenleyin.
 5. ClamAV ile Imagick/GD servislerinin kullanılabilir olduğunu doğrulayın.
 
-## 1.0.1
+## 1.0.2
 
-- XenForo `xf_cron_entry.entry_id` 25 karakter sınırını aşan cron kimlikleri düzeltildi.
-- Kurulum sırasında görülen `Please enter a value using 25 characters or fewer` hatası giderildi.
-- XenForo çekirdek 25 karakter ID alanları yeniden doğrulandı.
+- XenForo cron kimlikleri 25 karakter sınırına uygun hale getirildi.
+- `public:wrxt_portfolio_list` template derleyici hatasına neden olan riskli child-element yapıları kaldırıldı.
+- 22 master template XenForo 2.3 uyumlu güvenli tag yapısıyla yeniden düzenlendi.
