@@ -69,11 +69,11 @@
     "src/addons/Warext/Portfolio/Service/UploadRateLimiter.php": "56e6cbc102365c8e509fd75cd32dead76d826c7568b50ab9ce6de9617c63c579",
     "src/addons/Warext/Portfolio/Service/UploadSessionManager.php": "dfff9b1b6a1cda863fc165001f84378bce1f882e8bd6e034cb184c4d2bf70c9a",
     "src/addons/Warext/Portfolio/Service/WorkerProcess.php": "38c29c6b825ce1dd8efb62578c84f34636f47cbf76c223c4e5a630ef147271be",
+    "src/addons/Warext/Portfolio/Setup.php": "08b91bdd61d8c5e4af446470695e1f356c254292dddbe04196ecf8c08892d181",
     "src/addons/Warext/Portfolio/Setup/AuxSchemaTrait.php": "443cfd85bb4b521440e57d07dd02b47f07e30320678f56e460a5896df9bb82d0",
     "src/addons/Warext/Portfolio/Setup/CoreSchemaTrait.php": "05f7c2ef272d41cab8e8aa9d9ac5ca54faa63a8ac139aaf0d584ffb616c9bc5c",
     "src/addons/Warext/Portfolio/Setup/DefaultsTrait.php": "c481ae6ec04833ce2ace4570b992eea205284d0abc143e65b8935747411607fa",
     "src/addons/Warext/Portfolio/Setup/UpgradeTrait.php": "edd3dde4de663feffddd066b37c4e442f5e4821cf10b4cb3550b6df63b929bd1",
-    "src/addons/Warext/Portfolio/Setup.php": "08b91bdd61d8c5e4af446470695e1f356c254292dddbe04196ecf8c08892d181",
     "src/addons/Warext/Portfolio/Storage/BlobStorageInterface.php": "ed12445d847497beb96de5ecacc9ce092d8c9e12842a7b8174f82044bfae0bc5",
     "src/addons/Warext/Portfolio/Storage/LocalBlobStorage.php": "3d3f249d3ce8d63e66148ee9f3679d7bdea4716ab9e17c2dedbcb8a1805b0a32",
     "src/addons/Warext/Portfolio/Worker/Glb/Helpers.php": "eba5384ce4caefd758dfb2e90df7d61ca768cab488aad3e8b5d167c180712a46",
@@ -87,7 +87,7 @@
     "src/addons/Warext/Portfolio/_data/admin_navigation.xml": "c746ee23347b4b4bd61dd788eeaa70e380d6c02d0cf59a9e8c98d46f3eb19a38",
     "src/addons/Warext/Portfolio/_data/admin_permission.xml": "076713ea20299796a6843c4490f57f55bff36ae236c32a5da70e5d90f1be4928",
     "src/addons/Warext/Portfolio/_data/content_type_fields.xml": "0027896e03f6be096f8b4b1b5ae94d2bed5295e26f7ded80479db6ae608ae08f",
-    "src/addons/Warext/Portfolio/_data/cron.xml": "31ba0ecfb7f9ff23ebad2ffb21840656545c0ff441b535008be66bee2fe19d83",
+    "src/addons/Warext/Portfolio/_data/cron.xml": "3907667aae1d401c4c8ec7fb8b9ae137cd42d3fdbea3e650ebcffdfb625e920e",
     "src/addons/Warext/Portfolio/_data/option_groups.xml": "973f02232bdbd29cf5938c6e862284fa5269e7304b66f76677e85df997ce9304",
     "src/addons/Warext/Portfolio/_data/options.xml": "c1d09349a0f9fa5f17522d7c5fd9c202c9c75009817a83689c5e7572a3ed93f1",
     "src/addons/Warext/Portfolio/_data/permissions.xml": "339295b1b73aeb5af7d0e8f377663f92a0f202509e5adf35516b23bcedd58e2b",
@@ -95,5 +95,5 @@
     "src/addons/Warext/Portfolio/_data/routes.xml": "236ca8b55611fde138fbb3ec3df189036921a2dc65ee3c2fee67ffc9d540f8b6",
     "src/addons/Warext/Portfolio/_data/template_modifications.xml": "bb972258b32dafe7adb722a11a8a56c04dcfa11c2cdcd47b5e15cd5c7580e3ea",
     "src/addons/Warext/Portfolio/_data/templates.xml": "f11163c5efaba45da45344bf7b49d506c76e0e8c4646e5fcaf6c8b699ad3d4a7",
-    "src/addons/Warext/Portfolio/addon.json": "8dad52f0e4dceb194628579109cd5ce31bb1375507049acf076732669c334a74"
+    "src/addons/Warext/Portfolio/addon.json": "084fd2954d3d986bad9d315fcbb25fa0b19dc5248b166edace164d1860b84f2c"
 }
