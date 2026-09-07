@@ -1,0 +1,27 @@
+name: 1.0.2
+
+on:
+  push:
+    branches:
+      - publish-1.0.2
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Paket
+        run: |
+          zip -qr Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip README.md upload
+          unzip -t Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip >/dev/null
+          sha256sum Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip > SHA256SUMS.txt
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create v1.0.2 Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip SHA256SUMS.txt --title "1.0.2" --notes "1.0.2" --target main
