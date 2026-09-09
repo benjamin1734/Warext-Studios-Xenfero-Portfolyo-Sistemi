@@ -119,21 +119,22 @@ class SecurityPipeline extends AbstractService
                 $file->save();
                 $stateMachine->logFileEvent($file, 'scan_clean', 'info', '', ['attempt' => (int)$file->scan_attempts]);
                 $stateMachine->transitionFile($file, 'processing');
+
                 try
                 {
-                    \XF::app()->jobManager()->enqueueUnique(
-                        'wrxtPortfolioProcess_' . (int)$file->file_id,
-                        'Warext\Portfolio:ProcessFile',
-                        ['file_id' => (int)$file->file_id],
-                        false,
-                        110
-                    );
+                    return $this->service('Warext\Portfolio:ProcessingPipeline')->process($file);
                 }
                 catch (\Throwable $e)
                 {
-                    $stateMachine->logFileEvent($file, 'processing_job_enqueue_failed', 'warning', 'job_enqueue_failed');
+                    $file->processing_status = 'error';
+                    $file->reason_code = 'processing_pipeline_error';
+                    $file->next_processing_date = \XF::$time + 300;
+                    $file->save();
+                    $stateMachine->logFileEvent($file, 'processing_pipeline_error', 'critical', 'processing_pipeline_error', [
+                        'exception' => get_class($e)
+                    ]);
+                    return 'processing_pending';
                 }
-                return 'processing';
             }
 
             return (string)$file->state;
