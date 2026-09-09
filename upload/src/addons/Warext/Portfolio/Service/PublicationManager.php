@@ -29,6 +29,7 @@ class PublicationManager extends AbstractService
             if ((int)$file->portfolio_id !== (int)$portfolio->portfolio_id) { throw new \RuntimeException('wrxt_portfolio_publish_mixed_portfolio'); }
         }
 
+        $blobManager = $this->service('Warext\Portfolio:BlobManager');
         $oldPointers = [];
         $db = $this->db();
         $db->beginTransaction();
@@ -37,24 +38,23 @@ class PublicationManager extends AbstractService
             $db->fetchOne('SELECT portfolio_id FROM xf_wrxt_portfolio WHERE portfolio_id = ? FOR UPDATE', (int)$portfolio->portfolio_id);
             foreach ($candidates as $file)
             {
-                $row = $db->fetchRow('SELECT file_id, state, processing_status, processed_mime, processed_blob_id, thumbnail_blob_id FROM xf_wrxt_portfolio_file WHERE file_id = ? FOR UPDATE', (int)$file->file_id);
+                $row = $db->fetchRow('SELECT file_id, state, processing_status, processed_mime FROM xf_wrxt_portfolio_file WHERE file_id = ? FOR UPDATE', (int)$file->file_id);
                 if (!$row || !in_array((string)$row['state'], ['security_passed', 'moderation'], true) || (string)$row['processing_status'] !== 'passed')
                 {
                     throw new \RuntimeException('wrxt_portfolio_publish_file_not_ready');
                 }
                 $expectedMime = (string)$file->file_role === 'model' ? 'model/gltf-binary' : 'image/webp';
-                if ((string)$row['processed_mime'] !== $expectedMime || !(int)$row['processed_blob_id'])
+                if ((string)$row['processed_mime'] !== $expectedMime)
                 {
                     throw new \RuntimeException('wrxt_portfolio_publish_file_mime_invalid');
                 }
-                foreach ([(int)$row['processed_blob_id'], (int)$row['thumbnail_blob_id']] as $blobId)
+                if (!$blobManager->isFileStorageSafe($file, false))
                 {
-                    if (!$blobId) { continue; }
-                    $blob = $db->fetchRow('SELECT blob_id, state, security_state FROM xf_wrxt_portfolio_blob WHERE blob_id = ? FOR UPDATE', $blobId);
-                    if (!$blob || (string)$blob['state'] !== 'ready' || (string)$blob['security_state'] !== 'clean')
-                    {
-                        throw new \RuntimeException('wrxt_portfolio_publish_blob_blocked');
-                    }
+                    throw new \RuntimeException('wrxt_portfolio_publish_storage_not_safe');
+                }
+                if ((string)$file->file_role !== 'model' && !$blobManager->isFileStorageSafe($file, true))
+                {
+                    throw new \RuntimeException('wrxt_portfolio_publish_thumbnail_not_safe');
                 }
             }
 
@@ -108,7 +108,7 @@ class PublicationManager extends AbstractService
             {
                 try
                 {
-                    $this->service('Warext\Portfolio:BlobManager')->detachFile($old);
+                    $blobManager->detachFile($old);
                     $stateMachine->transitionFile($old, 'deleted', 'replaced_after_moderation');
                 }
                 catch (\Throwable $e)
