@@ -113,7 +113,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- processing aşamasındaki ikinci job kuyruğu bağımlılığı kaldırıldı\n- Karantina ekranındaki Şimdi işle / yeniden dene işlemi gerçek zamanlı hale getirildi\n- cPanel için Imagick/GD görsel işleme fallback eklendi\n- GLB modellerde izole worker zorunluluğu korunuyor\n- Manuel yayın onayı ve teknik işlem aşamaları Admin CP'de daha açık anlatılıyor"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- blob_publish_failed için eski kurulum şeması self-repair eklendi\n- takılmış processing kayıtları yükseltmede yeniden denenebilir hale getiriliyor\n- blob publish başarısızlığında doğrulanmış direct-blob fallback eklendi\n- Karantina butonları gerçek zamanlı pipeline controller'ına bağlandı\n- Moderasyon/yayın güvenlik kontrolleri fallback depolama ile uyumlu hale getirildi\n- Sürüm numaralandırması 1.1.x düzenine geçirildi"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
