@@ -75,4 +75,43 @@
     </div>
 </xf:if>]]></replace>
   </modification>
+
+  <modification type="public" template="wrxt_portfolio_add" modification_key="wrxt_portfolio_add_upload_form" description="Yeni çalışma formunu dosya yüklemeli multipart forma çevirir" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:form action="{{ link('portfolyo/save') }}" ajax="true" class="block">]]></find>
+    <replace><![CDATA[<xf:form action="{{ link('portfolyo/save') }}" method="post" upload="true" ajax="true" class="block">]]></replace>
+  </modification>
+
+  <modification type="public" template="wrxt_portfolio_add" modification_key="wrxt_portfolio_add_editor_media" description="Açıklama alanını XenForo editörüne çevirir ve ilk oluşturma ekranına medya alanlarını ekler" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:textarearow name="description" rows="8" label="Açıklama" />]]></find>
+    <replace><![CDATA[<xf:editorrow name="description"
+    label="Açıklama"
+    rowtype="fullWidth"
+    data-min-height="220"
+    explain="Çalışmanızı XenForo editörünü kullanarak biçimlendirebilirsiniz." />
+
+<xf:uploadrow name="cover_file"
+    accept=".jpg,.jpeg,.png,.webp"
+    label="Kapak görseli"
+    explain="Ana portfolyo görseli. JPG, JPEG, PNG veya WebP yükleyebilirsiniz." />
+
+<xf:uploadrow name="gallery_files[]"
+    accept=".jpg,.jpeg,.png,.webp"
+    multiple="true"
+    label="Galeri görselleri"
+    explain="Birden fazla galeri görselini aynı anda seçebilirsiniz." />
+
+<xf:if is="$quota.allow_model3d">
+    <xf:uploadrow name="model_file"
+        accept=".glb"
+        label="3D model"
+        explain="Tür olarak 3D model seçtiğinizde GLB model dosyanızı buradan yükleyin." />
+<xf:else />
+    <xf:inforow label="3D model">Kullanıcı grubunuz için 3D model yükleme izni kapalı.</xf:inforow>
+</xf:if>]]></replace>
+  </modification>
+
+  <modification type="public" template="wrxt_portfolio_add" modification_key="wrxt_portfolio_add_submit_label" description="Yeni çalışma formunun gönderim metnini günceller" execution_order="30" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:submitrow submit="Taslağı oluştur" />]]></find>
+    <replace><![CDATA[<xf:submitrow submit="Çalışmayı oluştur" />]]></replace>
+  </modification>
 </template_modifications>
