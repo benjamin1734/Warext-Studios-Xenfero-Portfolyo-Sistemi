@@ -1,65 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <phrases>
-  <phrase title="wrxt_portfolio" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo]]></phrase>
-  <phrase title="wrxt_portfolio_invalid_category" version_id="1000101" version_string="1.0.1"><![CDATA[Geçerli bir portfolyo kategorisi seçin.]]></phrase>
-  <phrase title="wrxt_portfolio_type_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu kategori seçilen çalışma türünü kabul etmiyor.]]></phrase>
-  <phrase title="wrxt_portfolio_not_found" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo çalışması bulunamadı.]]></phrase>
-  <phrase title="wrxt_pf_profile_btn" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo]]></phrase>
-  <phrase title="permission_group_wrxtPortfolio" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo izinleri]]></phrase>
-  <phrase title="permission_wrxtPortfolio_view" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyoları görüntüleyebilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_create" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo oluşturabilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_editOwn" version_id="1000101" version_string="1.0.1"><![CDATA[Kendi portfolyosunu düzenleyebilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_deleteOwn" version_id="1000101" version_string="1.0.1"><![CDATA[Kendi portfolyosunu silebilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_manage" version_id="1000101" version_string="1.0.1"><![CDATA[Tüm portfolyoları yönetebilir]]></phrase>
-  <phrase title="admin_permission_wrxtPortfolioManage" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo sistemini yönet]]></phrase>
-  <phrase title="admin_navigation_wrxtPortfolioAdmin" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo]]></phrase>
-
-  <phrase title="wrxt_portfolio_upload_empty" version_id="1000101" version_string="1.0.1"><![CDATA[Boş dosya yüklenemez.]]></phrase>
-  <phrase title="wrxt_portfolio_model_upload_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu hesap veya çalışma için 3D model yükleme izni bulunmuyor.]]></phrase>
-  <phrase title="wrxt_portfolio_file_too_large" version_id="1000101" version_string="1.0.1"><![CDATA[Dosya, hesabınız için izin verilen tek dosya boyutu sınırını aşıyor.]]></phrase>
-  <phrase title="wrxt_portfolio_file_count_limit" version_id="1000101" version_string="1.0.1"><![CDATA[Bu çalışma için izin verilen dosya sayısı sınırına ulaşıldı.]]></phrase>
-  <phrase title="wrxt_portfolio_storage_quota_exceeded" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo depolama kotanız doldu.]]></phrase>
-  <phrase title="wrxt_portfolio_upload_rate_limit" version_id="1000101" version_string="1.0.1"><![CDATA[Çok fazla dosya yükleme isteği yapıldı. Daha sonra tekrar deneyin.]]></phrase>
-  <phrase title="wrxt_portfolio_storage_unavailable" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo depolama alanına şu anda erişilemiyor.]]></phrase>
-  <phrase title="wrxt_portfolio_storage_reserve" version_id="1000101" version_string="1.0.1"><![CDATA[Sunucu güvenli boş alan sınırına ulaştığı için yeni dosya yüklemeleri geçici olarak durduruldu.]]></phrase>
-  <phrase title="wrxt_portfolio_invalid_file_role" version_id="1000101" version_string="1.0.1"><![CDATA[Geçersiz dosya türü seçildi.]]></phrase>
-  <phrase title="wrxt_portfolio_upload_failed" version_id="1000101" version_string="1.0.1"><![CDATA[Dosya yüklenemedi.]]></phrase>
-  <phrase title="wrxt_portfolio_extension_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu dosya uzantısına izin verilmiyor.]]></phrase>
-  <phrase title="wrxt_portfolio_model_requires_glb" version_id="1000101" version_string="1.0.1"><![CDATA[3D model dosyaları yalnızca GLB biçiminde yüklenebilir.]]></phrase>
-  <phrase title="wrxt_portfolio_image_required" version_id="1000101" version_string="1.0.1"><![CDATA[Kapak ve galeri alanlarında yalnızca desteklenen görsel dosyaları kullanılabilir.]]></phrase>
-  <phrase title="wrxt_portfolio_select_file" version_id="1000101" version_string="1.0.1"><![CDATA[Yüklenecek bir dosya seçin.]]></phrase>
-  <phrase title="wrxt_portfolio_security_waiting" version_id="1000101" version_string="1.0.1"><![CDATA[Dosyanız güvenlik kontrolü bekliyor.]]></phrase>
-  <phrase title="wrxt_portfolio_security_failed" version_id="1000101" version_string="1.0.1"><![CDATA[Dosya güvenlik kontrollerinden geçemedi.]]></phrase>
-  <phrase title="wrxt_portfolio_clamav_unavailable" version_id="1000101" version_string="1.0.1"><![CDATA[Zararlı yazılım tarama servisine şu anda erişilemiyor. Dosya yayınlanmayacak ve tarama otomatik olarak yeniden denenecek.]]></phrase>
-  <phrase title="option_wrxtPfBlobGcHours" version_id="1000101" version_string="1.0.1"><![CDATA[Yetim dosya silme bekleme süresi (saat)]]></phrase>
-  <phrase title="option_explain_wrxtPfBlobGcHours" version_id="1000101" version_string="1.0.1"><![CDATA[Referans sayısı sıfıra düşen güvenli dosyaların fiziksel olarak silinmeden önce tutulacağı süre.]]></phrase>
-
-  <phrase title="permission_wrxtPortfolio_like" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo çalışmalarını beğenebilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_comment" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo çalışmalarına yorum yapabilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_save" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo çalışmalarını kaydedebilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_follow" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo sahiplerini takip edebilir]]></phrase>
-  <phrase title="permission_wrxtPortfolio_deleteOwnComment" version_id="1000101" version_string="1.0.1"><![CDATA[Kendi portfolyo yorumunu silebilir]]></phrase>
-  <phrase title="wrxt_portfolio_like_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu çalışmayı beğenme izniniz yok.]]></phrase>
-  <phrase title="wrxt_portfolio_save_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu çalışmayı kaydetme izniniz yok.]]></phrase>
-  <phrase title="wrxt_portfolio_follow_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu kullanıcıyı takip edemezsiniz.]]></phrase>
-  <phrase title="wrxt_portfolio_comment_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Yorum yapma izniniz yok.]]></phrase>
-  <phrase title="wrxt_portfolio_comment_empty" version_id="1000101" version_string="1.0.1"><![CDATA[Yorum boş olamaz.]]></phrase>
-  <phrase title="wrxt_portfolio_comment_flood" version_id="1000101" version_string="1.0.1"><![CDATA[Çok hızlı yorum gönderiyorsunuz. Birkaç saniye sonra tekrar deneyin.]]></phrase>
-  <phrase title="wrxt_portfolio_comment_daily_limit" version_id="1000101" version_string="1.0.1"><![CDATA[Günlük yorum sınırına ulaştınız.]]></phrase>
-  <phrase title="wrxt_portfolio_comment_delete_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu yorumu silemezsiniz.]]></phrase>
-  <phrase title="permission_wrxtPortfolio_report" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo çalışmasını raporlayabilir]]></phrase>
-  <phrase title="admin_permission_wrxtPortfolioModerate" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo moderasyonu]]></phrase>
-  <phrase title="admin_permission_wrxtPortfolioSecurity" version_id="1000101" version_string="1.0.1"><![CDATA[Portfolyo Güvenlik Merkezi]]></phrase>
-  <phrase title="admin_navigation_wrxtPortfolioModeration" version_id="1000101" version_string="1.0.1"><![CDATA[Moderasyon ve raporlar]]></phrase>
-  <phrase title="admin_navigation_wrxtPortfolioSecurity" version_id="1000101" version_string="1.0.1"><![CDATA[Güvenlik Merkezi]]></phrase>
-  <phrase title="option_wrxtPfRescanDays" version_id="1000101" version_string="1.0.1"><![CDATA[Yayınlanmış dosyaları yeniden tarama aralığı (gün)]]></phrase>
-  <phrase title="wrxt_portfolio_report_not_allowed" version_id="1000101" version_string="1.0.1"><![CDATA[Bu çalışmayı raporlayamazsınız.]]></phrase>
-  <phrase title="wrxt_portfolio_report_reason_invalid" version_id="1000101" version_string="1.0.1"><![CDATA[Geçerli bir rapor nedeni seçin.]]></phrase>
-  <phrase title="wrxt_portfolio_report_daily_limit" version_id="1000101" version_string="1.0.1"><![CDATA[Günlük rapor sınırına ulaştınız.]]></phrase>
-  <phrase title="wrxt_portfolio_report_duplicate" version_id="1000101" version_string="1.0.1"><![CDATA[Aynı çalışma için benzer açık bir raporunuz zaten bulunuyor.]]></phrase>
-  <phrase title="wrxt_portfolio_security_not_passed" version_id="1000101" version_string="1.0.1"><![CDATA[Çalışma teknik güvenlik kontrollerini geçmediği için yayınlanamaz.]]></phrase>
-  <phrase title="wrxt_portfolio_blob_security_blocked" version_id="1000101" version_string="1.0.1"><![CDATA[Çalışmanın dosyalarından biri teknik güvenlik tarafından engellendi. Bu karar moderasyon tarafından aşılamaz.]]></phrase>
-  <phrase title="wrxt_portfolio_file_not_security_passed" version_id="1000101" version_string="1.0.1"><![CDATA[Tüm dosyalar güvenlik kontrolünden geçmeden çalışma yayınlanamaz.]]></phrase>
-  <phrase title="wrxt_portfolio_no_safe_files" version_id="1000101" version_string="1.0.1"><![CDATA[Yayınlanabilecek güvenli dosya bulunmuyor.]]></phrase>
-  <phrase title="wrxt_portfolio_published_file_delete_requires_moderation" version_id="1000101" version_string="1.0.1"><![CDATA[Yayınlanmış bir dosya doğrudan silinemez. Yeni bir dosya yükleyip moderasyon onayından sonra değiştirin.]]></phrase>
+  <phrase title="wrxt_portfolio" version_id="1000100" version_string="1.0.0">Portfolyo</phrase>
+  <phrase title="wrxt_portfolio_invalid_category" version_id="1000100" version_string="1.0.0">Geçerli bir portfolyo kategorisi seçin.</phrase>
+  <phrase title="wrxt_portfolio_type_not_allowed" version_id="1000100" version_string="1.0.0">Bu kategori seçilen çalışma türünü kabul etmiyor.</phrase>
+  <phrase title="wrxt_portfolio_not_found" version_id="1000100" version_string="1.0.0">Portfolyo çalışması bulunamadı.</phrase>
+  <phrase title="wrxt_portfolio_profile_button" version_id="1000100" version_string="1.0.0">Portfolyo</phrase>
+  <phrase title="permission_group_wrxtPortfolio" version_id="1000100" version_string="1.0.0">Portfolyo izinleri</phrase>
+  <phrase title="permission_wrxtPortfolio_view" version_id="1000100" version_string="1.0.0">Portfolyoları görüntüleyebilir</phrase>
+  <phrase title="permission_wrxtPortfolio_create" version_id="1000100" version_string="1.0.0">Portfolyo oluşturabilir</phrase>
+  <phrase title="permission_wrxtPortfolio_editOwn" version_id="1000100" version_string="1.0.0">Kendi portfolyosunu düzenleyebilir</phrase>
+  <phrase title="permission_wrxtPortfolio_deleteOwn" version_id="1000100" version_string="1.0.0">Kendi portfolyosunu silebilir</phrase>
+  <phrase title="permission_wrxtPortfolio_manage" version_id="1000100" version_string="1.0.0">Tüm portfolyoları yönetebilir</phrase>
+  <phrase title="admin_permission_wrxtPortfolioManage" version_id="1000100" version_string="1.0.0">Portfolyo sistemini yönet</phrase>
+  <phrase title="admin_navigation_wrxtPortfolioAdmin" version_id="1000100" version_string="1.0.0">Portfolyo</phrase>
+  <phrase title="wrxt_portfolio_upload_empty" version_id="1000100" version_string="1.0.0">Boş dosya yüklenemez.</phrase>
+  <phrase title="wrxt_portfolio_model_upload_not_allowed" version_id="1000100" version_string="1.0.0">Bu hesap veya çalışma için 3D model yükleme izni bulunmuyor.</phrase>
+  <phrase title="wrxt_portfolio_file_too_large" version_id="1000100" version_string="1.0.0">Dosya, hesabınız için izin verilen tek dosya boyutu sınırını aşıyor.</phrase>
+  <phrase title="wrxt_portfolio_file_count_limit" version_id="1000100" version_string="1.0.0">Bu çalışma için izin verilen dosya sayısı sınırına ulaşıldı.</phrase>
+  <phrase title="wrxt_portfolio_storage_quota_exceeded" version_id="1000100" version_string="1.0.0">Portfolyo depolama kotanız doldu.</phrase>
+  <phrase title="wrxt_portfolio_upload_rate_limit" version_id="1000100" version_string="1.0.0">Çok fazla dosya yükleme isteği yapıldı. Daha sonra tekrar deneyin.</phrase>
+  <phrase title="wrxt_portfolio_storage_unavailable" version_id="1000100" version_string="1.0.0">Portfolyo depolama alanına şu anda erişilemiyor.</phrase>
+  <phrase title="wrxt_portfolio_storage_reserve" version_id="1000100" version_string="1.0.0">Sunucu güvenli boş alan sınırına ulaştığı için yeni dosya yüklemeleri geçici olarak durduruldu.</phrase>
+  <phrase title="wrxt_portfolio_invalid_file_role" version_id="1000100" version_string="1.0.0">Geçersiz dosya türü seçildi.</phrase>
+  <phrase title="wrxt_portfolio_upload_failed" version_id="1000100" version_string="1.0.0">Dosya yüklenemedi.</phrase>
+  <phrase title="wrxt_portfolio_extension_not_allowed" version_id="1000100" version_string="1.0.0">Bu dosya uzantısına izin verilmiyor.</phrase>
+  <phrase title="wrxt_portfolio_model_requires_glb" version_id="1000100" version_string="1.0.0">3D model dosyaları yalnızca GLB biçiminde yüklenebilir.</phrase>
+  <phrase title="wrxt_portfolio_image_required" version_id="1000100" version_string="1.0.0">Kapak ve galeri alanlarında yalnızca desteklenen görsel dosyaları kullanılabilir.</phrase>
+  <phrase title="wrxt_portfolio_select_file" version_id="1000100" version_string="1.0.0">Yüklenecek bir dosya seçin.</phrase>
+  <phrase title="wrxt_portfolio_security_waiting" version_id="1000100" version_string="1.0.0">Dosyanız güvenlik kontrolü bekliyor.</phrase>
+  <phrase title="wrxt_portfolio_security_failed" version_id="1000100" version_string="1.0.0">Dosya güvenlik kontrollerinden geçemedi.</phrase>
+  <phrase title="wrxt_portfolio_clamav_unavailable" version_id="1000100" version_string="1.0.0">Zararlı yazılım tarama servisine şu anda erişilemiyor. Dosya yayınlanmayacak ve tarama otomatik olarak yeniden denenecek.</phrase>
+  <phrase title="option_wrxtPortfolioBlobGcGraceHours" version_id="1000100" version_string="1.0.0">Yetim dosya silme bekleme süresi (saat)</phrase>
+  <phrase title="option_explain_wrxtPortfolioBlobGcGraceHours" version_id="1000100" version_string="1.0.0">Referans sayısı sıfıra düşen güvenli dosyaların fiziksel olarak silinmeden önce tutulacağı süre.</phrase>
+  <phrase title="permission_wrxtPortfolio_like" version_id="1000100" version_string="1.0.0">Portfolyo çalışmalarını beğenebilir</phrase>
+  <phrase title="permission_wrxtPortfolio_comment" version_id="1000100" version_string="1.0.0">Portfolyo çalışmalarına yorum yapabilir</phrase>
+  <phrase title="permission_wrxtPortfolio_save" version_id="1000100" version_string="1.0.0">Portfolyo çalışmalarını kaydedebilir</phrase>
+  <phrase title="permission_wrxtPortfolio_follow" version_id="1000100" version_string="1.0.0">Portfolyo sahiplerini takip edebilir</phrase>
+  <phrase title="permission_wrxtPortfolio_deleteOwnComment" version_id="1000100" version_string="1.0.0">Kendi portfolyo yorumunu silebilir</phrase>
+  <phrase title="wrxt_portfolio_like_not_allowed" version_id="1000100" version_string="1.0.0">Bu çalışmayı beğenme izniniz yok.</phrase>
+  <phrase title="wrxt_portfolio_save_not_allowed" version_id="1000100" version_string="1.0.0">Bu çalışmayı kaydetme izniniz yok.</phrase>
+  <phrase title="wrxt_portfolio_follow_not_allowed" version_id="1000100" version_string="1.0.0">Bu kullanıcıyı takip edemezsiniz.</phrase>
+  <phrase title="wrxt_portfolio_comment_not_allowed" version_id="1000100" version_string="1.0.0">Yorum yapma izniniz yok.</phrase>
+  <phrase title="wrxt_portfolio_comment_empty" version_id="1000100" version_string="1.0.0">Yorum boş olamaz.</phrase>
+  <phrase title="wrxt_portfolio_comment_flood" version_id="1000100" version_string="1.0.0">Çok hızlı yorum gönderiyorsunuz. Birkaç saniye sonra tekrar deneyin.</phrase>
+  <phrase title="wrxt_portfolio_comment_daily_limit" version_id="1000100" version_string="1.0.0">Günlük yorum sınırına ulaştınız.</phrase>
+  <phrase title="wrxt_portfolio_comment_delete_not_allowed" version_id="1000100" version_string="1.0.0">Bu yorumu silemezsiniz.</phrase>
+  <phrase title="permission_wrxtPortfolio_report" version_id="1000100" version_string="1.0.0">Portfolyo çalışmasını raporlayabilir</phrase>
+  <phrase title="admin_permission_wrxtPortfolioModerate" version_id="1000100" version_string="1.0.0">Portfolyo moderasyonu</phrase>
+  <phrase title="admin_permission_wrxtPortfolioSecurity" version_id="1000100" version_string="1.0.0">Portfolyo Güvenlik Merkezi</phrase>
+  <phrase title="admin_navigation_wrxtPortfolioModeration" version_id="1000100" version_string="1.0.0">Moderasyon ve raporlar</phrase>
+  <phrase title="admin_navigation_wrxtPortfolioSecurity" version_id="1000100" version_string="1.0.0">Güvenlik Merkezi</phrase>
+  <phrase title="option_wrxtPortfolioRescanDays" version_id="1000100" version_string="1.0.0">Yayınlanmış dosyaları yeniden tarama aralığı (gün)</phrase>
+  <phrase title="wrxt_portfolio_report_not_allowed" version_id="1000100" version_string="1.0.0">Bu çalışmayı raporlayamazsınız.</phrase>
+  <phrase title="wrxt_portfolio_report_reason_invalid" version_id="1000100" version_string="1.0.0">Geçerli bir rapor nedeni seçin.</phrase>
+  <phrase title="wrxt_portfolio_report_daily_limit" version_id="1000100" version_string="1.0.0">Günlük rapor sınırına ulaştınız.</phrase>
+  <phrase title="wrxt_portfolio_report_duplicate" version_id="1000100" version_string="1.0.0">Aynı çalışma için benzer açık bir raporunuz zaten bulunuyor.</phrase>
+  <phrase title="wrxt_portfolio_security_not_passed" version_id="1000100" version_string="1.0.0">Çalışma teknik güvenlik kontrollerini geçmediği için yayınlanamaz.</phrase>
+  <phrase title="wrxt_portfolio_blob_security_blocked" version_id="1000100" version_string="1.0.0">Çalışmanın dosyalarından biri teknik güvenlik tarafından engellendi. Bu karar moderasyon tarafından aşılamaz.</phrase>
+  <phrase title="wrxt_portfolio_file_not_security_passed" version_id="1000100" version_string="1.0.0">Tüm dosyalar güvenlik kontrolünden geçmeden çalışma yayınlanamaz.</phrase>
+  <phrase title="wrxt_portfolio_no_safe_files" version_id="1000100" version_string="1.0.0">Yayınlanabilecek güvenli dosya bulunmuyor.</phrase>
+  <phrase title="wrxt_portfolio_published_file_delete_requires_moderation" version_id="1000100" version_string="1.0.0">Yayınlanmış bir dosya doğrudan silinemez. Yeni bir dosya yükleyip moderasyon onayından sonra değiştirin.</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioAdmin" version_id="1000103" version_string="1.0.3">Portfolyo Sistemi</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioOverview" version_id="1000103" version_string="1.0.3">Portfolyo Yönetimi</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioModeration" version_id="1000103" version_string="1.0.3">Moderasyon ve Raporlar</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioSecurity" version_id="1000103" version_string="1.0.3">Güvenlik Merkezi</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioQuarantine" version_id="1000103" version_string="1.0.3">Karantina</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioBlocked" version_id="1000103" version_string="1.0.3">Engellenen Dosyalar</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioEvents" version_id="1000103" version_string="1.0.3">Güvenlik Olayları</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioAudit" version_id="1000103" version_string="1.0.3">Denetim Kayıtları</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioHashes" version_id="1000103" version_string="1.0.3">SHA-256 Engelleme Listesi</phrase>
+  <phrase title="admin_navigation.wrxtPortfolioSettings" version_id="1000103" version_string="1.0.3">Portfolyo Ayarları</phrase>
+  <phrase title="option_group.wrxtPortfolioSettings" version_id="1000103" version_string="1.0.3">Warext Studios - Portfolyo Sistemi</phrase>
+  <phrase title="nav.wrxtPortfolioNav" version_id="1000103" version_string="1.0.3">Portfolyo</phrase>
 </phrases>
