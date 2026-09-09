@@ -49,7 +49,7 @@ class BlobGarbageCollector extends AbstractService
             $deleteAfter = 0;
             if ($actual === 0)
             {
-                $graceHours = max(1, min(720, (int)($this->app->options()->wrxtPortfolioBlobGcGraceHours ?? 24)));
+                $graceHours = max(1, min(720, (int)($this->app->options()->wrxtPfBlobGcHours ?? 24)));
                 $deleteAfter = \XF::$time + ($graceHours * 3600);
             }
             $this->db()->query(

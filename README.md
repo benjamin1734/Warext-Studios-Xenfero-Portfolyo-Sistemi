@@ -1,105 +1,58 @@
 # Warext Studios | XenForo Portfolyo Sistemi
 
-XenForo 2.3+ için üyelerin görsel ve 3D çalışmalarını güvenli biçimde yayınlayabildiği kapsamlı portfolyo sistemidir.
+XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
-**Sürüm:** 1.0.3  
-**Geliştirici:** Warext Studios  
+**Güncel sürüm:** 1.0.4  
 **Add-on ID:** `Warext/Portfolio`
 
-## Kurulum ZIP'i
+## İndirme ve kurulum
 
-**[Warext Studios | XenForo Portfolyo Sistemi 1.0.3 - Kurulum ZIP'ini indir](https://raw.githubusercontent.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/main/dist/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip)**
+Güncel kurulum paketini GitHub **Releases** bölümünden indirin:
 
-Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır. Paket her kaynak güncellemesinde GitHub Actions tarafından yeniden oluşturulur ve `dist/` altında tutulur.
+https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/latest
 
-## Erişim noktaları
+XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden ZIP dosyasını yükleyin.
 
-### Kullanıcı tarafı
+## Kullanıcı tarafı
 
-- Ana portfolyo sayfası: `/portfolyo/`
-- Çalışma ekleme: `/portfolyo/add`
-- Çalışmalarım: `/portfolyo/mine`
-- Kaydedilenler: `/portfolyo/saved`
-- Üye profillerinde **Portfolyo** butonu
-- Ana forum navigasyonunda **Portfolyo** menü bağlantısı
+Ana forum navigasyonunda **Portfolyo** bağlantısı bulunur. Portfolyo ana sayfası `/portfolyo/` adresidir.
 
-### Admin CP
+Giriş yapmış kullanıcılar portfolyo sayfasının üst kısmında izinlerine göre şu işlemleri görür:
+
+- **Yeni Çalışma** → `/portfolyo/add`
+- **Çalışmalarım** → `/portfolyo/mine`
+- **Kaydedilenler** → `/portfolyo/saved`
+
+Üye profillerinde ayrıca **Portfolyo** butonu bulunur ve ilgili üyenin yayınlanmış çalışmalarını açar.
+
+## Admin CP
 
 Admin CP sol menüsünde **Portfolyo Sistemi** bağımsız bir ana kategori olarak görünür. Altında:
 
-- **Portfolyo Yönetimi** → `admin.php?wrxt-portfolyo/`
-- **Moderasyon ve Raporlar** → `admin.php?wrxt-portfolyo/reports`
-- **Güvenlik Merkezi** → `admin.php?wrxt-portfolyo/security`
-- **Karantina** → `admin.php?wrxt-portfolyo/quarantine`
-- **Engellenen Dosyalar** → `admin.php?wrxt-portfolyo/blocked`
-- **Güvenlik Olayları** → `admin.php?wrxt-portfolyo/events`
-- **Denetim Kayıtları** → `admin.php?wrxt-portfolyo/audit`
-- **SHA-256 Engelleme Listesi** → `admin.php?wrxt-portfolyo/hashes`
-- **Portfolyo Ayarları** → `admin.php?options/groups/wrxtPortfolioSettings/`
+- Portfolyo Yönetimi
+- Moderasyon ve Raporlar
+- Güvenlik Merkezi
+- Karantina
+- Engellenen Dosyalar
+- Güvenlik Olayları
+- Denetim Kayıtları
+- SHA-256 Engelleme Listesi
+- Portfolyo Ayarları
 
-## Özellikler
-
-- Görsel ve GLB tabanlı 3D portfolyo çalışmaları
-- Kapak, galeri ve interaktif 3D model görüntüleme
-- Taslak, güvenlik kontrolü, moderasyon ve yayınlama akışı
-- Kategori, etiket ve kullanılan program bilgileri
-- Üye profiline portfolyo entegrasyonu
-- Beğeni, yorum, kaydetme, takip ve görüntülenme sistemi
-- Kategori ve içerik türüne göre filtreleme ve sıralama
-- XenForo bildirim merkezi ve Approval Queue entegrasyonu
-- Telif, çalıntı çalışma ve zararlı dosya şüphesi raporları
-- Admin CP Güvenlik Merkezi, audit log ve yeniden tarama sistemi
-
-## Dosya güvenliği
-
-- Özel karantina alanı
-- Uzantı, MIME ve magic-byte doğrulaması
-- SHA-256 bütünlük kontrolü ve hash blacklist
-- ClamAV taraması ve fail-closed davranış
-- Görsellerin güvenli WebP biçimine yeniden kodlanması
-- EXIF ve gereksiz metadata temizliği
-- GLB yapı, URI ve kaynak doğrulaması
-- Model karmaşıklık ve texture limitleri
-- Düşük bellekli PNG/WebP/GLB parser kontrolleri
-- Sandbox WebGL2 3D viewer
-- Yayındaki dosyalar için periyodik yeniden tarama
-- Teknik güvenlik bloklarının moderasyon tarafından bypass edilememesi
-
-## Depolama ve yayınlama
-
-- SHA-256 içerik adresli blob depolama
-- Güvenli deduplication ve referans sayacı
-- Garbage collection
-- Atomic kapak/model değişimi
-- Yayınlanmış içerik değişiklikleri için bekleyen revizyon ve moderasyon akışı
+Ayarlar doğrudan `admin.php?options/groups/wrxtPortfolioSettings/` adresinden de açılabilir.
 
 ## Gereksinimler
 
 - XenForo 2.3.0+
 - PHP 8.0+
 - PHP ZIP desteği
-- PHP CLI erişimi
 - ClamAV / `clamd`
 - Imagick veya GD
 
-## Kurulum
+## 1.0.4
 
-1. `dist/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip` paketini indirin.
-2. XenForo Admin CP → **Add-ons → Install/upgrade from archive** bölümünü açın.
-3. ZIP dosyasını seçip kurulumu başlatın.
-4. Kurulumdan sonra kullanıcı grubu ve Admin CP izinlerini düzenleyin.
-5. ClamAV ile Imagick/GD servislerinin kullanılabilir olduğunu doğrulayın.
-
-## 1.0.2
-
-- XenForo cron kimlikleri 25 karakter sınırına uygun hale getirildi.
-- `public:wrxt_portfolio_list` template derleyici hatasına neden olan riskli child-element yapıları kaldırıldı.
-- 22 master template XenForo 2.3 uyumlu güvenli tag yapısıyla yeniden düzenlendi.
-
-## 1.0.3
-
-- Admin CP sol menüsüne bağımsız **Portfolyo Sistemi** ana kategorisi eklendi.
-- Yönetim, moderasyon, güvenlik, karantina, engellenen dosyalar, olaylar, audit, hash listesi ve ayarlar tek kategori altında toplandı.
-- Portfolyo ayar grubuna doğrudan Admin CP menü bağlantısı eklendi.
-- Forum ana navigasyonuna **Portfolyo** bağlantısı eklendi.
-- XenForo 2.3 admin/navigation phrase anahtarları standart noktalı formata taşındı; eski phrase kayıtları yükseltme uyumluluğu için korundu.
+- Admin CP menüsü gerçek bağımsız **Portfolyo Sistemi** kategorisi olacak şekilde düzeltildi.
+- Ham `admin_navigation.*`, `admin_permission.*`, `option.*` ve izin phrase anahtarlarının kullanıcıya görünmesi engellendi.
+- Portfolyo ayarlarının Türkçe başlıkları düzenlendi.
+- Kullanıcı işlemleri portfolyo ana sayfasının üst bölümüne taşındı.
+- Ayar XML'i ile PHP servislerindeki option ID'leri eşitlendi.

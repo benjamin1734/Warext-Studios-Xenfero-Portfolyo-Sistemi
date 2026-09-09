@@ -8,7 +8,7 @@ class StorageGuard extends AbstractService
 {
     public function assertCapacity(int $incomingBytes): void
     {
-        $reserveMb = max(256, (int)$this->app->options()->wrxtPortfolioDiskReserveMb);
+        $reserveMb = max(256, (int)($this->app->options()->wrxtPfDiskReserveMb ?? 2048));
         $reserveBytes = $reserveMb * 1024 * 1024;
         $path = \XF::getRootDirectory() . '/internal_data';
 

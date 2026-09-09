@@ -33,7 +33,8 @@ class UploadSessionManager extends AbstractService
         $session->ip_hash = ($ip !== '' && $salt !== '') ? hash_hmac('sha256', $ip, $salt) : '';
         $session->created_date = \XF::$time;
         $session->last_activity_date = \XF::$time;
-        $session->expires_date = \XF::$time + max(900, (int)$this->app->options()->wrxtPortfolioUploadSessionMinutes * 60);
+        $minutes = max(15, (int)($this->app->options()->wrxtPfUploadMins ?? 30));
+        $session->expires_date = \XF::$time + ($minutes * 60);
         $session->save();
         return $session;
     }
@@ -43,7 +44,8 @@ class UploadSessionManager extends AbstractService
         $session->accepted_count++;
         $session->uploaded_bytes += $bytes;
         $session->last_activity_date = \XF::$time;
-        $session->expires_date = \XF::$time + max(900, (int)$this->app->options()->wrxtPortfolioUploadSessionMinutes * 60);
+        $minutes = max(15, (int)($this->app->options()->wrxtPfUploadMins ?? 30));
+        $session->expires_date = \XF::$time + ($minutes * 60);
         $session->save();
     }
 }

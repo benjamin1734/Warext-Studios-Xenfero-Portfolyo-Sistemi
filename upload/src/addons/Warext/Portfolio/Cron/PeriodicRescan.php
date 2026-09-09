@@ -6,7 +6,7 @@ class PeriodicRescan
 {
     public static function run(): void
     {
-        $days = max(1, (int)(\XF::options()->wrxtPortfolioRescanDays ?? 30));
+        $days = max(1, (int)(\XF::options()->wrxtPfRescanDays ?? 30));
         $cutoff = \XF::$time - ($days * 86400);
         $files = \XF::finder('Warext\\Portfolio:PortfolioFile')
             ->where('state', ['security_passed', 'moderation', 'published'])

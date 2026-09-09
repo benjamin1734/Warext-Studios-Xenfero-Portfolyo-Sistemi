@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - 'upload/**'
+      - '!upload/src/addons/Warext/Portfolio/hashes.json'
       - 'README.md'
       - '.github/workflows/package-release.yml'
 
@@ -32,6 +33,30 @@ jobs:
           )
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Regenerate XenForo file hashes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          upload = Path('upload')
+          hash_file = upload / 'src/addons/Warext/Portfolio/hashes.json'
+          roots = [
+              upload / 'js/warext/portfolio',
+              upload / 'src/addons/Warext/Portfolio'
+          ]
+          hashes = {}
+          for root in roots:
+              for path in sorted(root.rglob('*')):
+                  if not path.is_file() or path == hash_file:
+                      continue
+                  key = path.relative_to(upload).as_posix()
+                  hashes[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+          hash_file.write_text(json.dumps(hashes, ensure_ascii=False, indent=4) + '\n', encoding='utf-8')
+          PY
+
       - name: Build XenForo install ZIP
         shell: bash
         run: |
@@ -51,7 +76,9 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip" dist/SHA256SUMS.txt
+          git add upload/src/addons/Warext/Portfolio/hashes.json \
+            "dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip" \
+            dist/SHA256SUMS.txt
           if git diff --cached --quiet; then
             echo 'Release package already up to date.'
           else
@@ -68,6 +95,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Bağımsız Portfolyo Sistemi Admin CP kategorisi\n- Düzeltilmiş Türkçe menü, izin ve ayar adları\n- Kullanıcı tarafında üst bölüm hızlı işlem butonları\n- Portfolyo ayar ID eşitlemeleri ve dosya bütünlük güncellemesi"
 
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
@@ -75,5 +103,5 @@ jobs:
             gh release create "$TAG" "$ZIP" dist/SHA256SUMS.txt \
               --target main \
               --title "$VERSION" \
-              --notes "Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Bağımsız Portfolyo Sistemi Admin CP kategorisi\n- Portfolyo Yönetimi, Moderasyon ve Raporlar\n- Güvenlik Merkezi ve karantina araçları\n- Portfolyo Ayarları bağlantısı\n- Ana navigasyon Portfolyo bağlantısı\n- Kullanıcı profili Portfolyo butonu"
+              --notes "$NOTES"
           fi

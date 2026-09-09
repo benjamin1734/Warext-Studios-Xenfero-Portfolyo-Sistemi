@@ -9,7 +9,7 @@ class CleanupQuarantine
     public static function run(): void
     {
         $app = \XF::app();
-        $ttlHours = max(1, (int)$app->options()->wrxtPortfolioQuarantineHours);
+        $ttlHours = max(1, (int)($app->options()->wrxtPfQuarantineHrs ?? 24));
         $cutoff = \XF::$time - ($ttlHours * 3600);
         $files = \XF::finder('Warext\Portfolio:PortfolioFile')
             ->where('state', ['uploading', 'quarantine'])
