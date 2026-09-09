@@ -54,7 +54,26 @@ jobs:
           git add "dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip" dist/SHA256SUMS.txt
           if git diff --cached --quiet; then
             echo 'Release package already up to date.'
-            exit 0
+          else
+            git commit -m "release: package Portfolyo ${VERSION}"
+            git push
           fi
-          git commit -m "release: package Portfolyo ${VERSION}"
-          git push
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERSION='${{ steps.version.outputs.version }}'
+          TAG="v${VERSION}"
+          ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
+          else
+            gh release create "$TAG" "$ZIP" dist/SHA256SUMS.txt \
+              --target main \
+              --title "$VERSION" \
+              --notes "Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Bağımsız Portfolyo Sistemi Admin CP kategorisi\n- Portfolyo Yönetimi, Moderasyon ve Raporlar\n- Güvenlik Merkezi ve karantina araçları\n- Portfolyo Ayarları bağlantısı\n- Ana navigasyon Portfolyo bağlantısı\n- Kullanıcı profili Portfolyo butonu"
+          fi
