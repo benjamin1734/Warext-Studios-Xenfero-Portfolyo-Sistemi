@@ -180,7 +180,7 @@ class ProcessingPipeline extends AbstractService
     private function scheduleRetry(PortfolioFile $file, string $reason): void
     {
         $attempt = max(1, (int)$file->processing_attempts);
-        $baseMinutes = max(1, min(60, (int)$this->app->options()->wrxtPfProcRetryMins));
+        $baseMinutes = max(1, min(60, (int)$this->app->options()->wrxtPortfolioProcessingRetryMinutes));
         $delay = min(3600, $baseMinutes * 60 * min(6, $attempt));
         $file->processing_status = 'error';
         $file->reason_code = $reason ?: 'processing_unavailable';
