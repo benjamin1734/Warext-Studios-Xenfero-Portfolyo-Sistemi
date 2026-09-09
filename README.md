@@ -2,48 +2,30 @@
 
 XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
-**Güncel sürüm:** 1.0.5  
+**Güncel sürüm:** 1.0.6  
 **Add-on ID:** `Warext/Portfolio`
 
-## İndirme ve kurulum
+## Kurulum / yükseltme
 
-Güncel kurulum paketini GitHub **Releases** bölümünden indirin:
-
-https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/latest
-
-XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden ZIP dosyasını yükleyin.
+Güncel paketi GitHub Releases bölümünden indirin ve XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden yükleyin.
 
 ## Kullanıcı tarafı
 
-Ana forum navigasyonundaki **Portfolyo** bağlantısı genel topluluk vitrinidir. `/portfolyo/` adresinde yalnızca yayınlanmış kullanıcı çalışmalarının listesi, filtreleri ve sıralaması bulunur. Kişisel yönetim butonları bu sayfada gösterilmez.
+- Navbar **Portfolyo** → `/portfolyo/`: tüm yayınlanmış çalışmaların genel vitrini.
+- Kullanıcı menüsü **Portfolyom** → `/portfolyo/mine`
+- Kullanıcı menüsü **Yeni çalışma** → `/portfolyo/add`
+- Kullanıcı menüsü **Kaydedilenler** → `/portfolyo/saved`
+- Diğer üyelerin profilindeki **Portfolyo** butonu yalnızca o üyenin yayınlanmış çalışmalarını gösterir.
 
-Kişisel portfolyo işlemleri kullanıcı adı/avatar menüsünden yapılır:
-
-- **Portfolyom** → `/portfolyo/mine`
-- **Yeni çalışma** → `/portfolyo/add`
-- **Kaydedilenler** → `/portfolyo/saved`
-
-Diğer üyelerin profillerindeki **Portfolyo** butonu o üyenin herkese açık yayınlanmış çalışmalarını gösterir.
-
-Yayınlanmış portfolyo vitrini, kullanıcı portfolyo sayfaları ve yayınlanmış çalışma detayları genel erişime açıktır. İçerik oluşturma, düzenleme, kaydetme, yorum, takip ve raporlama işlemleri kullanıcı grubu izinlerine bağlıdır.
+Genel vitrin ve yayınlanmış çalışma sayfaları herkese açıktır. Oluşturma, düzenleme, yorum, beğeni, kaydetme, takip ve raporlama işlemleri kullanıcı grubu izinleriyle yönetilir.
 
 ## Admin CP
 
-Admin CP sol menüsünde **Portfolyo Sistemi** bağımsız bir ana kategori olarak görünür. Altında Portfolyo Yönetimi, Moderasyon ve Raporlar, Güvenlik Merkezi, Karantina, Engellenen Dosyalar, Güvenlik Olayları, Denetim Kayıtları, SHA-256 Engelleme Listesi ve Portfolyo Ayarları bulunur.
+**Portfolyo Sistemi** bağımsız ana kategori olarak görünür. Portfolyo Yönetimi, Moderasyon ve Raporlar, Güvenlik Merkezi, Karantina, Engellenen Dosyalar, Güvenlik Olayları, Denetim Kayıtları, SHA-256 Engelleme Listesi ve Portfolyo Ayarları bu bölüm altındadır.
 
-## Gereksinimler
+## 1.0.6
 
-- XenForo 2.3.0+
-- PHP 8.0+
-- PHP ZIP desteği
-- ClamAV / `clamd`
-- Imagick veya GD
-
-## 1.0.5
-
-- Navbar Portfolyo bağlantısı tamamen genel topluluk vitrini haline getirildi.
-- Genel vitrin ve yayınlanmış çalışma görüntülemedeki gereksiz `view` izin engeli kaldırıldı.
-- Kişisel Portfolyom / Yeni çalışma / Kaydedilenler işlemleri kullanıcı hesabı menüsüne taşındı.
-- Genel portfolyo listesindeki kişisel işlem butonları kaldırıldı.
-- Varsayılan XenForo grup izinlerinin kurulum ve yükseltmede gerçekten uygulanması sağlandı.
-- Mevcut kurulumlarda Registered ve Administrative dahil varsayılan grupların eksik Portfolyo izinleri yükseltme sırasında otomatik tamamlanır.
+- Public route tanımları XenForo 2.3 route formatına göre düzeltildi.
+- `calisma` ve `kullanici` sub-route formatlarına eksik literal segmentler eklendi.
+- Public route section context değeri gerçek navbar navigation ID'si olan `wrxtPortfolioNav` ile eşitlendi.
+- `/portfolyo/`, `/portfolyo/add`, `/portfolyo/mine`, `/portfolyo/saved`, çalışma ve kullanıcı portfolyo sayfalarının aynı route ailesinde doğru çözülmesi sağlandı.

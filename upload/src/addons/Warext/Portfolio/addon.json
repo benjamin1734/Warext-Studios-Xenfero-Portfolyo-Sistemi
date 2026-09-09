@@ -1,8 +1,8 @@
 {
     "title": "Warext Studios | XenForo Portfolyo Sistemi",
     "description": "XenForo üyeleri için güvenli görsel ve 3D çalışma portfolyo sistemi.",
-    "version_id": 1000105,
-    "version_string": "1.0.5",
+    "version_id": 1000106,
+    "version_string": "1.0.6",
     "dev": "Warext Studios",
     "require": {
         "XF": [
