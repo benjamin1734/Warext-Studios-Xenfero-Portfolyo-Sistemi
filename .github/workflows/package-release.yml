@@ -1,0 +1,60 @@
+name: Package Portfolyo Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'upload/**'
+      - 'README.md'
+      - '.github/workflows/package-release.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(python3 - <<'PY'
+          import json
+          with open('upload/src/addons/Warext/Portfolio/addon.json', encoding='utf-8') as f:
+              print(json.load(f)['version_string'])
+          PY
+          )
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build XenForo install ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION='${{ steps.version.outputs.version }}'
+          mkdir -p dist
+          ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
+          rm -f "$ZIP"
+          zip -r -9 "$ZIP" README.md upload >/dev/null
+          sha256sum "$ZIP" > dist/SHA256SUMS.txt
+          unzip -t "$ZIP"
+
+      - name: Commit packaged release
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION='${{ steps.version.outputs.version }}'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip" dist/SHA256SUMS.txt
+          if git diff --cached --quiet; then
+            echo 'Release package already up to date.'
+            exit 0
+          fi
+          git commit -m "release: package Portfolyo ${VERSION}"
+          git push
