@@ -5,6 +5,7 @@ namespace Warext\Portfolio\Service;
 use XF\Service\AbstractService;
 use XF\Util\File;
 use Warext\Portfolio\Entity\PortfolioFile;
+use Warext\Portfolio\Exception\ProcessingUnavailableException;
 
 class ImageProcessor extends AbstractService
 {
@@ -38,7 +39,29 @@ class ImageProcessor extends AbstractService
                 throw new \RuntimeException('processing_source_hash_mismatch');
             }
 
-            $workerResult = $this->service('Warext\Portfolio:WorkerProcess')->runImageWorker($input, $display, $thumb);
+            try
+            {
+                $workerResult = $this->service('Warext\Portfolio:WorkerProcess')->runImageWorker($input, $display, $thumb);
+            }
+            catch (ProcessingUnavailableException $e)
+            {
+                $fallbackReasons = [
+                    'worker_proc_open_unavailable',
+                    'worker_php_cli_unavailable',
+                    'worker_start_failed',
+                    'image_library_unavailable'
+                ];
+
+                if (!in_array((string)$e->getMessage(), $fallbackReasons, true))
+                {
+                    throw $e;
+                }
+
+                $workerResult = $this->service('Warext\Portfolio:InProcessImageProcessor')
+                    ->process($input, $display, $thumb);
+                $workerResult['fallback_reason'] = (string)$e->getMessage();
+            }
+
             $displayMeta = $this->verifyWebp($display);
             $thumbMeta = $this->verifyWebp($thumb);
 
