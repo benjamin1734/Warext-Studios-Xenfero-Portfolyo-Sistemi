@@ -17,4 +17,46 @@
 </xf:if>
 <!--[XF:content_links:bottom]-->]]></replace>
   </modification>
+
+  <modification type="admin" template="wrxt_portfolio_security_quarantine" modification_key="wrxt_pf_queue_help" description="Karantina ve moderasyon akışını yöneticilere açıklar" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>Karantina ve İşlem Kuyruğu</xf:title>]]></find>
+    <replace><![CDATA[<xf:title>Karantina ve İşlem Kuyruğu</xf:title>
+<div class="blockMessage blockMessage--important">
+    <b>Yayın akışı:</b> Karantina → doğrulama → ClamAV taraması → görsel/3D işleme → teknik kontrol tamamlandı → <b>Portfolyo Moderasyonu</b> → manuel yayın onayı.
+    Buradaki <b>Şimdi işle / yeniden dene</b> butonu dosyayı sadece kuyruğa eklemez; işlemi o anda çalıştırır ve sonucu ekranda gösterir.
+    <div style="margin-top:8px"><a href="{{ link('wrxt-portfolyo/moderation') }}" class="button button--link">Portfolyo Moderasyonunu aç</a></div>
+</div>]]></replace>
+  </modification>
+
+  <modification type="admin" template="wrxt_portfolio_security_quarantine" modification_key="wrxt_pf_queue_run_action" description="Karantina yeniden deneme işlemini anlık işlem controllerına yönlendirir" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:form action="{{ link('wrxt-portfolyo/quarantine-retry') }}" ajax="true">]]></find>
+    <replace><![CDATA[<xf:form action="{{ link('wrxt-portfolyo-queue/run') }}">]]></replace>
+  </modification>
+
+  <modification type="admin" template="wrxt_portfolio_security_quarantine" modification_key="wrxt_pf_queue_run_label" description="Kuyruk işlem butonunu daha anlaşılır hale getirir" execution_order="30" enabled="1" action="str_replace">
+    <find><![CDATA[>İşlemi yeniden dene</xf:button>]]></find>
+    <replace><![CDATA[>Şimdi işle / yeniden dene</xf:button>]]></replace>
+  </modification>
+
+  <modification type="admin" template="wrxt_portfolio_security_quarantine" modification_key="wrxt_pf_queue_continue_action" description="ClamAV devam işlemini anlık işleme bağlar" execution_order="40" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:form action="{{ link('wrxt-portfolyo/quarantine-continue') }}" ajax="true">]]></find>
+    <replace><![CDATA[<xf:form action="{{ link('wrxt-portfolyo-queue/continue') }}">]]></replace>
+  </modification>
+
+  <modification type="admin" template="wrxt_portfolio_admin_moderation" modification_key="wrxt_pf_moderation_help" description="Manuel yayın onayının nerede yapıldığını açıklar" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>Portfolyo Moderasyonu</xf:title>]]></find>
+    <replace><![CDATA[<xf:title>Portfolyo Moderasyonu</xf:title>
+<div class="blockMessage blockMessage--important">
+    <b>Manuel onay ekranı burasıdır.</b> Yalnızca bütün dosyaları teknik güvenlik ve işleme kontrollerini geçen çalışmalar burada görünür. <b>Onayla ve yayınla</b> işlemi çalışmayı genel Portfolyo vitrinine açar. İşleme aşamasında olan içerikler önce Karantina / İşlem Kuyruğu ekranında tamamlanmalıdır.
+    <div style="margin-top:8px"><a href="{{ link('wrxt-portfolyo/quarantine') }}" class="button button--link">Karantina / İşlem Kuyruğunu aç</a></div>
+</div>]]></replace>
+  </modification>
+
+  <modification type="admin" template="wrxt_portfolio_security_dashboard" modification_key="wrxt_pf_processing_diag_help" description="cPanel işleme yöntemlerini güvenlik merkezinde açıklar" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>Portfolyo Güvenlik Merkezi</xf:title>]]></find>
+    <replace><![CDATA[<xf:title>Portfolyo Güvenlik Merkezi</xf:title>
+<div class="blockMessage">
+    <b>İşleme notu:</b> Görseller öncelikle izole PHP worker ile işlenir. cPanel'de <code>proc_open</code> veya PHP CLI kapalıysa 1.0.10 ile Imagick/GD üzerinden güvenli yerel WebP fallback kullanılır. <b>GLB 3D modeller için izole worker zorunludur</b>; worker kullanılamıyorsa neden Karantina ekranında açıkça gösterilir.
+</div>]]></replace>
+  </modification>
 </template_modifications>
