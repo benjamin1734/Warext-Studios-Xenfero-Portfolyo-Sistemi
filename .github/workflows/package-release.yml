@@ -88,7 +88,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Yeni çalışma ekranına XenForo dahili zengin metin editörü eklendi\n- Kapak ve çoklu galeri görseli ilk formdan yüklenebilir hale getirildi\n- İzin verilen gruplar için GLB 3D model yükleme alanı eklendi\n- İlk formdan seçilen dosyalar karantina ve güvenlik işleme kuyruğuna bağlandı"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Portfolyo Ayarları 404 sorunu giderildi ve option-group self-repair eklendi\n- Bağımsız moderasyon kuyruğu ile Önizle / Onayla / Reddet akışı eklendi\n- Karantina kuyruğuna yeniden dene ve kontrollü ClamAV olmadan devam işlemleri eklendi\n- İşleme retry option ID hatası düzeltildi\n- Genel vitrin, detay, kullanıcı portfolyosu, kaydedilenler ve çalışmalarım ekranları yeniden tasarlandı\n- Oluşturma ve düzenleme ekranları XenForo dahili editörüyle doğrudan çalışıyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
