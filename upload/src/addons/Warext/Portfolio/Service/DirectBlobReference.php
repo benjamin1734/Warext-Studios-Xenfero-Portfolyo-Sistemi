@@ -19,32 +19,34 @@ class DirectBlobReference extends AbstractService
         }
 
         $isModel = (string)$file->extension === 'glb';
-        $primary = $this->acquireReference(
-            $primaryPath,
-            $primaryHash,
-            $primaryMime,
-            $isModel ? 'glb' : 'webp',
-            (int)($result['processed_size'] ?? 0),
-            $isModel ? 'model' : 'image'
-        );
-
+        $primary = null;
         $thumb = null;
-        $thumbPath = (string)($result['thumbnail_storage_name'] ?? '');
-        if ($thumbPath !== '')
-        {
-            $thumbHash = $this->hashPath($thumbPath);
-            $thumb = $this->acquireReference(
-                $thumbPath,
-                $thumbHash,
-                'image/webp',
-                'webp',
-                $this->sizePath($thumbPath),
-                'thumbnail'
-            );
-        }
 
         try
         {
+            $primary = $this->acquireReference(
+                $primaryPath,
+                $primaryHash,
+                $primaryMime,
+                $isModel ? 'glb' : 'webp',
+                (int)($result['processed_size'] ?? 0),
+                $isModel ? 'model' : 'image'
+            );
+
+            $thumbPath = (string)($result['thumbnail_storage_name'] ?? '');
+            if ($thumbPath !== '')
+            {
+                $thumbHash = $this->hashPath($thumbPath);
+                $thumb = $this->acquireReference(
+                    $thumbPath,
+                    $thumbHash,
+                    'image/webp',
+                    'webp',
+                    $this->sizePath($thumbPath),
+                    'thumbnail'
+                );
+            }
+
             $file->processed_blob_id = (int)$primary->blob_id;
             $file->processed_storage_name = (string)$primary->storage_name;
             $file->thumbnail_blob_id = $thumb ? (int)$thumb->blob_id : 0;
@@ -53,7 +55,10 @@ class DirectBlobReference extends AbstractService
         }
         catch (\Throwable $e)
         {
-            $this->service('Warext\Portfolio:BlobManager')->release((int)$primary->blob_id);
+            if ($primary)
+            {
+                $this->service('Warext\Portfolio:BlobManager')->release((int)$primary->blob_id);
+            }
             if ($thumb)
             {
                 $this->service('Warext\Portfolio:BlobManager')->release((int)$thumb->blob_id);
@@ -84,10 +89,25 @@ class DirectBlobReference extends AbstractService
                 {
                     throw new \RuntimeException('direct_blob_security_not_clean');
                 }
-                $blob->storage_name = $path;
-                $blob->mime = $mime;
-                $blob->extension = $extension;
-                $blob->file_size = max(0, $size);
+
+                $existingPath = (string)$blob->storage_name;
+                $existingValid = false;
+                if ($existingPath !== '')
+                {
+                    try
+                    {
+                        $existingValid = hash_equals($sha256, $this->hashPath($existingPath));
+                    }
+                    catch (\Throwable $ignored) {}
+                }
+
+                if (!$existingValid)
+                {
+                    $blob->storage_name = $path;
+                    $blob->mime = $mime;
+                    $blob->extension = $extension;
+                    $blob->file_size = max(0, $size);
+                }
                 $blob->state = 'ready';
                 $blob->ref_count = (int)$blob->ref_count + 1;
                 $blob->delete_after_date = 0;
