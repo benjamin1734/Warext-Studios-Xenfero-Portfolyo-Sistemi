@@ -101,19 +101,49 @@ class ProcessingPipeline extends AbstractService
         $file->processed_height = $result['processed_height'] ?? 0;
         $file->thumbnail_width = $result['thumbnail_width'] ?? 0;
         $file->thumbnail_height = $result['thumbnail_height'] ?? 0;
+
+        $storageMode = 'blob';
+        $blobManager = $this->service('Warext\Portfolio:BlobManager');
         try
         {
-            $this->service('Warext\Portfolio:BlobManager')->attachProcessedResult($file, $result);
+            $blobManager->attachProcessedResult($file, $result);
         }
-        catch (\Throwable $e)
+        catch (\Throwable $blobError)
         {
-            $this->scheduleRetry($file, 'blob_publish_failed');
-            $stateMachine->logFileEvent($file, 'blob_publish_failed', 'warning', 'blob_publish_failed', [
-                'exception' => get_class($e),
+            $blobCode = $this->safeErrorCode($blobError, 'blob_publish_failed');
+            try
+            {
+                $blobManager->attachLegacyResult($file, $result);
+                $storageMode = 'direct';
+                $stateMachine->logFileEvent($file, 'blob_publish_fallback', 'warning', $blobCode, [
+                    'exception' => get_class($blobError),
+                    'attempt' => (int)$file->processing_attempts
+                ]);
+            }
+            catch (\Throwable $fallbackError)
+            {
+                $fallbackCode = $this->safeErrorCode($fallbackError, 'legacy_storage_failed');
+                $this->scheduleRetry($file, mb_substr($blobCode . ':' . $fallbackCode, 0, 100));
+                $stateMachine->logFileEvent($file, 'blob_publish_failed', 'warning', (string)$file->reason_code, [
+                    'blob_exception' => get_class($blobError),
+                    'fallback_exception' => get_class($fallbackError),
+                    'attempt' => (int)$file->processing_attempts,
+                    'next_processing_date' => (int)$file->next_processing_date
+                ]);
+                return 'processing_pending';
+            }
+        }
+
+        if (!$blobManager->isFileStorageSafe($file, false) || !$blobManager->isFileStorageSafe($file, true))
+        {
+            $this->scheduleRetry($file, 'processed_storage_verify_failed');
+            $stateMachine->logFileEvent($file, 'processed_storage_verify_failed', 'critical', 'processed_storage_verify_failed', [
+                'storage_mode' => $storageMode,
                 'attempt' => (int)$file->processing_attempts
             ]);
             return 'processing_pending';
         }
+
         if ((string)$file->extension === 'glb')
         {
             $stats = is_array($result['stats'] ?? null) ? $result['stats'] : [];
@@ -139,7 +169,8 @@ class ProcessingPipeline extends AbstractService
             $stateMachine->logFileEvent($file, 'model_analyzed', 'info', '', [
                 'processed_size' => $result['processed_size'],
                 'processed_sha256' => $result['processed_sha256'],
-                'stats' => $result['stats'] ?? []
+                'stats' => $result['stats'] ?? [],
+                'storage_mode' => $storageMode
             ]);
         }
         else
@@ -151,7 +182,8 @@ class ProcessingPipeline extends AbstractService
                 'processed_width' => $result['processed_width'],
                 'processed_height' => $result['processed_height'],
                 'processed_size' => $result['processed_size'],
-                'processed_sha256' => $result['processed_sha256']
+                'processed_sha256' => $result['processed_sha256'],
+                'storage_mode' => $storageMode
             ]);
         }
 
@@ -183,8 +215,20 @@ class ProcessingPipeline extends AbstractService
         $baseMinutes = max(1, min(60, (int)($this->app->options()->wrxtPfProcRetryMins ?? 5)));
         $delay = min(3600, $baseMinutes * 60 * min(6, $attempt));
         $file->processing_status = 'error';
-        $file->reason_code = $reason ?: 'processing_unavailable';
+        $file->reason_code = mb_substr($reason ?: 'processing_unavailable', 0, 100);
         $file->next_processing_date = \XF::$time + $delay;
         $file->save();
+    }
+
+    private function safeErrorCode(\Throwable $e, string $fallback): string
+    {
+        $message = strtolower(trim((string)$e->getMessage()));
+        if ($message !== '' && preg_match('/^[a-z0-9_:-]{1,80}$/', $message))
+        {
+            return $message;
+        }
+        $short = (new \ReflectionClass($e))->getShortName();
+        $short = strtolower((string)preg_replace('/[^a-z0-9]+/i', '_', $short));
+        return $short !== '' ? $fallback . ':' . $short : $fallback;
     }
 }
