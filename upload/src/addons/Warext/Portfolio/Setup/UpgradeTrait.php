@@ -91,7 +91,6 @@ trait UpgradeTrait
             $this->createBlobTable();
         }
 
-
     public function upgrade1000080Step1(): void
     {
         $this->schemaManager()->alterTable('xf_wrxt_portfolio', function(Alter $table)
@@ -102,6 +101,7 @@ trait UpgradeTrait
         });
         $this->createCommunityTables();
     }
+
     public function upgrade1000090Step1(): void
     {
         $this->schemaManager()->alterTable('xf_wrxt_portfolio_blob', function(Alter $table)
@@ -126,4 +126,55 @@ trait UpgradeTrait
         });
     }
 
+    public function upgrade1010101Step1(): void
+    {
+        // Eski 1.0.x kurulumlarında düşük numaralı migration adımları atlanmış
+        // olabileceğinden blob tablosunu ve kritik kolonları idempotent olarak onar.
+        $this->createBlobTable();
+
+        $db = $this->db();
+        if (!$db->fetchRow("SHOW COLUMNS FROM xf_wrxt_portfolio_file LIKE 'processed_blob_id'"))
+        {
+            $this->schemaManager()->alterTable('xf_wrxt_portfolio_file', function(Alter $table)
+            {
+                $table->addColumn('processed_blob_id', 'int')->unsigned()->setDefault(0)->after('processed_storage_name');
+                $table->addKey('processed_blob_id');
+            });
+        }
+        if (!$db->fetchRow("SHOW COLUMNS FROM xf_wrxt_portfolio_file LIKE 'thumbnail_blob_id'"))
+        {
+            $this->schemaManager()->alterTable('xf_wrxt_portfolio_file', function(Alter $table)
+            {
+                $table->addColumn('thumbnail_blob_id', 'int')->unsigned()->setDefault(0)->after('thumbnail_storage_name');
+                $table->addKey('thumbnail_blob_id');
+            });
+        }
+
+        if ($db->fetchOne("SHOW TABLES LIKE 'xf_wrxt_portfolio_blob'"))
+        {
+            $blobColumns = [
+                'security_state' => "ALTER TABLE xf_wrxt_portfolio_blob ADD security_state VARCHAR(20) NOT NULL DEFAULT 'clean' AFTER state",
+                'blocked_reason' => "ALTER TABLE xf_wrxt_portfolio_blob ADD blocked_reason VARCHAR(100) NOT NULL DEFAULT '' AFTER security_state",
+                'last_security_scan_date' => "ALTER TABLE xf_wrxt_portfolio_blob ADD last_security_scan_date INT UNSIGNED NOT NULL DEFAULT 0 AFTER blocked_reason",
+                'next_security_scan_date' => "ALTER TABLE xf_wrxt_portfolio_blob ADD next_security_scan_date INT UNSIGNED NOT NULL DEFAULT 0 AFTER last_security_scan_date"
+            ];
+            foreach ($blobColumns as $column => $sql)
+            {
+                if (!$db->fetchRow("SHOW COLUMNS FROM xf_wrxt_portfolio_blob LIKE '" . $column . "'"))
+                {
+                    $db->query($sql);
+                }
+            }
+        }
+
+        // Daha önce blob_publish_failed nedeniyle takılmış dosyaları yeni pipeline ile
+        // yeniden denenebilir hale getir.
+        $db->query(
+            "UPDATE xf_wrxt_portfolio_file
+             SET next_processing_date = 0
+             WHERE state = 'processing'
+               AND processing_status = 'error'
+               AND (reason_code = 'blob_publish_failed' OR reason_code LIKE 'blob_%')"
+        );
+    }
 }
