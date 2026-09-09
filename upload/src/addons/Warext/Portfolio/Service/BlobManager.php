@@ -54,6 +54,7 @@ class BlobManager extends AbstractService
             $blob->storage_name = $storageName;
             $blob->ref_count = 1;
             $blob->state = 'ready';
+            $blob->security_state = 'clean';
             $blob->created_date = \XF::$time;
             $blob->last_ref_date = \XF::$time;
             $blob->save();
@@ -153,6 +154,129 @@ class BlobManager extends AbstractService
         }
     }
 
+    /**
+     * Blob/dedupe katmanı geçici olarak kullanılamıyorsa işlenmiş ve hash'i
+     * doğrulanmış dosyayı doğrudan internal-data üzerinde tutar. BlobMaintenance
+     * daha sonra bu kaydı tekrar blob deposuna taşımayı deneyebilir.
+     */
+    public function attachLegacyResult(PortfolioFile $file, array $result): void
+    {
+        $primarySource = (string)($result['processed_storage_name'] ?? '');
+        $primaryHash = strtolower((string)($result['processed_sha256'] ?? ''));
+        $primaryMime = (string)($result['processed_mime'] ?? '');
+        $thumbSource = (string)($result['thumbnail_storage_name'] ?? '');
+
+        if ($primarySource === '' || !preg_match('/^[a-f0-9]{64}$/', $primaryHash))
+        {
+            throw new \RuntimeException('legacy_processed_result_invalid');
+        }
+        if (!hash_equals($primaryHash, $this->hashAbstractedPath($primarySource)))
+        {
+            throw new \RuntimeException('legacy_primary_hash_mismatch');
+        }
+        if ($primaryMime === 'image/webp' && !$this->verifyWebpAbstractedPath($primarySource))
+        {
+            throw new \RuntimeException('legacy_primary_webp_invalid');
+        }
+        if ($primaryMime === 'model/gltf-binary' && !$this->verifyGlbAbstractedPath($primarySource))
+        {
+            throw new \RuntimeException('legacy_primary_glb_invalid');
+        }
+        if ($thumbSource !== '' && !$this->verifyWebpAbstractedPath($thumbSource))
+        {
+            throw new \RuntimeException('legacy_thumbnail_webp_invalid');
+        }
+
+        $oldPrimary = (int)$file->processed_blob_id;
+        $oldThumb = (int)$file->thumbnail_blob_id;
+        $file->processed_blob_id = 0;
+        $file->thumbnail_blob_id = 0;
+        $file->processed_storage_name = $primarySource;
+        $file->thumbnail_storage_name = $thumbSource;
+        $file->save();
+
+        if ($oldPrimary)
+        {
+            $this->release($oldPrimary);
+        }
+        if ($oldThumb)
+        {
+            $this->release($oldThumb);
+        }
+    }
+
+    public function isFileStorageSafe(PortfolioFile $file, bool $thumbnail = false): bool
+    {
+        if ($thumbnail)
+        {
+            $blobId = (int)$file->thumbnail_blob_id;
+            $storageName = (string)$file->thumbnail_storage_name;
+            if (!$blobId && $storageName === '')
+            {
+                return true;
+            }
+            if ($blobId)
+            {
+                $blob = $this->em()->find('Warext\Portfolio:Blob', $blobId);
+                if (!$blob || (string)$blob->state !== 'ready' || (string)$blob->security_state !== 'clean')
+                {
+                    return false;
+                }
+                $storageName = (string)$blob->storage_name;
+            }
+            return $storageName !== '' && $this->verifyWebpAbstractedPath($storageName);
+        }
+
+        $storageName = (string)$file->processed_storage_name;
+        $blobId = (int)$file->processed_blob_id;
+        if ($blobId)
+        {
+            $blob = $this->em()->find('Warext\Portfolio:Blob', $blobId);
+            if (!$blob || (string)$blob->state !== 'ready' || (string)$blob->security_state !== 'clean')
+            {
+                return false;
+            }
+            $storageName = (string)$blob->storage_name;
+        }
+        if ($storageName === '' || !preg_match('/^[a-f0-9]{64}$/', (string)$file->processed_sha256))
+        {
+            return false;
+        }
+        try
+        {
+            if (!hash_equals((string)$file->processed_sha256, $this->hashAbstractedPath($storageName)))
+            {
+                return false;
+            }
+            if ((string)$file->processed_mime === 'image/webp')
+            {
+                return $this->verifyWebpAbstractedPath($storageName);
+            }
+            if ((string)$file->processed_mime === 'model/gltf-binary')
+            {
+                return $this->verifyGlbAbstractedPath($storageName);
+            }
+        }
+        catch (\Throwable $e)
+        {
+            return false;
+        }
+        return false;
+    }
+
+    public function storageName(PortfolioFile $file, bool $thumbnail = false): string
+    {
+        if ($thumbnail)
+        {
+            if ($file->ThumbnailBlob && (string)$file->ThumbnailBlob->state === 'ready' && (string)$file->ThumbnailBlob->security_state === 'clean')
+            {
+                return (string)$file->ThumbnailBlob->storage_name;
+            }
+            return (string)$file->thumbnail_storage_name;
+        }
+        return $this->primaryStorageName($file);
+    }
+
     public function detachFile(PortfolioFile $file): void
     {
         $primary = (int)$file->processed_blob_id;
@@ -223,6 +347,10 @@ class BlobManager extends AbstractService
         {
             return false;
         }
+        if (!$this->isFileStorageSafe($file))
+        {
+            throw new \RuntimeException('legacy_storage_not_safe');
+        }
         $result = [
             'processed_storage_name' => (string)$file->processed_storage_name,
             'processed_sha256' => (string)$file->processed_sha256,
@@ -258,7 +386,7 @@ class BlobManager extends AbstractService
 
     public function primaryStorageName(PortfolioFile $file): string
     {
-        if ($file->ProcessedBlob)
+        if ($file->ProcessedBlob && (string)$file->ProcessedBlob->state === 'ready' && (string)$file->ProcessedBlob->security_state === 'clean')
         {
             return (string)$file->ProcessedBlob->storage_name;
         }
@@ -303,5 +431,37 @@ class BlobManager extends AbstractService
         }
         fclose($stream);
         return $size;
+    }
+
+    private function verifyWebpAbstractedPath(string $path): bool
+    {
+        $stream = \XF::fs()->readStream($path);
+        if (!is_resource($stream))
+        {
+            return false;
+        }
+        $header = fread($stream, 12);
+        fclose($stream);
+        return is_string($header)
+            && strlen($header) === 12
+            && substr($header, 0, 4) === 'RIFF'
+            && substr($header, 8, 4) === 'WEBP';
+    }
+
+    private function verifyGlbAbstractedPath(string $path): bool
+    {
+        $stream = \XF::fs()->readStream($path);
+        if (!is_resource($stream))
+        {
+            return false;
+        }
+        $header = fread($stream, 12);
+        fclose($stream);
+        if (!is_string($header) || strlen($header) !== 12 || substr($header, 0, 4) !== 'glTF')
+        {
+            return false;
+        }
+        $version = unpack('V', substr($header, 4, 4))[1] ?? 0;
+        return (int)$version === 2;
     }
 }
