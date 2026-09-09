@@ -2,91 +2,60 @@
 
 XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
-**Güncel sürüm:** 1.0.10  
+**Güncel sürüm:** 1.1.1  
 **Add-on ID:** `Warext/Portfolio`
 
 ## Kurulum / yükseltme
 
-Güncel paketi GitHub Releases bölümünden indirin ve XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden mevcut sürümün üzerine yükseltin. 1.0.10 için manuel SQL gerekmez.
+GitHub Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.1.zip` paketini XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden mevcut sürümün üzerine yükleyin.
 
-Kurulum için **Release Assets** altında bulunan `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.10.zip` dosyasını kullanın. `dist/` paketi ve XenForo `hashes.json` kaydı GitHub Actions tarafından aynı kaynaklardan otomatik oluşturulur.
+1.1.1 için manuel SQL import gerekmez. Yükseltme adımı eski 1.0.x kurulumlarında eksik kalmış olabilecek blob şemasını otomatik onarır ve `blob_publish_failed` durumunda takılmış dosyaları yeniden denenebilir hale getirir.
 
 ## Kullanıcı tarafı
 
-- Navbar **Portfolyo** → `/portfolyo/`: yayınlanmış çalışmaların kart tabanlı genel vitrini.
+- Navbar **Portfolyo** → `/portfolyo/`: yayınlanmış çalışmaların genel vitrini.
 - Kullanıcı menüsü **Portfolyom** → `/portfolyo/mine`
 - Kullanıcı menüsü **Yeni çalışma** → `/portfolyo/add`
 - Kullanıcı menüsü **Kaydedilenler** → `/portfolyo/saved`
-- Diğer üyelerin profilindeki **Portfolyo** butonu yalnızca o üyenin yayınlanmış çalışmalarını gösterir.
-- Yeni çalışma ve düzenleme ekranlarında XenForo'nun dahili zengin metin editörü kullanılır.
+- Açıklama alanları XenForo dahili zengin metin editörünü kullanır.
 - Kapak, çoklu galeri görseli ve izinli gruplarda GLB 3D model yüklenebilir.
 
 ## Yayın akışı
 
 1. Dosya karantinaya alınır.
-2. Uzantı, MIME, magic bytes, dosya yapısı, boyut ve SHA-256 kontrolleri yapılır.
+2. MIME, magic bytes, dosya yapısı, boyut ve SHA-256 doğrulanır.
 3. ClamAV erişilebiliyorsa zararlı yazılım taraması yapılır.
-4. Görseller WebP çıktısına yeniden işlenir. Öncelik izole PHP worker'dır; cPanel'de `proc_open` veya PHP CLI kullanılamıyorsa Imagick/GD yerel fallback devreye girer.
-5. GLB 3D modeller güvenlik nedeniyle yalnızca izole worker ile analiz edilir.
-6. Tüm teknik kontroller geçen çalışma **Portfolyo Moderasyonu** ekranına düşer.
-7. Yetkili **Onayla ve yayınla** veya **Reddet** işlemini uygular.
-
-ClamAV sunucu/cPanel tarafından kullanılamıyorsa dosya otomatik olarak güvenlik kontrolünü geçmiş sayılmaz. Güvenlik yetkilisi, yalnızca yapısal doğrulamayı geçmiş ve gerçek bir ClamAV servis/bağlantı hatasında bekleyen dosyada **ClamAV olmadan devam** işlemini açıkça seçebilir. Enfekte, hash engelli veya yapısal doğrulamadan geçemeyen dosyalar bu işlemle aşılamaz.
+4. JPG/PNG/WebP dosyaları güvenli WebP çıktısına dönüştürülür. İzole worker kullanılamazsa Imagick/GD fallback denenir.
+5. GLB modeller güvenlik nedeniyle izole worker ile analiz edilir.
+6. İşlenmiş çıktı blob deposuna alınır. Normal blob yayını başarısız olursa 1.1.1 doğrulanmış direct-blob fallback kullanır.
+7. Tüm dosyalar teknik kontrolleri geçince çalışma **Portfolyo Moderasyonu** ekranına gider.
+8. Yetkili **Onayla ve yayınla** veya **Reddet** işlemini uygular.
 
 ## Admin CP
 
-**Portfolyo Sistemi** altında:
-
-- Portfolyo Yönetimi
-- Portfolyo Moderasyonu
-- Güvenlik Merkezi
-- Karantina / işlem kuyruğu
-- Engellenen Dosyalar
-- Güvenlik Olayları
-- Denetim Kayıtları
-- SHA-256 Engelleme Listesi
-- Portfolyo Ayarları
+**Portfolyo Sistemi** altında Portfolyo Yönetimi, Portfolyo Moderasyonu, Güvenlik Merkezi, Karantina / işlem kuyruğu, Engellenen Dosyalar, Güvenlik Olayları, Denetim Kayıtları, SHA-256 Engelleme Listesi ve Portfolyo Ayarları bulunur.
 
 ### Karantina / işlem kuyruğu
 
-**Şimdi işle / yeniden dene** butonu 1.0.10'dan itibaren yalnızca XenForo job kuyruğuna kayıt eklemez; seçilen dosyanın o anki teknik aşamasını doğrudan çalıştırır ve sonucu yöneticiye gösterir.
+**Şimdi işle / yeniden dene** butonu 1.1.1'de gerçekten aynı HTTP isteğinde güvenlik/işleme pipeline'ını çalıştırır. Önceki sürümde gerçek zamanlı controller hazırlanmış olmasına rağmen Karantina ekranındaki mevcut buton eski action'a bağlı kaldığı için işlem yeniden job kuyruğuna gönderiliyordu.
 
-- ClamAV erişilemiyorsa neden ekranda görünür ve güvenli koşullarda **ClamAV olmadan devam** kullanılabilir.
-- Görsel worker kullanılamıyorsa Imagick/GD fallback otomatik denenir.
-- GLB dosyasında worker yoksa dosya yayınlanmaz; açık hata koduyla işlem kuyruğunda kalır.
-- Dosya teknik kontrolleri bitirdiğinde çalışma otomatik olarak **Portfolyo Moderasyonu** aşamasına taşınır.
+ClamAV servis/bağlantı hatasında, yalnızca yapısal doğrulamayı geçmiş dosyalarda **ClamAV olmadan devam** kullanılabilir. Zararlı, hash engelli veya yapısal doğrulamayı geçememiş dosyalarda bu işlem kullanılamaz.
 
 ### Manuel yayın onayı
 
-Manuel yayın onayı **Karantina** ekranında yapılmaz. Karantina yalnızca teknik güvenlik ve dosya işleme aşamasıdır.
-
-Teknik kontroller tamamen bittikten sonra:
+Manuel yayın onayı Karantina ekranında yapılmaz. Dosyaların teknik kontrolleri tamamen bittikten sonra çalışma:
 
 **Admin CP → Portfolyo Sistemi → Portfolyo Moderasyonu**
 
-Burada çalışma için **Önizle**, **Onayla ve yayınla** ve **Reddet** işlemleri görünür. Onaylanan çalışma genel `/portfolyo/` vitrininde yayınlanır.
+alanına geçer. Burada **Önizle**, **Onayla ve yayınla** ve **Reddet** işlemleri bulunur.
 
-## 1.0.10
+## 1.1.1
 
-- `processing` aşamasında görünürde hiçbir şey olmamasına neden olan ikinci job kuyruğu bağımlılığı kaldırıldı; güvenlik taraması tamamlandıktan sonra dosya işleme aynı çalışma zincirinde başlatılıyor.
-- Karantina **Şimdi işle / yeniden dene** işlemi gerçek zamanlı çalışacak şekilde ayrıldı; yalnızca kuyruğa ekleyip beklemiyor.
-- cPanel'de `proc_open` veya PHP CLI kapalı olduğunda JPG/PNG/WebP dosyaları için Imagick/GD tabanlı kontrollü yerel WebP fallback eklendi.
-- GLB güvenliği gevşetilmedi; 3D model analizi için izole worker zorunlu kalmaya devam ediyor.
-- Karantina ekranına yayın akışını açıklayan yardım alanı eklendi.
-- Portfolyo Moderasyonu ekranına manuel onayın burada yapıldığını açıklayan bilgi alanı eklendi.
-- ClamAV olmadan devam işlemi başarılı olduğunda dosya doğrudan işleme alınarak moderasyona geçiş deneniyor.
-- İşlem sonucu `scan_pending`, `processing_pending`, `blocked` veya moderasyona hazır şeklinde yöneticiye açık mesajla gösteriliyor.
-
-## 1.0.9
-
-- Admin CP **Portfolyo Ayarları** bağlantısındaki 404 sorunu giderildi. Eksik XenForo option-group metadata'sı yükseltmede ve ayar ekranı açılırken kendini onarıyor.
-- Teknik kontrolden geçen çalışmalar için bağımsız **Portfolyo Moderasyonu** kuyruğu eklendi.
-- Moderasyon ekranına **Önizle**, **Onayla ve yayınla** ve **Reddet** işlemleri eklendi.
-- Karantina ekranı salt okunur olmaktan çıkarıldı; durum, doğrulama, tarama, işleme ve hata nedeni ayrıntılı gösteriliyor.
-- Karantinaya **İşlemi yeniden dene** ve yalnızca güvenli koşullarda kullanılabilen **ClamAV olmadan devam** işlemleri eklendi.
-- İşleme kuyruğundaki yanlış option ID (`wrxtPortfolioProcessingRetryMinutes`) düzeltilerek gerçek `wrxtPfProcRetryMins` seçeneğine bağlandı.
-- Genel portfolyo vitrini kart/grid yapısına geçirildi; kapak önizlemeleri, kategori/tür ve istatistikler eklendi.
-- Çalışma detay sayfası medya, açıklama, bilgi paneli, etiketler, galeri, 3D model ve etkileşim alanlarıyla yeniden tasarlandı.
-- Kullanıcı portfolyosu, Kaydedilenler ve Çalışmalarım ekranları aynı görsel sisteme geçirildi.
-- Oluşturma/düzenleme şablonları doğrudan XenForo editörü ve medya alanlarını içeriyor; önceki kırılgan kendi-template modifikasyonları kaldırıldı.
-- Onay bekleyen sahipler için durum metinleri Türkçeleştirildi ve teknik süreç daha anlaşılır hale getirildi.
+- `blob_publish_failed` nedeniyle görsellerin `processing / error` durumunda kalması için blob şeması self-repair eklendi.
+- Eski 1.0.x sürümlerinden yükselen kurulumlarda eksik blob tablosu ve kritik blob kolonları kontrol edilip onarılıyor.
+- Yükseltme sırasında eski `blob_publish_failed` kayıtlarının `next_processing_date` değeri sıfırlanarak yeniden işlenmeleri sağlanıyor.
+- Normal blob klasörüne yayınlama başarısız olursa hash doğrulanmış direct-blob fallback eklendi; medya endpoint'leri yine dosyayı gösterebiliyor.
+- Moderasyon ve yayın güvenlik kontrolleri hem standart blob hem doğrulanmış fallback depolamayı destekleyecek şekilde eşitlendi.
+- Karantina ekranındaki mevcut **Şimdi işle / yeniden dene** ve **ClamAV olmadan devam** URL'leri gerçek zamanlı pipeline controller'ına bağlandı.
+- İşlem hataları tek `blob_publish_failed` kodu altında tamamen gizlenmek yerine güvenli teknik alt hata kodlarıyla kayda alınıyor.
+- Sürüm numaralandırması bundan sonra `1.1.1 → 1.1.2 ... 1.1.9 → 1.2.0` düzeninde ilerleyecek.
