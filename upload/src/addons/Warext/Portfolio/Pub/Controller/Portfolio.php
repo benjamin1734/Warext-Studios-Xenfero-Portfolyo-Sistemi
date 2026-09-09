@@ -2,6 +2,7 @@
 
 namespace Warext\Portfolio\Pub\Controller;
 
+use XF\ControllerPlugin\EditorPlugin;
 use XF\Pub\Controller\AbstractController;
 
 class Portfolio extends AbstractController
@@ -85,7 +86,8 @@ class Portfolio extends AbstractController
         }
 
         return $this->view('Warext\Portfolio:Portfolio\Add', 'wrxt_portfolio_add', [
-            'categories' => $this->repository('Warext\Portfolio:Portfolio')->getActiveCategories()
+            'categories' => $this->repository('Warext\Portfolio:Portfolio')->getActiveCategories(),
+            'quota' => $this->service('Warext\Portfolio:QuotaPolicy')->getPolicy($visitor)
         ]);
     }
 
@@ -100,17 +102,17 @@ class Portfolio extends AbstractController
 
         $input = $this->filter([
             'title' => 'str',
-            'description' => 'str',
             'category_id' => 'uint',
             'portfolio_type' => 'str',
             'programs' => 'str',
             'tags' => 'str'
         ]);
+        $description = $this->plugin(EditorPlugin::class)->fromInput('description');
 
         $service = $this->service('Warext\Portfolio:CreatePortfolio');
         $service->setContent(
             $input['title'],
-            $input['description'],
+            $description,
             $input['category_id'],
             $input['portfolio_type'],
             $input['programs'],
@@ -123,6 +125,45 @@ class Portfolio extends AbstractController
         }
 
         $portfolio = $service->save();
+
+        try
+        {
+            $this->acceptInitialUploads($portfolio);
+        }
+        catch (\RuntimeException $e)
+        {
+            return $this->error($e->getMessage());
+        }
+
         return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
+    }
+
+    protected function acceptInitialUploads($portfolio): void
+    {
+        $quarantine = $this->service('Warext\Portfolio:Quarantine');
+
+        $cover = $this->request->getFile('cover_file', false, false);
+        if ($cover)
+        {
+            $quarantine->accept($portfolio, $cover, 'cover');
+        }
+
+        $gallery = $this->request->getFile('gallery_files', true, false);
+        if ($gallery)
+        {
+            foreach (is_array($gallery) ? $gallery : [$gallery] as $upload)
+            {
+                if ($upload)
+                {
+                    $quarantine->accept($portfolio, $upload, 'gallery');
+                }
+            }
+        }
+
+        $model = $this->request->getFile('model_file', false, false);
+        if ($model)
+        {
+            $quarantine->accept($portfolio, $model, 'model');
+        }
     }
 }
