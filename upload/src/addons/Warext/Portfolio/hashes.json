@@ -32,7 +32,7 @@
     "src/addons/Warext/Portfolio/Job/RescanFile.php": "7d3469d4e0c72a3b67c086c2e6eb42741f409eaed32edd0b31eab48dc60fcf17",
     "src/addons/Warext/Portfolio/Job/SecurityScan.php": "62385151d65b79a2adb1a849ebbbf596f678de1bf07ac822804ccb14d100fc91",
     "src/addons/Warext/Portfolio/Pub/Controller/Item.php": "3d18cf02e4f64cd313d536a1b8718a3d759c84445ecf2b68811ea2c0d0c6ec41",
-    "src/addons/Warext/Portfolio/Pub/Controller/Portfolio.php": "32dee7414c7c443ff4e75e0c6a004ce8c9165d45cee7050db05ba5ff226509e6",
+    "src/addons/Warext/Portfolio/Pub/Controller/Portfolio.php": "52d94dc2c56d29de6c72e9091dcafeb7af94dcd49f06b6e0c4e2c8a2bd0a9759",
     "src/addons/Warext/Portfolio/Pub/Controller/UserPortfolio.php": "6c00009d94745fc21f1446360862e3cbc5e6b7f49bb3e34bd97eecf14d2e0c92",
     "src/addons/Warext/Portfolio/Pub/View/Media.php": "f8aaffa7361c481f9bea1280032c20d24ee3fe4ce83c714c8c426f649d312ae8",
     "src/addons/Warext/Portfolio/Pub/View/Model/Data.php": "316545323182b81206372988da98921fcbfaa621f596dd63cb809ec74eccbaff",
@@ -94,7 +94,7 @@
     "src/addons/Warext/Portfolio/_data/permissions.xml": "339295b1b73aeb5af7d0e8f377663f92a0f202509e5adf35516b23bcedd58e2b",
     "src/addons/Warext/Portfolio/_data/phrases.xml": "48fb5b510358be4cf0b68c5f0413a17438d37827cbb9128d040df6459fa5f4b8",
     "src/addons/Warext/Portfolio/_data/routes.xml": "1a7adc6af6b608f949a7ec90a044f6b20e911d2757c24079abf69bace955cb59",
-    "src/addons/Warext/Portfolio/_data/template_modifications.xml": "bf9a1427155a66c76077c6496fed33f90a8f9026842712ac55dd69ce50424b4e",
+    "src/addons/Warext/Portfolio/_data/template_modifications.xml": "47fdceca47930b2a4b0dad662057e79b273a77539cf62e12052dd87967c43ba9",
     "src/addons/Warext/Portfolio/_data/templates.xml": "af61d84696aedfdd60654ac7d8f69b0f8b6e93f25178dc37188c3033ce39912d",
-    "src/addons/Warext/Portfolio/addon.json": "09b4be554b1f4aab09ed2a5624cd0962f1050dc20febd857de29a7200712ce7b"
+    "src/addons/Warext/Portfolio/addon.json": "ae9b4f0ef018956cb8c4a5306405f328a3b71c097e2ec5da6af175d83cb1e012"
 }
