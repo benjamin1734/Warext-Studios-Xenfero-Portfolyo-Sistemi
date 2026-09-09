@@ -28,4 +28,51 @@
 </xf:if>
 <!--[XF:content_links:bottom]-->]]></replace>
   </modification>
+
+  <modification type="public" template="wrxt_portfolio_mine" modification_key="wrxt_portfolio_mine_actions_empty" description="Çalışmalarım sayfasına yeni çalışma butonu ve boş durum mesajı ekler" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>Çalışmalarım</xf:title><div class="block"><div class="block-container"><div class="block-body"><xf:foreach loop="$items" value="$item"><div class="block-row"><a href="{{ link('portfolyo/calisma',$item) }}"><b>{$item.title}</b></a> · {$item.status} · {$item.security_status} <xf:button href="{{ link('portfolyo/calisma/edit',$item) }}">Düzenle</xf:button></div></xf:foreach></div></div></div><xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="portfolyo/mine" />]]></find>
+    <replace><![CDATA[<xf:title>Çalışmalarım</xf:title>
+<xf:pageaction>
+    <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'create')">
+        <xf:button href="{{ link('portfolyo/add') }}" class="button--primary">Yeni çalışma ekle</xf:button>
+    </xf:if>
+</xf:pageaction>
+
+<xf:if is="$total > 0">
+    <div class="block">
+        <div class="block-container">
+            <div class="block-body">
+                <xf:foreach loop="$items" value="$item">
+                    <div class="block-row">
+                        <a href="{{ link('portfolyo/calisma',$item) }}"><b>{$item.title}</b></a>
+                        · {$item.status} · {$item.security_status}
+                        <xf:button href="{{ link('portfolyo/calisma/edit',$item) }}">Düzenle</xf:button>
+                    </div>
+                </xf:foreach>
+            </div>
+        </div>
+    </div>
+    <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="portfolyo/mine" />
+<xf:else />
+    <div class="block">
+        <div class="block-container">
+            <div class="block-row">
+                <div class="contentRow">
+                    <div class="contentRow-main">
+                        <h3 class="contentRow-title">Henüz portfolyo içeriğiniz yok</h3>
+                        <div class="contentRow-snippet">Henüz herhangi bir portfolyo içeriği eklemediniz.</div>
+                        <div class="contentRow-minor" style="margin-top:12px">
+                            <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'create')">
+                                <xf:button href="{{ link('portfolyo/add') }}" class="button--primary">İlk çalışmanı ekle</xf:button>
+                            <xf:else />
+                                Yeni çalışma oluşturmak için kullanıcı grubunuzun portfolyo oluşturma iznine sahip olması gerekir.
+                            </xf:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</xf:if>]]></replace>
+  </modification>
 </template_modifications>

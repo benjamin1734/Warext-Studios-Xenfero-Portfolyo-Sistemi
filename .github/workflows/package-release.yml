@@ -88,7 +88,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- XenForo 2.3 public route tanımları düzeltildi\n- Portfolyo ana vitrini ve kullanıcı paneli route'ları yeniden eşlendi\n- Çalışma ve kullanıcı sub-route formatlarındaki 404 sorunu giderildi\n- Public navigation context wrxtPortfolioNav ile eşitlendi"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Çalışmalarım sayfasına Yeni çalışma ekle butonu eklendi\n- Boş portfolyo durumunda açıklayıcı mesaj ve İlk çalışmanı ekle CTA'sı eklendi\n- Oluşturma izni yoksa kullanıcıya açık izin bilgilendirmesi gösterilir"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
