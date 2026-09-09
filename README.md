@@ -2,15 +2,42 @@
 
 XenForo 2.3+ için üyelerin görsel ve 3D çalışmalarını güvenli biçimde yayınlayabildiği kapsamlı portfolyo sistemidir.
 
-**Sürüm:** 1.0.2  
+**Sürüm:** 1.0.3  
 **Geliştirici:** Warext Studios  
 **Add-on ID:** `Warext/Portfolio`
 
 ## Kurulum ZIP'i
 
-**[Warext Studios | XenForo Portfolyo Sistemi 1.0.2 - Kurulum ZIP'ini indir](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/download/v1.0.2/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip)**
+**[Warext Studios | XenForo Portfolyo Sistemi 1.0.3 - Kurulum ZIP'ini indir](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/download/v1.0.3/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip)**
 
 Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır.
+
+## Erişim noktaları
+
+### Kullanıcı tarafı
+
+- Ana portfolyo sayfası: `/portfolyo/`
+- Çalışma ekleme: `/portfolyo/add`
+- Çalışmalarım: `/portfolyo/mine`
+- Kaydedilenler: `/portfolyo/saved`
+- Üye profillerinde **Portfolyo** butonu
+- Ana forum navigasyonunda **Portfolyo** menü bağlantısı
+
+### Admin CP
+
+Admin CP sol menüsünde **Portfolyo Sistemi** artık bağımsız bir ana kategori olarak görünür. Altında:
+
+- Portfolyo Yönetimi
+- Moderasyon ve Raporlar
+- Güvenlik Merkezi
+- Karantina
+- Engellenen Dosyalar
+- Güvenlik Olayları
+- Denetim Kayıtları
+- SHA-256 Engelleme Listesi
+- Portfolyo Ayarları
+
+Ayarlar ayrıca doğrudan `admin.php?options/groups/wrxtPortfolioSettings/` adresinden açılabilir.
 
 ## Özellikler
 
@@ -59,7 +86,7 @@ Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır
 
 ## Kurulum
 
-1. Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.2.zip` dosyasını indirin.
+1. Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip` dosyasını indirin.
 2. XenForo Admin CP → **Add-ons → Install/upgrade from archive** bölümünü açın.
 3. ZIP dosyasını seçip kurulumu başlatın.
 4. Kurulumdan sonra kullanıcı grubu ve Admin CP izinlerini düzenleyin.
@@ -70,3 +97,11 @@ Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır
 - XenForo cron kimlikleri 25 karakter sınırına uygun hale getirildi.
 - `public:wrxt_portfolio_list` template derleyici hatasına neden olan riskli child-element yapıları kaldırıldı.
 - 22 master template XenForo 2.3 uyumlu güvenli tag yapısıyla yeniden düzenlendi.
+
+## 1.0.3
+
+- Admin CP sol menüsüne bağımsız **Portfolyo Sistemi** ana kategorisi eklendi.
+- Yönetim, moderasyon, güvenlik, karantina, engellenen dosyalar, olaylar, audit, hash listesi ve ayarlar tek kategori altında toplandı.
+- Portfolyo ayar grubuna doğrudan Admin CP menü bağlantısı eklendi.
+- Forum ana navigasyonuna **Portfolyo** bağlantısı eklendi.
+- XenForo 2.3 admin/navigation phrase anahtarları standart noktalı formata taşındı; eski phrase kayıtları yükseltme uyumluluğu için korundu.
