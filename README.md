@@ -8,9 +8,9 @@ XenForo 2.3+ için üyelerin görsel ve 3D çalışmalarını güvenli biçimde 
 
 ## Kurulum ZIP'i
 
-**[Warext Studios | XenForo Portfolyo Sistemi 1.0.3 - Kurulum ZIP'ini indir](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases/download/v1.0.3/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip)**
+**[Warext Studios | XenForo Portfolyo Sistemi 1.0.3 - Kurulum ZIP'ini indir](https://raw.githubusercontent.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/main/dist/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip)**
 
-Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır.
+Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır. Paket her kaynak güncellemesinde GitHub Actions tarafından yeniden oluşturulur ve `dist/` altında tutulur.
 
 ## Erişim noktaları
 
@@ -25,19 +25,17 @@ Bu dosya XenForo Admin CP üzerinden doğrudan kurulmak için hazırlanmıştır
 
 ### Admin CP
 
-Admin CP sol menüsünde **Portfolyo Sistemi** artık bağımsız bir ana kategori olarak görünür. Altında:
+Admin CP sol menüsünde **Portfolyo Sistemi** bağımsız bir ana kategori olarak görünür. Altında:
 
-- Portfolyo Yönetimi
-- Moderasyon ve Raporlar
-- Güvenlik Merkezi
-- Karantina
-- Engellenen Dosyalar
-- Güvenlik Olayları
-- Denetim Kayıtları
-- SHA-256 Engelleme Listesi
-- Portfolyo Ayarları
-
-Ayarlar ayrıca doğrudan `admin.php?options/groups/wrxtPortfolioSettings/` adresinden açılabilir.
+- **Portfolyo Yönetimi** → `admin.php?wrxt-portfolyo/`
+- **Moderasyon ve Raporlar** → `admin.php?wrxt-portfolyo/reports`
+- **Güvenlik Merkezi** → `admin.php?wrxt-portfolyo/security`
+- **Karantina** → `admin.php?wrxt-portfolyo/quarantine`
+- **Engellenen Dosyalar** → `admin.php?wrxt-portfolyo/blocked`
+- **Güvenlik Olayları** → `admin.php?wrxt-portfolyo/events`
+- **Denetim Kayıtları** → `admin.php?wrxt-portfolyo/audit`
+- **SHA-256 Engelleme Listesi** → `admin.php?wrxt-portfolyo/hashes`
+- **Portfolyo Ayarları** → `admin.php?options/groups/wrxtPortfolioSettings/`
 
 ## Özellikler
 
@@ -86,7 +84,7 @@ Ayarlar ayrıca doğrudan `admin.php?options/groups/wrxtPortfolioSettings/` adre
 
 ## Kurulum
 
-1. Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip` dosyasını indirin.
+1. `dist/Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.3.zip` paketini indirin.
 2. XenForo Admin CP → **Add-ons → Install/upgrade from archive** bölümünü açın.
 3. ZIP dosyasını seçip kurulumu başlatın.
 4. Kurulumdan sonra kullanıcı grubu ve Admin CP izinlerini düzenleyin.
