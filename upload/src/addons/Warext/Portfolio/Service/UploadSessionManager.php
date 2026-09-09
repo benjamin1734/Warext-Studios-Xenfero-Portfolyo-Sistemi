@@ -18,10 +18,12 @@ class UploadSessionManager extends AbstractService
             ->where('expires_date', '>', \XF::$time)
             ->order('session_id', 'DESC')
             ->fetchOne();
+
         if ($session)
         {
             return $session;
         }
+
         $ip = trim((string)$this->app->request()->getIp());
         $salt = (string)$this->app->config('globalSalt');
         $session = $this->em()->create('Warext\Portfolio:UploadSession');
@@ -31,7 +33,7 @@ class UploadSessionManager extends AbstractService
         $session->ip_hash = ($ip !== '' && $salt !== '') ? hash_hmac('sha256', $ip, $salt) : '';
         $session->created_date = \XF::$time;
         $session->last_activity_date = \XF::$time;
-        $session->expires_date = \XF::$time + max(900, (int)$this->app->options()->wrxtPfUploadMins * 60);
+        $session->expires_date = \XF::$time + max(900, (int)$this->app->options()->wrxtPortfolioUploadSessionMinutes * 60);
         $session->save();
         return $session;
     }
@@ -41,7 +43,7 @@ class UploadSessionManager extends AbstractService
         $session->accepted_count++;
         $session->uploaded_bytes += $bytes;
         $session->last_activity_date = \XF::$time;
-        $session->expires_date = \XF::$time + max(900, (int)$this->app->options()->wrxtPfUploadMins * 60);
+        $session->expires_date = \XF::$time + max(900, (int)$this->app->options()->wrxtPortfolioUploadSessionMinutes * 60);
         $session->save();
     }
 }
