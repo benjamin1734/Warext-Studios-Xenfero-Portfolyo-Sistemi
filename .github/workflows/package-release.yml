@@ -10,6 +10,11 @@ on:
       - '!upload/src/addons/Warext/Portfolio/hashes.json'
       - 'README.md'
       - '.github/workflows/package-release.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/release-trigger/**'
 
 permissions:
   contents: write
@@ -65,6 +70,7 @@ jobs:
           unzip -t "$ZIP"
 
       - name: Commit packaged release
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -80,6 +86,7 @@ jobs:
           fi
 
       - name: Publish GitHub Release
+        if: github.event_name != 'pull_request' || startsWith(github.head_ref, 'release-trigger/')
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
