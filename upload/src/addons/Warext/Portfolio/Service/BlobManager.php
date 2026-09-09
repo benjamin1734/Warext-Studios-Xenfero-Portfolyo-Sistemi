@@ -378,6 +378,14 @@ class BlobManager extends AbstractService
         {
             try
             {
+                $referenced = (bool)$this->db()->fetchOne(
+                    'SELECT 1 FROM xf_wrxt_portfolio_blob WHERE storage_name = ? AND ref_count > 0 LIMIT 1',
+                    $path
+                );
+                if ($referenced)
+                {
+                    continue;
+                }
                 File::deleteFromAbstractedPath($path);
             }
             catch (\Throwable $e) {}
