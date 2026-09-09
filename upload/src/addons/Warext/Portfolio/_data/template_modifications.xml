@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template_modifications>
-  <modification type="public" template="member_view" modification_key="wrxt_portfolio_profile_button" description="Kullanıcı profiline portfolyo bağlantısı ekler" execution_order="10" enabled="1" action="str_replace">
+  <modification type="public" template="member_view" modification_key="wrxt_portfolio_profile_button" description="Diğer kullanıcıların profiline herkese açık portfolyo bağlantısı ekler" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<!--[XF:action_top_start]-->]]></find>
     <replace><![CDATA[<!--[XF:action_top_start]-->
-<xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'view')">
+<xf:if is="$xf.visitor.user_id != $user.user_id">
     <xf:button href="{{ link('portfolyo/kullanici', $user) }}" class="button--link">
-        {{ phrase('wrxt_portfolio_profile_button') }}
+        Portfolyo
     </xf:button>
 </xf:if>]]></replace>
   </modification>
-  <modification type="public" template="wrxt_portfolio_list" modification_key="wrxt_portfolio_list_actions" description="Portfolyo kullanıcı işlemlerini sayfanın üstünde görünür hale getirir" execution_order="10" enabled="1" action="str_replace">
-    <find><![CDATA[<xf:title>Portfolyo</xf:title>]]></find>
-    <replace><![CDATA[<xf:title>Portfolyo</xf:title>
-<xf:if is="$xf.visitor.user_id">
-<div class="block">
-    <div class="block-container">
-        <div class="block-row">
-            <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'create')"><xf:button href="{{ link('portfolyo/add') }}" class="button--primary">Yeni Çalışma</xf:button></xf:if>
-            <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'view')"> <xf:button href="{{ link('portfolyo/mine') }}">Çalışmalarım</xf:button></xf:if>
-            <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'save')"> <xf:button href="{{ link('portfolyo/saved') }}">Kaydedilenler</xf:button></xf:if>
-        </div>
-    </div>
-</div>
-</xf:if>]]></replace>
+
+  <modification type="public" template="wrxt_portfolio_list" modification_key="wrxt_portfolio_remove_personal_actions" description="Genel portfolyo vitrininden kişisel yönetim butonlarını kaldırır" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-footer"><xf:button href="{{ link('portfolyo/add') }}" class="button--primary">Çalışma ekle</xf:button> <xf:button href="{{ link('portfolyo/mine') }}">Çalışmalarım</xf:button> <xf:button href="{{ link('portfolyo/saved') }}">Kaydedilenler</xf:button></div>]]></find>
+    <replace><![CDATA[]]></replace>
+  </modification>
+
+  <modification type="public" template="account_visitor_menu" modification_key="wrxt_portfolio_account_menu" description="Kişisel portfolyo işlemlerini kullanıcı hesabı menüsüne ekler" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:content_links:bottom]-->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.visitor.user_id">
+    <li><a href="{{ link('portfolyo/mine') }}" class="menu-linkRow">Portfolyom</a></li>
+    <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'create')">
+        <li><a href="{{ link('portfolyo/add') }}" class="menu-linkRow">Yeni çalışma</a></li>
+    </xf:if>
+    <xf:if is="$xf.visitor.hasPermission('wrxtPortfolio', 'save')">
+        <li><a href="{{ link('portfolyo/saved') }}" class="menu-linkRow">Kaydedilenler</a></li>
+    </xf:if>
+</xf:if>
+<!--[XF:content_links:bottom]-->]]></replace>
   </modification>
 </template_modifications>

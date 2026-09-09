@@ -7,11 +7,13 @@ trait DefaultsTrait
     public function postInstall(array &$stateChanges): void
     {
         $this->insertDefaults();
+        $this->applyDefaultPermissions();
     }
 
     public function postUpgrade($previousVersion, array &$stateChanges): void
     {
         $this->insertDefaultGroupQuotas();
+        $this->applyDefaultPermissions();
     }
 
     protected function insertDefaults(): void
@@ -50,17 +52,27 @@ trait DefaultsTrait
             3 => ['view','create','editOwn','deleteOwn','like','comment','save','follow','deleteOwnComment','report','manage'],
             4 => ['view','moderate','report']
         ];
+
         foreach ($map as $groupId => $permissionIds)
         {
             $group = \XF::em()->find('XF:UserGroup', $groupId);
-            if (!$group) { continue; }
+            if (!$group)
+            {
+                continue;
+            }
+
             $existing = \XF::repository('XF:PermissionEntry')->getGlobalUserGroupPermissionEntries($groupId);
             $configured = $existing['wrxtPortfolio'] ?? [];
             $values = [];
+
             foreach ($permissionIds as $id)
             {
-                if (!array_key_exists($id, $configured)) { $values[$id] = 'allow'; }
+                if (!array_key_exists($id, $configured))
+                {
+                    $values[$id] = 'allow';
+                }
             }
+
             if ($values)
             {
                 $service = \XF::service('XF:UpdatePermissions');
@@ -89,12 +101,14 @@ trait DefaultsTrait
         {
             return;
         }
+
         try
         {
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($base, \FilesystemIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
+
             foreach ($iterator as $item)
             {
                 $path = $item->getPathname();

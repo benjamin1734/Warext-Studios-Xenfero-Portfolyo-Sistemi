@@ -95,18 +95,19 @@ class Portfolio extends Entity
 
     public function canView(?string &$error = null): bool
     {
-        if (!\XF::visitor()->hasPermission('wrxtPortfolio', 'view'))
-        {
-            return false;
-        }
-
         if ($this->status === 'published')
         {
             return true;
         }
 
         $visitor = \XF::visitor();
-        return $visitor->user_id && ($visitor->user_id === $this->user_id || $visitor->hasPermission('wrxtPortfolio', 'manage'));
+        if (!$visitor->user_id)
+        {
+            return false;
+        }
+
+        return $visitor->user_id === $this->user_id
+            || $visitor->hasPermission('wrxtPortfolio', 'manage');
     }
 
     public function canEdit(?string &$error = null): bool

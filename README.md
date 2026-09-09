@@ -2,7 +2,7 @@
 
 XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
-**Güncel sürüm:** 1.0.4  
+**Güncel sürüm:** 1.0.5  
 **Add-on ID:** `Warext/Portfolio`
 
 ## İndirme ve kurulum
@@ -15,31 +15,21 @@ XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden ZIP
 
 ## Kullanıcı tarafı
 
-Ana forum navigasyonunda **Portfolyo** bağlantısı bulunur. Portfolyo ana sayfası `/portfolyo/` adresidir.
+Ana forum navigasyonundaki **Portfolyo** bağlantısı genel topluluk vitrinidir. `/portfolyo/` adresinde yalnızca yayınlanmış kullanıcı çalışmalarının listesi, filtreleri ve sıralaması bulunur. Kişisel yönetim butonları bu sayfada gösterilmez.
 
-Giriş yapmış kullanıcılar portfolyo sayfasının üst kısmında izinlerine göre şu işlemleri görür:
+Kişisel portfolyo işlemleri kullanıcı adı/avatar menüsünden yapılır:
 
-- **Yeni Çalışma** → `/portfolyo/add`
-- **Çalışmalarım** → `/portfolyo/mine`
+- **Portfolyom** → `/portfolyo/mine`
+- **Yeni çalışma** → `/portfolyo/add`
 - **Kaydedilenler** → `/portfolyo/saved`
 
-Üye profillerinde ayrıca **Portfolyo** butonu bulunur ve ilgili üyenin yayınlanmış çalışmalarını açar.
+Diğer üyelerin profillerindeki **Portfolyo** butonu o üyenin herkese açık yayınlanmış çalışmalarını gösterir.
+
+Yayınlanmış portfolyo vitrini, kullanıcı portfolyo sayfaları ve yayınlanmış çalışma detayları genel erişime açıktır. İçerik oluşturma, düzenleme, kaydetme, yorum, takip ve raporlama işlemleri kullanıcı grubu izinlerine bağlıdır.
 
 ## Admin CP
 
-Admin CP sol menüsünde **Portfolyo Sistemi** bağımsız bir ana kategori olarak görünür. Altında:
-
-- Portfolyo Yönetimi
-- Moderasyon ve Raporlar
-- Güvenlik Merkezi
-- Karantina
-- Engellenen Dosyalar
-- Güvenlik Olayları
-- Denetim Kayıtları
-- SHA-256 Engelleme Listesi
-- Portfolyo Ayarları
-
-Ayarlar doğrudan `admin.php?options/groups/wrxtPortfolioSettings/` adresinden de açılabilir.
+Admin CP sol menüsünde **Portfolyo Sistemi** bağımsız bir ana kategori olarak görünür. Altında Portfolyo Yönetimi, Moderasyon ve Raporlar, Güvenlik Merkezi, Karantina, Engellenen Dosyalar, Güvenlik Olayları, Denetim Kayıtları, SHA-256 Engelleme Listesi ve Portfolyo Ayarları bulunur.
 
 ## Gereksinimler
 
@@ -49,10 +39,11 @@ Ayarlar doğrudan `admin.php?options/groups/wrxtPortfolioSettings/` adresinden d
 - ClamAV / `clamd`
 - Imagick veya GD
 
-## 1.0.4
+## 1.0.5
 
-- Admin CP menüsü gerçek bağımsız **Portfolyo Sistemi** kategorisi olacak şekilde düzeltildi.
-- Ham `admin_navigation.*`, `admin_permission.*`, `option.*` ve izin phrase anahtarlarının kullanıcıya görünmesi engellendi.
-- Portfolyo ayarlarının Türkçe başlıkları düzenlendi.
-- Kullanıcı işlemleri portfolyo ana sayfasının üst bölümüne taşındı.
-- Ayar XML'i ile PHP servislerindeki option ID'leri eşitlendi.
+- Navbar Portfolyo bağlantısı tamamen genel topluluk vitrini haline getirildi.
+- Genel vitrin ve yayınlanmış çalışma görüntülemedeki gereksiz `view` izin engeli kaldırıldı.
+- Kişisel Portfolyom / Yeni çalışma / Kaydedilenler işlemleri kullanıcı hesabı menüsüne taşındı.
+- Genel portfolyo listesindeki kişisel işlem butonları kaldırıldı.
+- Varsayılan XenForo grup izinlerinin kurulum ve yükseltmede gerçekten uygulanması sağlandı.
+- Mevcut kurulumlarda Registered ve Administrative dahil varsayılan grupların eksik Portfolyo izinleri yükseltme sırasında otomatik tamamlanır.

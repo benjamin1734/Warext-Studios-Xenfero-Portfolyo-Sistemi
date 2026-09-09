@@ -95,7 +95,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Bağımsız Portfolyo Sistemi Admin CP kategorisi\n- Düzeltilmiş Türkçe menü, izin ve ayar adları\n- Kullanıcı tarafında üst bölüm hızlı işlem butonları\n- Portfolyo ayar ID eşitlemeleri ve dosya bütünlük güncellemesi"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Genel Portfolyo vitrini herkese açık\n- Kişisel Portfolyo işlemleri kullanıcı hesabı menüsünde\n- Varsayılan XenForo grup izinleri otomatik uygulanır\n- Yayınlanmış çalışma ve kullanıcı portfolyolarındaki gereksiz izin engeli kaldırıldı"
 
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
