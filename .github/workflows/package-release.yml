@@ -88,7 +88,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Çalışmalarım sayfasına Yeni çalışma ekle butonu eklendi\n- Boş portfolyo durumunda açıklayıcı mesaj ve İlk çalışmanı ekle CTA'sı eklendi\n- Oluşturma izni yoksa kullanıcıya açık izin bilgilendirmesi gösterilir"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Yeni çalışma ekranına XenForo dahili zengin metin editörü eklendi\n- Kapak ve çoklu galeri görseli ilk formdan yüklenebilir hale getirildi\n- İzin verilen gruplar için GLB 3D model yükleme alanı eklendi\n- İlk formdan seçilen dosyalar karantina ve güvenlik işleme kuyruğuna bağlandı"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
