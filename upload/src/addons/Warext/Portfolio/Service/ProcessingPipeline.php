@@ -113,11 +113,16 @@ class ProcessingPipeline extends AbstractService
             $blobCode = $this->safeErrorCode($blobError, 'blob_publish_failed');
             try
             {
+                // Önce işlenmiş dosyaları yerinde ve hash doğrulamalı biçimde koru.
                 $blobManager->attachLegacyResult($file, $result);
-                $storageMode = 'direct';
+                // Ardından mevcut medya endpoint'leriyle tam uyum için doğrudan
+                // bu güvenli path'lere işaret eden blob referanslarını oluştur.
+                $this->service('Warext\Portfolio:DirectBlobReference')->attach($file, $result);
+                $storageMode = 'direct_blob';
                 $stateMachine->logFileEvent($file, 'blob_publish_fallback', 'warning', $blobCode, [
                     'exception' => get_class($blobError),
-                    'attempt' => (int)$file->processing_attempts
+                    'attempt' => (int)$file->processing_attempts,
+                    'fallback' => 'direct_blob_reference'
                 ]);
             }
             catch (\Throwable $fallbackError)
