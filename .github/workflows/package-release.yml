@@ -33,6 +33,31 @@ jobs:
           )
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: PHP syntax check
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            php -l "$file" >/dev/null
+          done < <(find upload/src/addons/Warext/Portfolio -type f -name '*.php' -print0)
+
+      - name: Validate XML and JSON data
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          root = Path('upload/src/addons/Warext/Portfolio')
+          for path in root.rglob('*.json'):
+              json.loads(path.read_text(encoding='utf-8'))
+          for path in (root / '_data').glob('*.xml'):
+              ET.parse(path)
+          print('JSON/XML validation OK')
+          PY
+
       - name: Regenerate XenForo file hashes
         shell: bash
         run: |
@@ -88,7 +113,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Portfolyo Ayarları 404 sorunu giderildi ve option-group self-repair eklendi\n- Bağımsız moderasyon kuyruğu ile Önizle / Onayla / Reddet akışı eklendi\n- Karantina kuyruğuna yeniden dene ve kontrollü ClamAV olmadan devam işlemleri eklendi\n- İşleme retry option ID hatası düzeltildi\n- Genel vitrin, detay, kullanıcı portfolyosu, kaydedilenler ve çalışmalarım ekranları yeniden tasarlandı\n- Oluşturma ve düzenleme ekranları XenForo dahili editörüyle doğrudan çalışıyor"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- processing aşamasındaki ikinci job kuyruğu bağımlılığı kaldırıldı\n- Karantina ekranındaki Şimdi işle / yeniden dene işlemi gerçek zamanlı hale getirildi\n- cPanel için Imagick/GD görsel işleme fallback eklendi\n- GLB modellerde izole worker zorunluluğu korunuyor\n- Manuel yayın onayı ve teknik işlem aşamaları Admin CP'de daha açık anlatılıyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
