@@ -30,7 +30,7 @@ class PortfolioFile extends Entity
             'sha256' => ['type' => self::STR, 'maxLength' => 64, 'default' => ''],
             'storage_name' => ['type' => self::STR, 'maxLength' => 255, 'default' => ''],
             'state' => ['type' => self::STR, 'allowedValues' => ['uploading', 'quarantine', 'validating', 'scanning', 'processing', 'security_passed', 'moderation', 'published', 'blocked', 'rejected', 'deleted'], 'default' => 'uploading'],
-            'scan_status' => ['type' => self::STR, 'allowedValues' => ['pending', 'clean', 'infected', 'error'], 'default' => 'pending'],
+            'scan_status' => ['type' => self::STR, 'allowedValues' => ['pending', 'clean', 'skipped', 'infected', 'error'], 'default' => 'pending'],
             'scan_signature' => ['type' => self::STR, 'maxLength' => 255, 'default' => ''],
             'scan_attempts' => ['type' => self::UINT, 'default' => 0],
             'last_scan_date' => ['type' => self::UINT, 'default' => 0],

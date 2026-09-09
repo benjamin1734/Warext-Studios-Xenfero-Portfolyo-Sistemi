@@ -2,6 +2,7 @@
 
 namespace Warext\Portfolio\Pub\Controller;
 
+use XF\ControllerPlugin\EditorPlugin;
 use XF\Mvc\ParameterBag;
 use XF\Pub\Controller\AbstractController;
 
@@ -20,6 +21,7 @@ class Item extends AbstractController
         $community->recordView($portfolio);
         return $this->view('Warext\Portfolio:Portfolio\\View', 'wrxt_portfolio_view', [
             'portfolio' => $portfolio,
+            'coverFile' => $this->findSafeCoverFile((int)$portfolio->portfolio_id),
             'galleryFiles' => $repo->getGalleryFiles($portfolio->portfolio_id, (string)$portfolio->status !== 'published'),
             'modelFile' => $this->findSafeModelFile((int)$portfolio->portfolio_id),
             'comments' => $repo->getComments((int)$portfolio->portfolio_id),
@@ -56,15 +58,15 @@ class Item extends AbstractController
 
         $input = $this->filter([
             'title' => 'str',
-            'description' => 'str',
             'category_id' => 'uint',
             'portfolio_type' => 'str',
             'programs' => 'str',
             'tags' => 'str'
         ]);
+        $description = $this->plugin(EditorPlugin::class)->fromInput('description');
 
         $service = $this->service('Warext\Portfolio:UpdatePortfolio', $portfolio);
-        $service->setContent($input['title'], $input['description'], $input['category_id'], $input['portfolio_type'], $input['programs'], $input['tags']);
+        $service->setContent($input['title'], $description, $input['category_id'], $input['portfolio_type'], $input['programs'], $input['tags']);
         if (!$service->validate($errors))
         {
             return $this->error($errors);
@@ -91,7 +93,6 @@ class Item extends AbstractController
             'portfolio' => $portfolio
         ]);
     }
-
 
     public function actionUpload(ParameterBag $params)
     {
@@ -227,7 +228,10 @@ class Item extends AbstractController
         {
             return $this->notFound();
         }
-        if (!$file->ProcessedBlob || (string)$file->ProcessedBlob->state !== 'ready' || (string)$file->ProcessedBlob->security_state === 'blocked') { return $this->notFound(); }
+        if (!$file->ProcessedBlob || (string)$file->ProcessedBlob->state !== 'ready' || (string)$file->ProcessedBlob->security_state === 'blocked')
+        {
+            return $this->notFound();
+        }
         $storageName = $this->service('Warext\Portfolio:BlobManager')->primaryStorageName($file);
         if ($storageName === '')
         {
@@ -248,35 +252,47 @@ class Item extends AbstractController
         return $this->view('Warext\Portfolio:Model\Data', '', ['content' => $content]);
     }
 
-
     public function actionLike(ParameterBag $params)
     {
-        $this->assertPostOnly(); $portfolio=$this->assertPortfolio($params->portfolio_id); if(!$portfolio->canView()) return $this->noPermission();
-        try{$this->service('Warext\Portfolio:Community')->toggleLike($portfolio);}catch(\RuntimeException $e){return $this->error(\XF::phrase($e->getMessage()));}
-        return $this->redirect($this->buildLink('portfolyo/calisma',$portfolio));
+        $this->assertPostOnly();
+        $portfolio = $this->assertPortfolio($params->portfolio_id);
+        if (!$portfolio->canView()) { return $this->noPermission(); }
+        try { $this->service('Warext\Portfolio:Community')->toggleLike($portfolio); }
+        catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
+        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
     }
 
     public function actionSaveItem(ParameterBag $params)
     {
-        $this->assertPostOnly(); $portfolio=$this->assertPortfolio($params->portfolio_id); if(!$portfolio->canView()) return $this->noPermission();
-        try{$this->service('Warext\Portfolio:Community')->toggleSave($portfolio);}catch(\RuntimeException $e){return $this->error(\XF::phrase($e->getMessage()));}
-        return $this->redirect($this->buildLink('portfolyo/calisma',$portfolio));
+        $this->assertPostOnly();
+        $portfolio = $this->assertPortfolio($params->portfolio_id);
+        if (!$portfolio->canView()) { return $this->noPermission(); }
+        try { $this->service('Warext\Portfolio:Community')->toggleSave($portfolio); }
+        catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
+        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
     }
 
     public function actionComment(ParameterBag $params)
     {
-        $this->assertPostOnly(); $portfolio=$this->assertPortfolio($params->portfolio_id); if(!$portfolio->canView()) return $this->noPermission();
-        $message=$this->filter('message','str');
-        try{$this->service('Warext\Portfolio:Community')->addComment($portfolio,$message);}catch(\RuntimeException $e){return $this->error(\XF::phrase($e->getMessage()));}
-        return $this->redirect($this->buildLink('portfolyo/calisma',$portfolio));
+        $this->assertPostOnly();
+        $portfolio = $this->assertPortfolio($params->portfolio_id);
+        if (!$portfolio->canView()) { return $this->noPermission(); }
+        $message = $this->filter('message', 'str');
+        try { $this->service('Warext\Portfolio:Community')->addComment($portfolio, $message); }
+        catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
+        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
     }
 
     public function actionCommentDelete(ParameterBag $params)
     {
-        $this->assertPostOnly(); $portfolio=$this->assertPortfolio($params->portfolio_id); $commentId=$this->filter('comment_id','uint');
-        $comment=$this->em()->find('Warext\Portfolio:Comment',$commentId); if(!$comment||(int)$comment->portfolio_id!==(int)$portfolio->portfolio_id) return $this->notFound();
-        try{$this->service('Warext\Portfolio:Community')->deleteComment($comment);}catch(\RuntimeException $e){return $this->error(\XF::phrase($e->getMessage()));}
-        return $this->redirect($this->buildLink('portfolyo/calisma',$portfolio));
+        $this->assertPostOnly();
+        $portfolio = $this->assertPortfolio($params->portfolio_id);
+        $commentId = $this->filter('comment_id', 'uint');
+        $comment = $this->em()->find('Warext\Portfolio:Comment', $commentId);
+        if (!$comment || (int)$comment->portfolio_id !== (int)$portfolio->portfolio_id) { return $this->notFound(); }
+        try { $this->service('Warext\Portfolio:Community')->deleteComment($comment); }
+        catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
+        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
     }
 
     public function actionReport(ParameterBag $params)
@@ -289,23 +305,76 @@ class Item extends AbstractController
             $reason = $this->filter('reason_code', 'str');
             $message = $this->filter('message', 'str');
             $fileId = $this->filter('file_id', 'uint');
-            try { $this->service('Warext\\Portfolio:ModerationManager')->createReport($portfolio, $reason, $message, $fileId); }
+            try { $this->service('Warext\Portfolio:ModerationManager')->createReport($portfolio, $reason, $message, $fileId); }
             catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
             return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
         }
-        return $this->view('Warext\\Portfolio:Portfolio\\Report', 'wrxt_portfolio_report', ['portfolio' => $portfolio]);
+        return $this->view('Warext\Portfolio:Portfolio\\Report', 'wrxt_portfolio_report', ['portfolio' => $portfolio]);
     }
 
     public function actionMedia(ParameterBag $params)
     {
-        $portfolio=$this->assertPortfolio($params->portfolio_id); if(!$portfolio->canView()) return $this->noPermission();
-        $fileId=$this->filter('file_id','uint'); $thumb=$this->filter('thumb','bool'); $file=$this->em()->find('Warext\Portfolio:PortfolioFile',$fileId);
-        $allowedStates = (string)$portfolio->status === 'published' ? ['published'] : ['security_passed','moderation','published'];
-        if(!$file||(int)$file->portfolio_id!==(int)$portfolio->portfolio_id||!in_array((string)$file->file_role,['cover','gallery'],true)||!in_array((string)$file->state,$allowedStates,true)||(string)$file->processing_status!=='passed'||(string)$file->processed_mime!=='image/webp') return $this->notFound();
-        if (!$file->ProcessedBlob || (string)$file->ProcessedBlob->state !== 'ready' || (string)$file->ProcessedBlob->security_state === 'blocked' || ($thumb && (!$file->ThumbnailBlob || (string)$file->ThumbnailBlob->state !== 'ready' || (string)$file->ThumbnailBlob->security_state === 'blocked'))) return $this->notFound();
-        $storageName = $thumb ? ($file->ThumbnailBlob ? (string)$file->ThumbnailBlob->storage_name : (string)$file->thumbnail_storage_name) : $this->service('Warext\Portfolio:BlobManager')->primaryStorageName($file);
-        if($storageName==='') return $this->notFound(); $stream=\XF::fs()->readStream($storageName); if(!is_resource($stream)) return $this->notFound(); $content=stream_get_contents($stream); fclose($stream); if(!is_string($content)) return $this->notFound();
-        $this->setResponseType('raw'); return $this->view('Warext\Portfolio:Media','',['content'=>$content,'etag'=>$file->processed_sha256 . ($thumb?'-t':'')]);
+        $portfolio = $this->assertPortfolio($params->portfolio_id);
+        if (!$portfolio->canView()) { return $this->noPermission(); }
+        $fileId = $this->filter('file_id', 'uint');
+        $thumb = $this->filter('thumb', 'bool');
+        $file = $this->em()->find('Warext\Portfolio:PortfolioFile', $fileId);
+        $allowedStates = (string)$portfolio->status === 'published' ? ['published'] : ['security_passed', 'moderation', 'published'];
+        if (!$file || (int)$file->portfolio_id !== (int)$portfolio->portfolio_id || !in_array((string)$file->file_role, ['cover', 'gallery'], true) || !in_array((string)$file->state, $allowedStates, true) || (string)$file->processing_status !== 'passed' || (string)$file->processed_mime !== 'image/webp')
+        {
+            return $this->notFound();
+        }
+        if (!$file->ProcessedBlob || (string)$file->ProcessedBlob->state !== 'ready' || (string)$file->ProcessedBlob->security_state === 'blocked' || ($thumb && (!$file->ThumbnailBlob || (string)$file->ThumbnailBlob->state !== 'ready' || (string)$file->ThumbnailBlob->security_state === 'blocked')))
+        {
+            return $this->notFound();
+        }
+        $storageName = $thumb
+            ? ($file->ThumbnailBlob ? (string)$file->ThumbnailBlob->storage_name : (string)$file->thumbnail_storage_name)
+            : $this->service('Warext\Portfolio:BlobManager')->primaryStorageName($file);
+        if ($storageName === '') { return $this->notFound(); }
+        $stream = \XF::fs()->readStream($storageName);
+        if (!is_resource($stream)) { return $this->notFound(); }
+        $content = stream_get_contents($stream);
+        fclose($stream);
+        if (!is_string($content)) { return $this->notFound(); }
+        $this->setResponseType('raw');
+        return $this->view('Warext\Portfolio:Media', '', [
+            'content' => $content,
+            'etag' => $file->processed_sha256 . ($thumb ? '-t' : '')
+        ]);
+    }
+
+    protected function findSafeCoverFile(int $portfolioId)
+    {
+        $portfolio = $this->em()->find('Warext\Portfolio:Portfolio', $portfolioId, ['CoverFile']);
+        if (!$portfolio)
+        {
+            return null;
+        }
+        if ((string)$portfolio->status === 'published')
+        {
+            $file = $portfolio->CoverFile;
+            return $this->isSafeImageFile($file) && (string)$file->state === 'published' ? $file : null;
+        }
+
+        $file = $this->finder('Warext\Portfolio:PortfolioFile')
+            ->where('portfolio_id', $portfolioId)
+            ->where('file_role', 'cover')
+            ->where('state', ['security_passed', 'moderation', 'published'])
+            ->where('processing_status', 'passed')
+            ->with(['ProcessedBlob', 'ThumbnailBlob'])
+            ->order('file_id', 'DESC')
+            ->fetchOne();
+        return $this->isSafeImageFile($file) ? $file : null;
+    }
+
+    protected function isSafeImageFile($file): bool
+    {
+        return (bool)($file
+            && (string)$file->processed_mime === 'image/webp'
+            && $file->ProcessedBlob
+            && (string)$file->ProcessedBlob->state === 'ready'
+            && (string)$file->ProcessedBlob->security_state !== 'blocked');
     }
 
     protected function findSafeModelFile(int $portfolioId)

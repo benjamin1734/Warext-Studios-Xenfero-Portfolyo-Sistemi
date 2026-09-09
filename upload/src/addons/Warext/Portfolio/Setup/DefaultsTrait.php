@@ -7,12 +7,14 @@ trait DefaultsTrait
     public function postInstall(array &$stateChanges): void
     {
         $this->insertDefaults();
+        $this->repairOptionGroupRelations();
         $this->applyDefaultPermissions();
     }
 
     public function postUpgrade($previousVersion, array &$stateChanges): void
     {
         $this->insertDefaultGroupQuotas();
+        $this->repairOptionGroupRelations();
         $this->applyDefaultPermissions();
     }
 
@@ -41,6 +43,28 @@ trait DefaultsTrait
         foreach ([2=>[52428800,536870912,10,30,15,1,0],3=>[209715200,21474836480,100,500,100,1,1],4=>[104857600,5368709120,50,200,50,1,0]] as $groupId => $values)
         {
             $db->query('INSERT IGNORE INTO xf_wrxt_portfolio_group_quota (user_group_id,max_file_bytes,max_total_bytes,hourly_uploads,daily_uploads,max_files_per_portfolio,allow_model3d,is_unlimited) VALUES (?,?,?,?,?,?,?,?)', [$groupId, ...$values]);
+        }
+    }
+
+    protected function repairOptionGroupRelations(): void
+    {
+        $db = $this->app->db();
+        $db->query(
+            'INSERT IGNORE INTO xf_option_group (group_id, display_order, debug_only) VALUES (?, ?, ?)',
+            ['wrxtPortfolioSettings', 9650, 0]
+        );
+
+        $optionIds = $db->fetchAllColumn(
+            "SELECT option_id FROM xf_option WHERE option_id LIKE 'wrxtPf%' ORDER BY option_id"
+        );
+        $displayOrder = 10;
+        foreach ($optionIds as $optionId)
+        {
+            $db->query(
+                'INSERT IGNORE INTO xf_option_group_relation (group_id, option_id, display_order) VALUES (?, ?, ?)',
+                ['wrxtPortfolioSettings', (string)$optionId, $displayOrder]
+            );
+            $displayOrder += 10;
         }
     }
 
