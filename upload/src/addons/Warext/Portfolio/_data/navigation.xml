@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation>
+  <navigation_entry navigation_id="wrxtPortfolioNav" display_order="640" navigation_type_id="basic" enabled="1"><![CDATA[{"link":"{{ link('portfolyo') }}","display_condition":"","extra_attributes":{"icon":"images"}}]]></navigation_entry>
+</navigation>
