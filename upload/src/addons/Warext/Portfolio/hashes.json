@@ -18,7 +18,7 @@
     "src/addons/Warext/Portfolio/Entity/Comment.php": "7f278d426262f8615e59d6733f81de2922090055e57c32c102e71577af057cbd",
     "src/addons/Warext/Portfolio/Entity/GroupQuota.php": "ebabc541a294a91ff63c11587001294fb790502edfc642d07f18d4a07351e108",
     "src/addons/Warext/Portfolio/Entity/ModerationReport.php": "4f44ef576231c833275aa8cca57bae8fb59c781e034db5618f5c03a05625d990",
-    "src/addons/Warext/Portfolio/Entity/Portfolio.php": "b94a53e8e36e54a17cbf392c92485f54fd147ca70832ba571d9ffc1e11843280",
+    "src/addons/Warext/Portfolio/Entity/Portfolio.php": "f1fb4f3605a6f2c70db16d2ea79a98c91bc2e95c700a3c74bf57baf092bcd990",
     "src/addons/Warext/Portfolio/Entity/PortfolioFile.php": "50a091bb1db5c06b992d885b1cc368a665851082915c164d6f58ab8a91a2940c",
     "src/addons/Warext/Portfolio/Entity/PortfolioTag.php": "9b675c75a5ac3105c5f8ef5fc0d62c42bb82fe529566a1299e2af42fde83a5c6",
     "src/addons/Warext/Portfolio/Entity/SecurityLog.php": "f8f949b8f2bb85363702f1f7d5e514f36586a8345a512159f92f6a8bbbef4595",
@@ -32,8 +32,8 @@
     "src/addons/Warext/Portfolio/Job/RescanFile.php": "7d3469d4e0c72a3b67c086c2e6eb42741f409eaed32edd0b31eab48dc60fcf17",
     "src/addons/Warext/Portfolio/Job/SecurityScan.php": "62385151d65b79a2adb1a849ebbbf596f678de1bf07ac822804ccb14d100fc91",
     "src/addons/Warext/Portfolio/Pub/Controller/Item.php": "3d18cf02e4f64cd313d536a1b8718a3d759c84445ecf2b68811ea2c0d0c6ec41",
-    "src/addons/Warext/Portfolio/Pub/Controller/Portfolio.php": "bc2457c4cd48ee7a47edb5f3f9dd48d96de41fd3dc7be6af26be857c2c7e62fc",
-    "src/addons/Warext/Portfolio/Pub/Controller/UserPortfolio.php": "aa3b94ca98055a04e14f09e2efdf40ee11c0a0e4c8b316c9f53af29099078be2",
+    "src/addons/Warext/Portfolio/Pub/Controller/Portfolio.php": "32dee7414c7c443ff4e75e0c6a004ce8c9165d45cee7050db05ba5ff226509e6",
+    "src/addons/Warext/Portfolio/Pub/Controller/UserPortfolio.php": "6c00009d94745fc21f1446360862e3cbc5e6b7f49bb3e34bd97eecf14d2e0c92",
     "src/addons/Warext/Portfolio/Pub/View/Media.php": "f8aaffa7361c481f9bea1280032c20d24ee3fe4ce83c714c8c426f649d312ae8",
     "src/addons/Warext/Portfolio/Pub/View/Model/Data.php": "316545323182b81206372988da98921fcbfaa621f596dd63cb809ec74eccbaff",
     "src/addons/Warext/Portfolio/Pub/View/Model/Frame.php": "ae410940d2a470cff76a7502f9a995b6471ae17a859902f193b2b3ca82153750",
@@ -71,7 +71,7 @@
     "src/addons/Warext/Portfolio/Service/WorkerProcess.php": "d1c21ad6f7c52d9878831ed06181bbbddbfbdcc5f73c1f66f6936d4f36ad4b9a",
     "src/addons/Warext/Portfolio/Setup/AuxSchemaTrait.php": "443cfd85bb4b521440e57d07dd02b47f07e30320678f56e460a5896df9bb82d0",
     "src/addons/Warext/Portfolio/Setup/CoreSchemaTrait.php": "05f7c2ef272d41cab8e8aa9d9ac5ca54faa63a8ac139aaf0d584ffb616c9bc5c",
-    "src/addons/Warext/Portfolio/Setup/DefaultsTrait.php": "d25dc21e82c8c7dfb9e1aadfd359094b70ca86b0e6c124d08db6c90e9dc7a3d5",
+    "src/addons/Warext/Portfolio/Setup/DefaultsTrait.php": "c24be4f1551c6c6cb70da6946d5852072c38f9ad546f30255a47fa380277742c",
     "src/addons/Warext/Portfolio/Setup/UpgradeTrait.php": "71d381ced7b2f67fb294477790fc909cae4a6a84ff9c7c74fa8b0c85baaf02bd",
     "src/addons/Warext/Portfolio/Setup.php": "08b91bdd61d8c5e4af446470695e1f356c254292dddbe04196ecf8c08892d181",
     "src/addons/Warext/Portfolio/Storage/BlobStorageInterface.php": "ed12445d847497beb96de5ecacc9ce092d8c9e12842a7b8174f82044bfae0bc5",
@@ -94,7 +94,7 @@
     "src/addons/Warext/Portfolio/_data/permissions.xml": "339295b1b73aeb5af7d0e8f377663f92a0f202509e5adf35516b23bcedd58e2b",
     "src/addons/Warext/Portfolio/_data/phrases.xml": "48fb5b510358be4cf0b68c5f0413a17438d37827cbb9128d040df6459fa5f4b8",
     "src/addons/Warext/Portfolio/_data/routes.xml": "236ca8b55611fde138fbb3ec3df189036921a2dc65ee3c2fee67ffc9d540f8b6",
-    "src/addons/Warext/Portfolio/_data/template_modifications.xml": "f7b3903a4fd39011c5b2adf273cf6d03ad300b37f048853d9374dffc50c862a8",
+    "src/addons/Warext/Portfolio/_data/template_modifications.xml": "0303e2adc70481517eeedd6dfdf3bd351491ecd14c0cdef77716191d8a6b4f04",
     "src/addons/Warext/Portfolio/_data/templates.xml": "af61d84696aedfdd60654ac7d8f69b0f8b6e93f25178dc37188c3033ce39912d",
-    "src/addons/Warext/Portfolio/addon.json": "03157eb3db6d397c84e7bfb60d8bcaf5134b52209ddd3fcf6aa5c4f2e0be62f3"
+    "src/addons/Warext/Portfolio/addon.json": "ea4fc90356b37940eac7f214a136268b5dd902cd9f7ed4ec545652d91a43bdc4"
 }
