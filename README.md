@@ -9,6 +9,8 @@ XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo e
 
 Güncel paketi GitHub Releases bölümünden indirin ve XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden mevcut sürümün üzerine yükseltin. 1.0.9 için manuel SQL gerekmez.
 
+Kurulum için **Release Assets** altında bulunan `Warext-Studios-XenForo-Portfolyo-Sistemi-1.0.9.zip` dosyasını kullanın. `dist/` paketi ve XenForo `hashes.json` kaydı GitHub Actions tarafından aynı kaynaklardan otomatik oluşturulur.
+
 ## Kullanıcı tarafı
 
 - Navbar **Portfolyo** → `/portfolyo/`: yayınlanmış çalışmaların kart tabanlı genel vitrini.
