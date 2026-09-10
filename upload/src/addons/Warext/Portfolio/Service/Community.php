@@ -127,12 +127,21 @@ class Community extends AbstractService
         {
             throw new \RuntimeException('wrxt_portfolio_comment_not_allowed');
         }
+
+        // XenForo editöründen gelen BB code'u bozmadan kontrol karakterlerini temizle.
         $message = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', trim($message)) ?? '';
-        $message = mb_substr($message, 0, 1000, 'UTF-8');
         if ($message === '')
         {
             throw new \RuntimeException('wrxt_portfolio_comment_empty');
         }
+
+        // Forum mesaj uzunluğu ayarını esas al. BB code'u ortadan kesmeyiz; uzun ise açık hata veririz.
+        $maxLength = max(1000, (int)(\XF::options()->messageMaxLength ?? 20000));
+        if (mb_strlen($message, 'UTF-8') > $maxLength)
+        {
+            throw new \RuntimeException('wrxt_portfolio_comment_too_long');
+        }
+
         $last = (int)$this->db()->fetchOne('SELECT MAX(created_date) FROM xf_wrxt_portfolio_comment WHERE user_id = ?', $visitor->user_id);
         if ($last && $last > \XF::$time - 15)
         {
@@ -143,6 +152,7 @@ class Community extends AbstractService
         {
             throw new \RuntimeException('wrxt_portfolio_comment_daily_limit');
         }
+
         $comment = $this->em()->create('Warext\Portfolio:Comment');
         $comment->portfolio_id = $portfolio->portfolio_id;
         $comment->user_id = $visitor->user_id;
@@ -151,6 +161,7 @@ class Community extends AbstractService
         $comment->state = 'visible';
         $comment->created_date = \XF::$time;
         $comment->save();
+
         $count = (int)$this->db()->fetchOne("SELECT COUNT(*) FROM xf_wrxt_portfolio_comment WHERE portfolio_id = ? AND state = 'visible'", $portfolio->portfolio_id);
         $this->db()->update('xf_wrxt_portfolio', ['comment_count' => $count], 'portfolio_id = ?', $portfolio->portfolio_id);
         $portfolio->comment_count = $count;
