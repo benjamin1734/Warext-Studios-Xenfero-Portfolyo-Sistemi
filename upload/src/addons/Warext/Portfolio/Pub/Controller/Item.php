@@ -193,9 +193,9 @@ class Item extends AbstractController
         $origin = ($parts['scheme'] ?? 'https') . '://' . ($parts['host'] ?? 'localhost') . (isset($parts['port']) ? ':' . (int)$parts['port'] : '');
 
         $this->setResponseType('raw');
-        return $this->view('Warext\Portfolio:Model\Frame', '', [
+        return $this->view('Warext\Portfolio:Model\\Frame', '', [
             'dataUrl' => $dataUrl,
-            'scriptUrl' => $boardUrl . '/js/warext/portfolio/model-viewer.js?v=1000101',
+            'scriptUrl' => $boardUrl . '/js/warext/portfolio/model-viewer.js?v=1010102',
             'origin' => $origin
         ]);
     }
@@ -249,7 +249,7 @@ class Item extends AbstractController
             return $this->notFound();
         }
         $this->setResponseType('raw');
-        return $this->view('Warext\Portfolio:Model\Data', '', ['content' => $content]);
+        return $this->view('Warext\Portfolio:Model\\Data', '', ['content' => $content]);
     }
 
     public function actionLike(ParameterBag $params)
@@ -276,11 +276,25 @@ class Item extends AbstractController
     {
         $this->assertPostOnly();
         $portfolio = $this->assertPortfolio($params->portfolio_id);
-        if (!$portfolio->canView()) { return $this->noPermission(); }
-        $message = $this->filter('message', 'str');
-        try { $this->service('Warext\Portfolio:Community')->addComment($portfolio, $message); }
-        catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
-        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
+        if (!$portfolio->canView())
+        {
+            return $this->noPermission();
+        }
+
+        $message = $this->plugin(EditorPlugin::class)->fromInput('message');
+        try
+        {
+            $comment = $this->service('Warext\Portfolio:Community')->addComment($portfolio, $message);
+        }
+        catch (\RuntimeException $e)
+        {
+            return $this->error(\XF::phrase($e->getMessage()));
+        }
+
+        return $this->redirect(
+            $this->buildLink('portfolyo/calisma', $portfolio) . '#comment-' . (int)$comment->comment_id,
+            'Yorumunuz gönderildi.'
+        );
     }
 
     public function actionCommentDelete(ParameterBag $params)
@@ -289,10 +303,69 @@ class Item extends AbstractController
         $portfolio = $this->assertPortfolio($params->portfolio_id);
         $commentId = $this->filter('comment_id', 'uint');
         $comment = $this->em()->find('Warext\Portfolio:Comment', $commentId);
-        if (!$comment || (int)$comment->portfolio_id !== (int)$portfolio->portfolio_id) { return $this->notFound(); }
-        try { $this->service('Warext\Portfolio:Community')->deleteComment($comment); }
-        catch (\RuntimeException $e) { return $this->error(\XF::phrase($e->getMessage())); }
-        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio));
+        if (!$comment || (int)$comment->portfolio_id !== (int)$portfolio->portfolio_id)
+        {
+            return $this->notFound();
+        }
+        try
+        {
+            $this->service('Warext\Portfolio:Community')->deleteComment($comment);
+        }
+        catch (\RuntimeException $e)
+        {
+            return $this->error(\XF::phrase($e->getMessage()));
+        }
+        return $this->redirect($this->buildLink('portfolyo/calisma', $portfolio) . '#portfolio-comments');
+    }
+
+    public function actionCommentReport(ParameterBag $params)
+    {
+        $portfolio = $this->assertPortfolio($params->portfolio_id);
+        if (!$portfolio->canView())
+        {
+            return $this->noPermission();
+        }
+
+        $commentId = $this->filter('comment_id', 'uint');
+        $comment = $this->em()->find('Warext\Portfolio:Comment', $commentId, ['User']);
+        if (!$comment || (int)$comment->portfolio_id !== (int)$portfolio->portfolio_id || (string)$comment->state !== 'visible')
+        {
+            return $this->notFound();
+        }
+        if (!$comment->canReport())
+        {
+            return $this->noPermission();
+        }
+
+        if ($this->isPost())
+        {
+            $this->assertPostOnly();
+            $reason = $this->filter('reason_code', 'str');
+            $message = $this->filter('message', 'str');
+            try
+            {
+                $this->service('Warext\Portfolio:ModerationManager')->createReport(
+                    $portfolio,
+                    $reason,
+                    $message,
+                    0,
+                    (int)$comment->comment_id
+                );
+            }
+            catch (\RuntimeException $e)
+            {
+                return $this->error(\XF::phrase($e->getMessage()));
+            }
+            return $this->redirect(
+                $this->buildLink('portfolyo/calisma', $portfolio) . '#comment-' . (int)$comment->comment_id,
+                'Yorum raporu moderasyon ekibine gönderildi.'
+            );
+        }
+
+        return $this->view('Warext\Portfolio:Portfolio\\Report', 'wrxt_portfolio_report', [
+            'portfolio' => $portfolio,
+            'comment' => $comment
+        ]);
     }
 
     public function actionReport(ParameterBag $params)
