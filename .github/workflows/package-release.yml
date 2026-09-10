@@ -141,7 +141,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Yorum alanında eksik kalan XenForo message.less ve bb_code.less paketleri yükleniyor\n- Yorum kartları gerçek XenForo konu mesajı iki kolonlu post düzenine oturtuldu\n- Avatar/kullanıcı/unvan/yetkili rozeti sol kullanıcı panelinde, mesaj ve tarih sağ panelde gösteriliyor\n- Raporla ve Sil aksiyonları XenForo message action bar içinde gösteriliyor\n- Hızlı yorum editörü XenForo quick-reply mesaj düzeniyle hizalanıyor\n- 1.1.2 yorum backend ve raporlama iyileştirmeleri korunuyor; manuel SQL gerekmiyor"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Her portfolyo yorumu bağımsız XenForo message kartı olarak gösteriliyor\n- Yorumların tek ortak kutuda birleşmesi kaldırıldı\n- Hızlı cevap editörü yorum listesinden ayrılarak ayrı block js-quickReply yapısına taşındı\n- Quick reply içinde XenForo block-container/block-body/message--quickReply hiyerarşisi kullanılıyor\n- message.less ve bb_code.less ile 1.1.2 yorum backend/raporlama geliştirmeleri korunuyor\n- Manuel SQL gerekmiyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
