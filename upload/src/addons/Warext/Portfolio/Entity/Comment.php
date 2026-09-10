@@ -61,4 +61,39 @@ class Comment extends Entity
             && $visitor->hasPermission('wrxtPortfolio', 'report')
         );
     }
+
+    public function canViewAttachments(): bool
+    {
+        return (bool)(
+            $this->state === 'visible'
+            && $this->Portfolio
+            && $this->Portfolio->canView()
+        );
+    }
+
+    public function isAttachmentEmbedded($attachment): bool
+    {
+        $attachmentId = $attachment instanceof \XF\Entity\Attachment
+            ? (int)$attachment->attachment_id
+            : (int)$attachment;
+
+        if (!$attachmentId || $this->message === '')
+        {
+            return false;
+        }
+
+        return (bool)preg_match(
+            '/\[ATTACH(?:[^\]]*)\]' . preg_quote((string)$attachmentId, '/') . '\[\/ATTACH\]/i',
+            (string)$this->message
+        );
+    }
+
+    protected function _postDelete()
+    {
+        parent::_postDelete();
+        $this->repository('XF:Attachment')->fastDeleteContentAttachments(
+            'wrxt_portfolio_comment',
+            (int)$this->comment_id
+        );
+    }
 }
