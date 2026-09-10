@@ -11,6 +11,7 @@ class Comment extends Entity
     {
         $structure->table = 'xf_wrxt_portfolio_comment';
         $structure->shortName = 'Warext\Portfolio:Comment';
+        $structure->contentType = 'wrxt_portfolio_comment';
         $structure->primaryKey = 'comment_id';
         $structure->columns = [
             'comment_id' => ['type' => self::UINT, 'autoIncrement' => true],
@@ -18,6 +19,7 @@ class Comment extends Entity
             'user_id' => ['type' => self::UINT, 'required' => true],
             'username' => ['type' => self::STR, 'maxLength' => 50, 'default' => ''],
             'message' => ['type' => self::STR, 'required' => true],
+            'attach_count' => ['type' => self::UINT, 'max' => 65535, 'forced' => true, 'default' => 0],
             'state' => ['type' => self::STR, 'allowedValues' => ['visible', 'deleted'], 'default' => 'visible'],
             'created_date' => ['type' => self::UINT, 'default' => \XF::$time],
             'updated_date' => ['type' => self::UINT, 'default' => 0],
@@ -25,7 +27,17 @@ class Comment extends Entity
         ];
         $structure->relations = [
             'Portfolio' => ['entity' => 'Warext\Portfolio:Portfolio', 'type' => self::TO_ONE, 'conditions' => 'portfolio_id', 'primary' => true],
-            'User' => ['entity' => 'XF:User', 'type' => self::TO_ONE, 'conditions' => 'user_id', 'primary' => true]
+            'User' => ['entity' => 'XF:User', 'type' => self::TO_ONE, 'conditions' => 'user_id', 'primary' => true],
+            'Attachments' => [
+                'entity' => 'XF:Attachment',
+                'type' => self::TO_MANY,
+                'conditions' => [
+                    ['content_type', '=', 'wrxt_portfolio_comment'],
+                    ['content_id', '=', '$comment_id']
+                ],
+                'with' => 'Data',
+                'order' => 'attach_date'
+            ]
         ];
         return $structure;
     }
