@@ -31,4 +31,16 @@ class Setup extends AbstractSetup
         $this->createCommunityTables();
         $this->createModerationTables();
     }
+
+    public function installStep2(): void
+    {
+        if (!$this->db()->fetchRow("SHOW COLUMNS FROM xf_wrxt_portfolio_moderation_report LIKE 'comment_id'"))
+        {
+            $this->schemaManager()->alterTable('xf_wrxt_portfolio_moderation_report', function(\XF\Db\Schema\Alter $table)
+            {
+                $table->addColumn('comment_id', 'int')->unsigned()->setDefault(0)->after('file_id');
+                $table->addKey(['comment_id', 'state']);
+            });
+        }
+    }
 }
