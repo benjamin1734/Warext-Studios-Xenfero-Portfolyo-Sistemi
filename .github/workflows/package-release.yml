@@ -58,6 +58,34 @@ jobs:
           print('JSON/XML validation OK')
           PY
 
+      - name: Validate local template modification anchors
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          data = Path('upload/src/addons/Warext/Portfolio/_data')
+          templates_root = ET.parse(data / 'templates.xml').getroot()
+          modifications_root = ET.parse(data / 'template_modifications.xml').getroot()
+          templates = {node.attrib['title']: (node.text or '') for node in templates_root.findall('template')}
+          failed = []
+          checked = 0
+          for mod in modifications_root.findall('modification'):
+              title = mod.attrib.get('template', '')
+              if title not in templates:
+                  continue
+              find_node = mod.find('find')
+              needle = find_node.text if find_node is not None else ''
+              checked += 1
+              if not needle or needle not in templates[title]:
+                  failed.append(f"{mod.attrib.get('modification_key')} -> {title}")
+          if failed:
+              raise SystemExit('Template modification anchor bulunamadı: ' + ', '.join(failed))
+          print(f'Local template modification anchors OK ({checked})')
+          PY
+
       - name: Regenerate XenForo file hashes
         shell: bash
         run: |
@@ -113,7 +141,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- blob_publish_failed için eski kurulum şeması self-repair eklendi\n- takılmış processing kayıtları yükseltmede yeniden denenebilir hale getiriliyor\n- blob publish başarısızlığında doğrulanmış direct-blob fallback eklendi\n- Karantina butonları gerçek zamanlı pipeline controller'ına bağlandı\n- Moderasyon/yayın güvenlik kontrolleri fallback depolama ile uyumlu hale getirildi\n- Sürüm numaralandırması 1.1.x düzenine geçirildi"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Yorum alanı XenForo konu mesajı görünümüne geçirildi\n- Düz textarea kaldırıldı ve XenForo dahili zengin metin editörü kullanılıyor\n- Yorum submit işlemi EditorPlugin ile BB code uyumlu hale getirildi\n- Yorumlara avatar, kullanıcı, tarih, mesaj aksiyonları, rapor ve silme kontrolleri eklendi\n- Yorum raporları çalışma raporlarından ayrı hedef olarak moderasyona aktarılıyor\n- 1.1.2 yükseltmesi comment_id rapor şemasını otomatik ekliyor; manuel SQL gerekmiyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
