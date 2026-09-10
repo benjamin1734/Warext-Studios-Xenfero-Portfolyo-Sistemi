@@ -176,6 +176,10 @@ trait UpgradeTrait
 
     public function upgrade1010102Step1(): void
     {
+        // 1.0.x dönemindeki eski migration numaraları nedeniyle bu tablo hiç oluşmamış
+        // olabileceğinden önce tabloyu idempotent olarak garanti altına al.
+        $this->createModerationTables();
+
         $db = $this->db();
         if (!$db->fetchRow("SHOW COLUMNS FROM xf_wrxt_portfolio_moderation_report LIKE 'comment_id'"))
         {
