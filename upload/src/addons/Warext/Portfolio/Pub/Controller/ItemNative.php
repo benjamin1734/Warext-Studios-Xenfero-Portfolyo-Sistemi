@@ -57,13 +57,13 @@ class ItemNative extends Item
         $message = $this->plugin(EditorPlugin::class)->fromInput('message');
         $attachmentHash = trim((string)$this->filter('attachment_hash', 'str'));
 
-        if ($attachmentHash !== '')
-        {
-            $this->assertValidCommentAttachmentHash($portfolio, $attachmentHash);
-        }
-
         try
         {
+            if ($attachmentHash !== '')
+            {
+                $this->assertValidCommentAttachmentHash($portfolio, $attachmentHash);
+            }
+
             $comment = $this->service('Warext\Portfolio:Community')->addComment($portfolio, $message);
 
             if ($attachmentHash !== '')
@@ -114,7 +114,7 @@ class ItemNative extends Item
     {
         if (!preg_match('/^[a-f0-9]{32}$/i', $attachmentHash))
         {
-            throw new \RuntimeException('wrxt_portfolio_comment_attachment_invalid');
+            throw new \RuntimeException('wrxt_portfolio_comment_not_allowed');
         }
 
         $attachmentRepo = $this->repository('XF:Attachment');
@@ -123,7 +123,7 @@ class ItemNative extends Item
             'portfolio_id' => (int)$portfolio->portfolio_id
         ]))
         {
-            throw new \RuntimeException('wrxt_portfolio_comment_attachment_not_allowed');
+            throw new \RuntimeException('wrxt_portfolio_comment_not_allowed');
         }
 
         $attachments = $attachmentRepo->findAttachmentsByTempHash($attachmentHash)
@@ -137,7 +137,7 @@ class ItemNative extends Item
                 || !$attachment->Data
                 || (int)$attachment->Data->user_id !== $visitorId)
             {
-                throw new \RuntimeException('wrxt_portfolio_comment_attachment_invalid');
+                throw new \RuntimeException('wrxt_portfolio_comment_not_allowed');
             }
         }
     }
