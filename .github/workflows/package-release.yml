@@ -48,31 +48,32 @@ jobs:
           if old_assets in text:
               text = text.replace(old_assets, new_assets, 1)
 
-          marker = '''        <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}"
-                 ajax="true"
-                 class="block js-quickReply"
-                 data-xf-init="ajax-submit">'''
-          if marker in text:
-              start = text.index(marker)
-              end_marker = '        </xf:form>'
-              end = text.index(end_marker, start) + len(end_marker)
-              native = '''        <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}"
-                 ajax="true"
-                 class="block js-quickReply"
-                 data-xf-init="quick-reply ajax-submit"
-                 data-preview-url="{{ link('portfolyo-yorum-onizle', null, {'portfolio_id': $portfolio.portfolio_id}) }}">
-            <div class="block-container">
-                <div class="block-body">
-                    <xf:macro template="quick_reply_macros"
-                              name="body"
-                              arg-showPreviewButton="true"
-                              arg-submitText="Yorum gönder"
-                              arg-minHeight="140"
-                              arg-placeholder="Yorumunuzu yazın..." />
-                </div>
-            </div>
-        </xf:form>'''
-              text = text[:start] + native + text[end:]
+          marker = '<xf:form action="{{ link(\'portfolyo/calisma/comment\', $portfolio) }}"'
+          native_mod = text.index('modification_key="wrxt_pf_native_comments"')
+          start = text.index(marker, native_mod)
+          line_start = text.rfind('\n', 0, start) + 1
+          end_marker = '</xf:form>'
+          end = text.index(end_marker, start) + len(end_marker)
+
+          native = '\n'.join([
+              '        <xf:form action="{{ link(\'portfolyo/calisma/comment\', $portfolio) }}"',
+              '                 ajax="true"',
+              '                 class="block js-quickReply"',
+              '                 data-xf-init="quick-reply ajax-submit"',
+              '                 data-preview-url="{{ link(\'portfolyo-yorum-onizle\', null, {\'portfolio_id\': $portfolio.portfolio_id}) }}">',
+              '            <div class="block-container">',
+              '                <div class="block-body">',
+              '                    <xf:macro template="quick_reply_macros"',
+              '                              name="body"',
+              '                              arg-showPreviewButton="true"',
+              '                              arg-submitText="Yorum gönder"',
+              '                              arg-minHeight="140"',
+              '                              arg-placeholder="Yorumunuzu yazın..." />',
+              '                </div>',
+              '            </div>',
+              '        </xf:form>'
+          ])
+          text = text[:line_start] + native + text[end:]
 
           if 'template="quick_reply_macros"' not in text:
               raise SystemExit('Native quick_reply_macros dönüşümü uygulanamadı')
