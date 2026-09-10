@@ -128,8 +128,6 @@ trait UpgradeTrait
 
     public function upgrade1010101Step1(): void
     {
-        // Eski 1.0.x kurulumlarında düşük numaralı migration adımları atlanmış
-        // olabileceğinden blob tablosunu ve kritik kolonları idempotent olarak onar.
         $this->createBlobTable();
 
         $db = $this->db();
@@ -167,8 +165,6 @@ trait UpgradeTrait
             }
         }
 
-        // Daha önce blob_publish_failed nedeniyle takılmış dosyaları yeni pipeline ile
-        // yeniden denenebilir hale getir.
         $db->query(
             "UPDATE xf_wrxt_portfolio_file
              SET next_processing_date = 0
@@ -176,5 +172,18 @@ trait UpgradeTrait
                AND processing_status = 'error'
                AND (reason_code = 'blob_publish_failed' OR reason_code LIKE 'blob_%')"
         );
+    }
+
+    public function upgrade1010102Step1(): void
+    {
+        $db = $this->db();
+        if (!$db->fetchRow("SHOW COLUMNS FROM xf_wrxt_portfolio_moderation_report LIKE 'comment_id'"))
+        {
+            $this->schemaManager()->alterTable('xf_wrxt_portfolio_moderation_report', function(Alter $table)
+            {
+                $table->addColumn('comment_id', 'int')->unsigned()->setDefault(0)->after('file_id');
+                $table->addKey(['comment_id', 'state']);
+            });
+        }
     }
 }
