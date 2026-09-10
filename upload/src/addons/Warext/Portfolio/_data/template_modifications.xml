@@ -18,15 +18,21 @@
 <!--[XF:content_links:bottom]-->]]></replace>
   </modification>
 
+  <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_message_assets" description="Portfolyo yorumlarında XenForo'nun gerçek konu mesajı stil ve BB code paketlerini yükler" execution_order="5" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" />]]></find>
+    <replace><![CDATA[<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" /><xf:css src="message.less" /><xf:css src="bb_code.less" />]]></replace>
+  </modification>
+
   <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_native_comments" description="Portfolyo yorumlarını XenForo konu mesajı ve hızlı cevap editörü düzenine geçirir" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<div class="block"><div class="block-container"><h2 class="block-header">Yorumlar <span class="label label--subtle">{$portfolio.comment_count}</span></h2><div class="block-body"><xf:if is="$comments is not empty"><xf:foreach loop="$comments" value="$comment"><div class="block-row"><div class="contentRow"><div class="contentRow-main"><div class="contentRow-title"><b>{$comment.username}</b></div><div class="contentRow-minor">{{ date_time($comment.created_date) }}</div><div style="margin-top:7px">{$comment.message}</div></div></div></div></xf:foreach><xf:else /><div class="block-row">Henüz yorum yapılmamış.</div></xf:if></div><xf:if is="$portfolio.status == 'published' AND $xf.visitor.user_id"><xf:form action="{{ link('portfolyo/calisma/comment',$portfolio) }}" ajax="true"><div class="block-body"><xf:textarearow name="message" rows="3" maxlength="1000" label="Yorumunuz" /></div><xf:submitrow submit="Yorum gönder" /></xf:form></xf:if></div></div>]]></find>
     <replace><![CDATA[<section class="block wrxtPfComments" id="portfolio-comments">
     <div class="block-container">
         <h2 class="block-header">Yorumlar <span class="label label--subtle">{$portfolio.comment_count}</span></h2>
-        <div class="block-body">
+        <div class="block-body js-replyNewMessageContainer">
             <xf:if is="$comments is not empty">
                 <xf:foreach loop="$comments" value="$comment">
-                    <article class="message message--post" id="comment-{$comment.comment_id}" data-author="{$comment.username}">
+                    <article class="message message--post js-post js-inlineModContainer" id="comment-{$comment.comment_id}" data-author="{$comment.username}">
+                        <span class="u-anchorTarget" id="comment-{$comment.comment_id}-anchor"></span>
                         <div class="message-inner">
                             <div class="message-cell message-cell--user">
                                 <section class="message-user">
@@ -43,7 +49,12 @@
                                                 <span class="username">{$comment.username}</span>
                                             </xf:if>
                                         </h4>
-                                        <xf:if is="$comment.User"><h5 class="userTitle message-userTitle" dir="auto">{$comment.User.user_title}</h5></xf:if>
+                                        <xf:if is="$comment.User">
+                                            <h5 class="userTitle message-userTitle" dir="auto">{$comment.User.user_title}</h5>
+                                            <xf:if is="$comment.User.is_staff">
+                                                <div class="userBanner userBanner--staff message-userBanner"><span class="userBanner-before"></span><strong>Yetkili</strong><span class="userBanner-after"></span></div>
+                                            </xf:if>
+                                        </xf:if>
                                     </div>
                                 </section>
                             </div>
@@ -51,15 +62,15 @@
                                 <div class="message-main">
                                     <header class="message-attribution">
                                         <ul class="message-attribution-main listInline">
-                                            <li><a href="#comment-{$comment.comment_id}" rel="nofollow">{{ date_time($comment.created_date) }}</a></li>
+                                            <li><a href="#comment-{$comment.comment_id}" class="u-concealed" rel="nofollow">{{ date_time($comment.created_date) }}</a></li>
                                         </ul>
                                         <ul class="message-attribution-opposite message-attribution-opposite--list listInline">
-                                            <li><a href="#comment-{$comment.comment_id}" rel="nofollow">#{$comment.comment_id}</a></li>
+                                            <li><a href="#comment-{$comment.comment_id}" class="u-concealed" rel="nofollow">#{$comment.comment_id}</a></li>
                                         </ul>
                                     </header>
                                     <div class="message-content">
                                         <div class="message-userContent lbContainer js-lbContainer">
-                                            <article class="message-body js-selectToQuote">
+                                            <article class="message-body">
                                                 {{ bb_code($comment.message, 'wrxt_portfolio_comment', $comment) }}
                                             </article>
                                         </div>
