@@ -1,1 +1,1 @@
-7d9c357f0b512dc588dffa24b9446d2aeaf774176b7fbdb0e63e4274e34c385e  dist/Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.1.zip
+62221011fe4e579f7a7992c88d45aefdfd8b35a05f3d18b128afc59566f7e3ad  dist/Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.2.zip
