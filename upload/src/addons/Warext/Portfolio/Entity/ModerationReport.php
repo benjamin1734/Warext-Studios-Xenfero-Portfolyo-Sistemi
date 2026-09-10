@@ -16,6 +16,7 @@ class ModerationReport extends Entity
             'report_id' => ['type' => self::UINT, 'autoIncrement' => true],
             'portfolio_id' => ['type' => self::UINT, 'required' => true],
             'file_id' => ['type' => self::UINT, 'default' => 0],
+            'comment_id' => ['type' => self::UINT, 'default' => 0],
             'reporter_user_id' => ['type' => self::UINT, 'required' => true],
             'reporter_username' => ['type' => self::STR, 'maxLength' => 50, 'default' => ''],
             'reason_code' => ['type' => self::STR, 'maxLength' => 32, 'required' => true],
@@ -31,6 +32,7 @@ class ModerationReport extends Entity
         $structure->relations = [
             'Portfolio' => ['entity' => 'Warext\\Portfolio:Portfolio', 'type' => self::TO_ONE, 'conditions' => 'portfolio_id', 'primary' => true],
             'File' => ['entity' => 'Warext\\Portfolio:PortfolioFile', 'type' => self::TO_ONE, 'conditions' => [['file_id', '=', '$file_id']]],
+            'Comment' => ['entity' => 'Warext\\Portfolio:Comment', 'type' => self::TO_ONE, 'conditions' => [['comment_id', '=', '$comment_id']]],
             'Reporter' => ['entity' => 'XF:User', 'type' => self::TO_ONE, 'conditions' => [['user_id', '=', '$reporter_user_id']]],
             'Assignee' => ['entity' => 'XF:User', 'type' => self::TO_ONE, 'conditions' => [['user_id', '=', '$assigned_user_id']]]
         ];
