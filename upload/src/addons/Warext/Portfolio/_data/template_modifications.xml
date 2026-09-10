@@ -20,7 +20,7 @@
 
   <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_message_assets" description="Portfolyo yorumlarında XenForo'nun konu mesajı stil ve BB code paketlerini yükler" execution_order="5" enabled="1" action="str_replace">
     <find><![CDATA[<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" />]]></find>
-    <replace><![CDATA[<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" /><xf:css src="message.less" /><xf:css src="bb_code.less" />]]></replace>
+    <replace><![CDATA[<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" /><xf:css src="message.less" /><xf:css src="bb_code.less" /><xf:js src="xf/message.js" min="1" />]]></replace>
   </modification>
 
   <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_native_comments" description="Portfolyo yorumlarını XenForo thread_view içindeki gerçek message block ve ayrı quick reply iskeletine geçirir" execution_order="10" enabled="1" action="str_replace">
@@ -114,38 +114,16 @@
         <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}"
                  ajax="true"
                  class="block js-quickReply"
-                 data-xf-init="ajax-submit">
+                 data-xf-init="quick-reply ajax-submit"
+                 data-preview-url="{{ link('portfolyo-yorum-onizle', null, {'portfolio_id': $portfolio.portfolio_id}) }}">
             <div class="block-container">
                 <div class="block-body">
-                    <div class="message message--quickReply block-topRadiusContent block-bottomRadiusContent">
-                        <div class="message-inner">
-                            <div class="message-cell message-cell--user">
-                                <div class="message-user">
-                                    <div class="message-avatar">
-                                        <div class="message-avatar-wrapper">
-                                            <xf:avatar user="$xf.visitor" size="m" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-cell message-cell--main">
-                                <div class="message-main">
-                                    <div class="message-content">
-                                        <div class="message-editorWrapper">
-                                            <xf:editor name="message" placeholder="Yorumunuzu yazın..." data-min-height="140" />
-                                        </div>
-                                    </div>
-                                    <footer class="message-footer">
-                                        <div class="message-actionBar actionBar">
-                                            <div class="actionBar-set actionBar-set--external">
-                                                <xf:button type="submit" class="button--primary">Yorum gönder</xf:button>
-                                            </div>
-                                        </div>
-                                    </footer>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <xf:macro template="quick_reply_macros"
+                              name="body"
+                              arg-showPreviewButton="true"
+                              arg-submitText="Yorum gönder"
+                              arg-minHeight="140"
+                              arg-placeholder="Yorumunuzu yazın..." />
                 </div>
             </div>
         </xf:form>
