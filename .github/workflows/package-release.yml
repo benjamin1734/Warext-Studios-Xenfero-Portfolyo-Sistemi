@@ -33,6 +33,58 @@ jobs:
           )
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Prepare 1.1.6 native XenForo quick reply
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('upload/src/addons/Warext/Portfolio/_data/template_modifications.xml')
+          text = path.read_text(encoding='utf-8')
+
+          old_assets = '<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" /><xf:css src="message.less" /><xf:css src="bb_code.less" />'
+          new_assets = '<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" /><xf:css src="message.less" /><xf:css src="bb_code.less" /><xf:js src="xf/message.js" min="1" />'
+          if old_assets in text:
+              text = text.replace(old_assets, new_assets, 1)
+
+          marker = '''        <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}"
+                 ajax="true"
+                 class="block js-quickReply"
+                 data-xf-init="ajax-submit">'''
+          if marker in text:
+              start = text.index(marker)
+              end_marker = '        </xf:form>'
+              end = text.index(end_marker, start) + len(end_marker)
+              native = '''        <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}"
+                 ajax="true"
+                 class="block js-quickReply"
+                 data-xf-init="quick-reply ajax-submit"
+                 data-preview-url="{{ link('portfolyo-yorum-onizle', null, {'portfolio_id': $portfolio.portfolio_id}) }}">
+            <div class="block-container">
+                <div class="block-body">
+                    <xf:macro template="quick_reply_macros"
+                              name="body"
+                              arg-showPreviewButton="true"
+                              arg-submitText="Yorum gönder"
+                              arg-minHeight="140"
+                              arg-placeholder="Yorumunuzu yazın..." />
+                </div>
+            </div>
+        </xf:form>'''
+              text = text[:start] + native + text[end:]
+
+          if 'template="quick_reply_macros"' not in text:
+              raise SystemExit('Native quick_reply_macros dönüşümü uygulanamadı')
+          if '<xf:js src="xf/message.js" min="1" />' not in text:
+              raise SystemExit('xf/message.js eklenemedi')
+          if '<xf:editor name="message" placeholder="Yorumunuzu yazın..."' in text:
+              raise SystemExit('Eski elle hazırlanmış quick reply editörü hâlâ mevcut')
+
+          path.write_text(text, encoding='utf-8')
+          print('Native XenForo quick reply applied')
+          PY
+
       - name: PHP syntax check
         shell: bash
         run: |
@@ -86,7 +138,7 @@ jobs:
           print(f'Local template modification anchors OK ({checked})')
           PY
 
-      - name: Validate XenForo comment skeleton
+      - name: Validate XenForo native comments and quick reply
         shell: bash
         run: |
           set -euo pipefail
@@ -95,8 +147,17 @@ jobs:
           grep -q 'template="message_macros"' "$FILE"
           grep -q 'name="user_info"' "$FILE"
           grep -q 'class="block js-quickReply"' "$FILE"
+          grep -q 'template="quick_reply_macros"' "$FILE"
+          grep -q 'name="body"' "$FILE"
+          grep -q 'data-xf-init="quick-reply ajax-submit"' "$FILE"
+          grep -q 'data-preview-url=' "$FILE"
+          grep -q 'xf/message.js' "$FILE"
           grep -q 'message-attribution message-attribution--split' "$FILE"
-          echo 'Native XenForo comment skeleton OK'
+          if grep -q '<xf:editor name="message" placeholder="Yorumunuzu yazın..."' "$FILE"; then
+            echo 'Custom quick-reply editor is still present.' >&2
+            exit 1
+          fi
+          echo 'Native XenForo comments + quick_reply_macros OK'
 
       - name: Regenerate XenForo file hashes
         shell: bash
@@ -136,7 +197,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add upload/src/addons/Warext/Portfolio/hashes.json "dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip" dist/SHA256SUMS.txt
+          git add upload/src/addons/Warext/Portfolio/_data/template_modifications.xml upload/src/addons/Warext/Portfolio/hashes.json "dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip" dist/SHA256SUMS.txt
           if git diff --cached --quiet; then
             echo 'Release package already up to date.'
           else
@@ -153,7 +214,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Yorum listesi XenForo thread_view içindeki block block--messages yapısına geçirildi\n- Her yorum gerçek message--post/js-post kartı olarak render ediliyor\n- Kullanıcı paneli message_macros::user_info ile XenForo'nun kendi postbit yapısından geliyor\n- Tarih/meta, mesaj içeriği ve action bar normal post sınıf hiyerarşisini kullanıyor\n- Raporla/Sil iç aksiyon grubuna, quick reply ayrı block js-quickReply alanına taşındı\n- Manuel SQL gerekmiyor"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Portfolyo hızlı cevap alanındaki elle hazırlanmış editör HTML'i kaldırıldı\n- XenForo'nun kendi quick_reply_macros::body makrosu doğrudan kullanılıyor\n- xf/message.js ve quick-reply ajax-submit zinciri aktif\n- XenForo native önizleme butonu Portfolyo yorum önizleme endpointine bağlandı\n- Önizleme XF:BbCodePreview üzerinden oluşturuluyor\n- Normal message_macros::user_info postbit ve yorum aksiyonları korunuyor\n- Manuel SQL gerekmiyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
