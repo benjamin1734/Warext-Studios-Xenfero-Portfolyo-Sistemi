@@ -35,7 +35,18 @@ class Comment extends Entity
         $visitor = \XF::visitor();
         return (bool)($visitor->user_id && (
             $visitor->hasPermission('wrxtPortfolio', 'manage') ||
+            $visitor->hasPermission('wrxtPortfolio', 'moderate') ||
             ($visitor->user_id === $this->user_id && $visitor->hasPermission('wrxtPortfolio', 'deleteOwnComment'))
         ));
+    }
+
+    public function canReport(): bool
+    {
+        $visitor = \XF::visitor();
+        return (bool)(
+            $this->state === 'visible'
+            && $visitor->user_id
+            && $visitor->hasPermission('wrxtPortfolio', 'report')
+        );
     }
 }
