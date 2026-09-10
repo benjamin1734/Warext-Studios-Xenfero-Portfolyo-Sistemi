@@ -7,6 +7,7 @@ use XF\AddOn\StepRunnerInstallTrait;
 use XF\AddOn\StepRunnerUninstallTrait;
 use XF\AddOn\StepRunnerUpgradeTrait;
 use Warext\Portfolio\Setup\AuxSchemaTrait;
+use Warext\Portfolio\Setup\CommentAttachmentUpgradeTrait;
 use Warext\Portfolio\Setup\CoreSchemaTrait;
 use Warext\Portfolio\Setup\DefaultsTrait;
 use Warext\Portfolio\Setup\UpgradeTrait;
@@ -19,6 +20,7 @@ class Setup extends AbstractSetup
     use CoreSchemaTrait;
     use AuxSchemaTrait;
     use UpgradeTrait;
+    use CommentAttachmentUpgradeTrait;
     use DefaultsTrait;
 
     public function installStep1(): void
