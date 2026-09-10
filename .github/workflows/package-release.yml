@@ -90,22 +90,52 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          FILE='upload/src/addons/Warext/Portfolio/_data/template_modifications.xml'
-          grep -q 'class="block block--messages"' "$FILE"
-          grep -q 'template="message_macros"' "$FILE"
-          grep -q 'name="user_info"' "$FILE"
-          grep -q 'class="block js-quickReply"' "$FILE"
-          grep -q 'template="quick_reply_macros"' "$FILE"
-          grep -q 'name="body"' "$FILE"
-          grep -q 'data-xf-init="quick-reply ajax-submit"' "$FILE"
-          grep -q 'data-preview-url=' "$FILE"
-          grep -q 'xf/message.js' "$FILE"
-          grep -q 'message-attribution message-attribution--split' "$FILE"
-          if grep -q '<xf:editor name="message" placeholder="Yorumunuzu yazın..."' "$FILE"; then
+          MOD='upload/src/addons/Warext/Portfolio/_data/template_modifications.xml'
+          TYPES='upload/src/addons/Warext/Portfolio/_data/content_type_fields.xml'
+          ROUTES='upload/src/addons/Warext/Portfolio/_data/routes.xml'
+          CTRL='upload/src/addons/Warext/Portfolio/Pub/Controller/ItemNative.php'
+          PREVIEW='upload/src/addons/Warext/Portfolio/Pub/Controller/CommentPreview.php'
+          ENTITY='upload/src/addons/Warext/Portfolio/Entity/Comment.php'
+          HANDLER='upload/src/addons/Warext/Portfolio/Attachment/Comment.php'
+          MIGRATION='upload/src/addons/Warext/Portfolio/Setup/CommentAttachmentUpgradeTrait.php'
+
+          grep -q 'class="block block--messages"' "$MOD"
+          grep -q 'template="message_macros"' "$MOD"
+          grep -q 'name="user_info"' "$MOD"
+          grep -q 'name="attachments"' "$MOD"
+          grep -q 'class="block js-quickReply"' "$MOD"
+          grep -q 'template="quick_reply_macros"' "$MOD"
+          grep -q 'name="body"' "$MOD"
+          grep -q 'arg-attachmentData="{$attachmentData}"' "$MOD"
+          grep -q 'data-xf-init="attachment-manager quick-reply"' "$MOD"
+          grep -q "data-message-container=\"div\[data-type='comment'\] .js-replyNewMessageContainer\"" "$MOD"
+          grep -q 'data-preview-url=' "$MOD"
+          grep -q 'xf/message.js' "$MOD"
+          grep -q 'message-attribution message-attribution--split' "$MOD"
+
+          grep -q 'content_type="wrxt_portfolio_comment" field_name="attachment_handler_class"' "$TYPES"
+          grep -q 'Warext\\Portfolio\\Attachment\\Comment' "$TYPES"
+          grep -q 'controller="Warext\\Portfolio:ItemNative"' "$ROUTES"
+          grep -q "getEditorData(" "$CTRL"
+          grep -q "associateAttachmentsWithContent(" "$CTRL"
+          grep -q "attachment_hash" "$CTRL"
+          grep -q "findAttachmentsByTempHash" "$PREVIEW"
+          grep -q "isAttachmentEmbedded" "$ENTITY"
+          grep -q "canViewAttachments" "$ENTITY"
+          grep -q "class Comment extends AbstractHandler" "$HANDLER"
+          grep -q "upgrade1010107Step1" "$MIGRATION"
+          grep -q "attach_count" "$MIGRATION"
+
+          if grep -q '<xf:editor name="message" placeholder="Yorumunuzu yazın..."' "$MOD"; then
             echo 'Custom quick-reply editor is still present.' >&2
             exit 1
           fi
-          echo 'Native XenForo comments + quick_reply_macros OK'
+          if grep -q 'data-xf-init="quick-reply ajax-submit"' "$MOD"; then
+            echo 'Legacy Portfolyo quick-reply init is still present.' >&2
+            exit 1
+          fi
+
+          echo 'Native XenForo comments + quick reply + attachment manager OK'
 
       - name: Regenerate XenForo file hashes
         shell: bash
@@ -162,7 +192,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Portfolyo hızlı cevap alanındaki elle hazırlanmış editör HTML'i kaldırıldı\n- XenForo'nun kendi quick_reply_macros::body makrosu doğrudan kullanılıyor\n- xf/message.js ve quick-reply ajax-submit zinciri aktif\n- XenForo native önizleme butonu Portfolyo yorum önizleme endpointine bağlandı\n- Önizleme XF:BbCodePreview üzerinden oluşturuluyor\n- Normal message_macros::user_info postbit ve yorum aksiyonları korunuyor\n- Manuel SQL gerekmiyor"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Portfolyo yorum alanı normal XenForo attachment-manager quick-reply zincirine bağlandı\n- XenForo quick_reply_macros::body gerçek attachmentData ile çalışıyor\n- Dosya ekle kontrolü XenForo çekirdek attachment manager tarafından oluşturuluyor\n- wrxt_portfolio_comment için gerçek attachment content type ve handler eklendi\n- Geçici ekler gönderimde güvenli şekilde yoruma ilişkilendiriliyor\n- Önizleme geçici ekleri destekliyor\n- Gönderilmiş ekler message_macros::attachments ile gösteriliyor\n- Eski kurulumlarda attach_count alanı otomatik migration ile ekleniyor\n- Manuel SQL gerekmiyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
