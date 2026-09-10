@@ -2,14 +2,14 @@
 
 XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
-**Güncel sürüm:** 1.1.4  
+**Güncel sürüm:** 1.1.5  
 **Add-on ID:** `Warext/Portfolio`
 
 ## Kurulum / yükseltme
 
-GitHub Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.4.zip` paketini XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden mevcut sürümün üzerine yükleyin.
+GitHub Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.5.zip` paketini XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden mevcut sürümün üzerine yükleyin.
 
-1.1.4 için manuel SQL import gerekmez.
+1.1.5 için manuel SQL import gerekmez.
 
 ## Kullanıcı tarafı
 
@@ -22,18 +22,18 @@ GitHub Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.4.z
 
 ## Yorum sistemi
 
-1.1.4 ile yorum görünümü XenForo konu görünümündeki yapıya daha yakın hale getirildi.
+1.1.5 ile yorum alanı XenForo `thread_view` / `post_macros` düzenine daha doğrudan bağlandı.
 
-- Yorum başlığı ayrı bloktur.
-- Her yorum bağımsız `message message--post` kartıdır; ortak tek kutunun parçası gibi görünmez.
-- Her kartta sol kullanıcı paneli, sağ mesaj alanı, tarih, kalıcı yorum numarası ve mesaj aksiyonları bulunur.
-- Yorumlar arasında ayrı kart boşluğu vardır.
-- Hızlı cevap alanı yorum listesinden ayrıdır ve XenForo'nun `block js-quickReply → block-container → block-body → message--quickReply` yapısını kullanır.
+- Mesaj listesi `block block--messages` yapısını kullanır.
+- Her yorum gerçek `message message--post js-post` kartı olarak render edilir.
+- Kullanıcı paneli elle taklit edilmez; XenForo `message_macros::user_info` makrosu kullanılır. Böylece avatar, kullanıcı adı, ünvan, banner/rol görünümü aktif temanın normal konu mesajlarıyla aynı altyapıdan gelir.
+- Mesaj meta alanı `message-attribution message-attribution--split`, içerik `message-content js-messageContent`, alt işlemler gerçek `message-actionBar actionBar` yapısını kullanır.
+- **Raporla** ve **Sil** sol iç işlem grubunda gösterilir; Sil işleminde XenForo onayı kullanılır.
+- Hızlı cevap, yorum listesinden bağımsız `block js-quickReply → block-container → block-body → message--quickReply` yapısındadır.
 - Düz textarea kullanılmaz; XenForo `<xf:editor>` kullanılır.
-- Backend `EditorPlugin::fromInput('message')` üzerinden BB code alır.
-- Yorum içeriği XenForo BB code renderer ile gösterilir.
-- Kullanıcı yetkisine göre **Raporla** ve **Sil** işlemleri mesaj aksiyon çubuğunda görünür.
-- Yorum raporları çalışma raporundan ayrı hedef olarak moderasyona aktarılır.
+- Backend `EditorPlugin::fromInput('message')` üzerinden BB code alır ve BB code renderer ile gösterir.
+- `message.less` ve `bb_code.less` doğrudan yüklenir; aktif temanın XenForo konu mesajı görünümü Portfolyo yorumlarına uygulanır.
+- Desteklenmeyen forum butonları sahte olarak eklenmez; mevcut Portfolyo yorum altyapısındaki raporlama/silme işlevleri gerçek controller işlemlerine bağlıdır.
 
 ## Yayın akışı
 
@@ -58,11 +58,12 @@ GitHub Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.4.z
 
 Dosyaların teknik kontrolleri bittikten sonra çalışma **Admin CP → Portfolyo Sistemi → Portfolyo Moderasyonu** alanına geçer. Burada **Önizle**, **Onayla ve yayınla** ve **Reddet** işlemleri bulunur.
 
-## 1.1.4
+## 1.1.5
 
-- Yorumların ve hızlı cevap editörünün aynı `block-container` içinde birleşmesi kaldırıldı.
-- Her yorum bağımsız XenForo mesaj kartına dönüştürüldü.
-- Hızlı cevap editörü ayrı `block js-quickReply` yapısına taşındı.
-- `message.less` ve `bb_code.less` entegrasyonu korunuyor.
-- 1.1.2'de eklenen BB code, yorum raporlama ve yetki kontrolleri korunuyor.
+- Yorum listesi normal XenForo `block--messages` kapsayıcısına geçirildi.
+- Elle hazırlanmış kullanıcı paneli kaldırıldı; `message_macros::user_info` kullanılmaya başlandı.
+- Tarih/meta satırı, içerik gövdesi ve mesaj işlem alanı normal konu mesajı sınıf hiyerarşisine geçirildi.
+- Raporla/Sil aksiyonları normal mesajlarda olduğu gibi iç aksiyon grubuna taşındı.
+- Hızlı cevap yorum listesinden bağımsız XenForo quick-reply bloğu olarak korunuyor.
+- 1.1.2–1.1.4 BB code, editör, raporlama ve güvenlik davranışları korunur.
 - Manuel SQL gerekmez.
