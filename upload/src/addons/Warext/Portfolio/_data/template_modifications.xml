@@ -18,6 +18,135 @@
 <!--[XF:content_links:bottom]-->]]></replace>
   </modification>
 
+  <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_native_comments" description="Portfolyo yorumlarını XenForo konu mesajı ve hızlı cevap editörü düzenine geçirir" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block"><div class="block-container"><h2 class="block-header">Yorumlar <span class="label label--subtle">{$portfolio.comment_count}</span></h2><div class="block-body"><xf:if is="$comments is not empty"><xf:foreach loop="$comments" value="$comment"><div class="block-row"><div class="contentRow"><div class="contentRow-main"><div class="contentRow-title"><b>{$comment.username}</b></div><div class="contentRow-minor">{{ date_time($comment.created_date) }}</div><div style="margin-top:7px">{$comment.message}</div></div></div></div></xf:foreach><xf:else /><div class="block-row">Henüz yorum yapılmamış.</div></xf:if></div><xf:if is="$portfolio.status == 'published' AND $xf.visitor.user_id"><xf:form action="{{ link('portfolyo/calisma/comment',$portfolio) }}" ajax="true"><div class="block-body"><xf:textarearow name="message" rows="3" maxlength="1000" label="Yorumunuz" /></div><xf:submitrow submit="Yorum gönder" /></xf:form></xf:if></div></div>]]></find>
+    <replace><![CDATA[<section class="block wrxtPfComments" id="portfolio-comments">
+    <div class="block-container">
+        <h2 class="block-header">Yorumlar <span class="label label--subtle">{$portfolio.comment_count}</span></h2>
+        <div class="block-body">
+            <xf:if is="$comments is not empty">
+                <xf:foreach loop="$comments" value="$comment">
+                    <article class="message message--post" id="comment-{$comment.comment_id}" data-author="{$comment.username}">
+                        <div class="message-inner">
+                            <div class="message-cell message-cell--user">
+                                <section class="message-user">
+                                    <div class="message-avatar">
+                                        <div class="message-avatar-wrapper">
+                                            <xf:avatar user="$comment.User" size="m" defaultname="{$comment.username}" />
+                                        </div>
+                                    </div>
+                                    <div class="message-userDetails">
+                                        <h4 class="message-name">
+                                            <xf:if is="$comment.User">
+                                                <a href="{{ link('members', $comment.User) }}" class="username">{$comment.username}</a>
+                                            <xf:else />
+                                                <span class="username">{$comment.username}</span>
+                                            </xf:if>
+                                        </h4>
+                                        <xf:if is="$comment.User"><h5 class="userTitle message-userTitle" dir="auto">{$comment.User.user_title}</h5></xf:if>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="message-cell message-cell--main">
+                                <div class="message-main">
+                                    <header class="message-attribution">
+                                        <ul class="message-attribution-main listInline">
+                                            <li><a href="#comment-{$comment.comment_id}" rel="nofollow">{{ date_time($comment.created_date) }}</a></li>
+                                        </ul>
+                                        <ul class="message-attribution-opposite message-attribution-opposite--list listInline">
+                                            <li><a href="#comment-{$comment.comment_id}" rel="nofollow">#{$comment.comment_id}</a></li>
+                                        </ul>
+                                    </header>
+                                    <div class="message-content">
+                                        <div class="message-userContent lbContainer js-lbContainer">
+                                            <article class="message-body js-selectToQuote">
+                                                {{ bb_code($comment.message, 'wrxt_portfolio_comment', $comment) }}
+                                            </article>
+                                        </div>
+                                    </div>
+                                    <footer class="message-footer">
+                                        <div class="message-actionBar actionBar">
+                                            <div class="actionBar-set actionBar-set--external">
+                                                <xf:if is="$comment.canReport()">
+                                                    <a href="{{ link('portfolyo/calisma/comment-report', $portfolio, {'comment_id': $comment.comment_id}) }}" class="actionBar-action" data-xf-click="overlay">Raporla</a>
+                                                </xf:if>
+                                                <xf:if is="$comment.canDelete()">
+                                                    <xf:form action="{{ link('portfolyo/calisma/comment-delete', $portfolio) }}" ajax="true" class="u-inline">
+                                                        <input type="hidden" name="comment_id" value="{$comment.comment_id}" />
+                                                        <button type="submit" class="actionBar-action" data-xf-click="confirm" data-confirm="Bu yorumu silmek istediğinize emin misiniz?">Sil</button>
+                                                    </xf:form>
+                                                </xf:if>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </xf:foreach>
+            <xf:else />
+                <div class="block-row block-row--separated">Henüz yorum yapılmamış. İlk yorumu siz yazabilirsiniz.</div>
+            </xf:if>
+        </div>
+
+        <xf:if is="$portfolio.status == 'published' AND $xf.visitor.user_id AND $xf.visitor.hasPermission('wrxtPortfolio', 'comment')">
+            <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}" ajax="true" class="message message--quickReply">
+                <div class="message-inner">
+                    <div class="message-cell message-cell--user">
+                        <div class="message-avatar">
+                            <div class="message-avatar-wrapper"><xf:avatar user="$xf.visitor" size="m" /></div>
+                        </div>
+                    </div>
+                    <div class="message-cell message-cell--main">
+                        <div class="message-main">
+                            <div class="message-content">
+                                <div class="message-editorWrapper">
+                                    <xf:editor name="message" placeholder="Yorumunuzu yazın..." data-min-height="140" />
+                                </div>
+                            </div>
+                            <footer class="message-footer">
+                                <div class="message-actionBar actionBar">
+                                    <div class="actionBar-set actionBar-set--external">
+                                        <xf:button type="submit" class="button--primary">Yorum gönder</xf:button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </xf:form>
+        <xf:elseif is="$portfolio.status == 'published' AND !$xf.visitor.user_id" />
+            <div class="block-footer">Yorum yapmak için giriş yapmalısınız.</div>
+        </xf:if>
+    </div>
+</section>]]></replace>
+  </modification>
+
+  <modification type="public" template="wrxt_portfolio_report" modification_key="wrxt_pf_comment_report_title" description="Rapor penceresini çalışma veya yorum hedefine göre adlandırır" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>Raporla</xf:title>]]></find>
+    <replace><![CDATA[<xf:title>{{ $comment ? 'Yorumu raporla' : 'Çalışmayı raporla' }}</xf:title>]]></replace>
+  </modification>
+
+  <modification type="public" template="wrxt_portfolio_report" modification_key="wrxt_pf_comment_report_action" description="Yorum raporunu yorum rapor controllerına gönderir" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:form action="{{ link('portfolyo/calisma/report',$portfolio) }}" ajax="true" class="block">]]></find>
+    <replace><![CDATA[<xf:form action="{{ $comment ? link('portfolyo/calisma/comment-report', $portfolio, {'comment_id': $comment.comment_id}) : link('portfolyo/calisma/report', $portfolio) }}" ajax="true" class="block">]]></replace>
+  </modification>
+
+  <modification type="public" template="wrxt_portfolio_report" modification_key="wrxt_pf_comment_report_reasons" description="Yorum raporlarında yorumlara uygun nedenleri gösterir" execution_order="30" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:selectrow name="reason_code" label="Neden"><xf:option value="stolen_work">Çalıntı çalışma</xf:option><xf:option value="copyright">Telif hakkı</xf:option><xf:option value="inappropriate">Uygunsuz içerik</xf:option><xf:option value="suspected_malicious">Şüpheli dosya</xf:option><xf:option value="spam">Spam</xf:option><xf:option value="wrong_category">Yanlış kategori</xf:option><xf:option value="other">Diğer</xf:option></xf:selectrow>]]></find>
+    <replace><![CDATA[<xf:if is="$comment">
+    <xf:inforow label="Raporlanan yorum"><b>{$comment.username}</b>: {{ snippet($comment.message, 180) }}</xf:inforow>
+    <xf:selectrow name="reason_code" label="Neden"><xf:option value="inappropriate">Uygunsuz içerik</xf:option><xf:option value="harassment">Hakaret / taciz</xf:option><xf:option value="spam">Spam</xf:option><xf:option value="copyright">Telif / izinsiz paylaşım</xf:option><xf:option value="other">Diğer</xf:option></xf:selectrow>
+<xf:else />
+    <xf:selectrow name="reason_code" label="Neden"><xf:option value="stolen_work">Çalıntı çalışma</xf:option><xf:option value="copyright">Telif hakkı</xf:option><xf:option value="inappropriate">Uygunsuz içerik</xf:option><xf:option value="suspected_malicious">Şüpheli dosya</xf:option><xf:option value="spam">Spam</xf:option><xf:option value="wrong_category">Yanlış kategori</xf:option><xf:option value="other">Diğer</xf:option></xf:selectrow>
+</xf:if>]]></replace>
+  </modification>
+
+  <modification type="admin" template="wrxt_portfolio_security_reports" modification_key="wrxt_pf_comment_report_target" description="Yorum raporlarını ACP rapor listesinde hedef yorum ile gösterir" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<b>{$report.Portfolio.title}</b> · {$report.reporter_username}]]></find>
+    <replace><![CDATA[<b>{$report.Portfolio.title}</b><xf:if is="$report.comment_id"> · <a href="{{ link('canonical:portfolyo/calisma', $report.Portfolio) }}#comment-{$report.comment_id}" target="_blank">Yorum #{$report.comment_id}</a></xf:if> · {$report.reporter_username}]]></replace>
+  </modification>
+
   <modification type="admin" template="wrxt_portfolio_security_quarantine" modification_key="wrxt_pf_queue_help" description="Karantina ve moderasyon akışını yöneticilere açıklar" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<xf:title>Karantina ve İşlem Kuyruğu</xf:title>]]></find>
     <replace><![CDATA[<xf:title>Karantina ve İşlem Kuyruğu</xf:title>
@@ -56,7 +185,7 @@
     <find><![CDATA[<xf:title>Portfolyo Güvenlik Merkezi</xf:title>]]></find>
     <replace><![CDATA[<xf:title>Portfolyo Güvenlik Merkezi</xf:title>
 <div class="blockMessage">
-    <b>İşleme notu:</b> Görseller öncelikle izole PHP worker ile işlenir. cPanel'de <code>proc_open</code> veya PHP CLI kapalıysa 1.0.10 ile Imagick/GD üzerinden güvenli yerel WebP fallback kullanılır. <b>GLB 3D modeller için izole worker zorunludur</b>; worker kullanılamıyorsa neden Karantina ekranında açıkça gösterilir.
+    <b>İşleme notu:</b> Görseller öncelikle izole PHP worker ile işlenir. cPanel'de <code>proc_open</code> veya PHP CLI kapalıysa Imagick/GD üzerinden güvenli yerel WebP fallback kullanılır. <b>GLB 3D modeller için izole worker zorunludur</b>; worker kullanılamıyorsa neden Karantina ekranında açıkça gösterilir.
 </div>]]></replace>
   </modification>
 </template_modifications>
