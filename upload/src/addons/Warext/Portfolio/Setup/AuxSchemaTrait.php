@@ -124,7 +124,7 @@ trait AuxSchemaTrait
         $this->schemaManager()->createTable('xf_wrxt_portfolio_comment', function(Create $table)
         {
             $table->addColumn('comment_id','int')->unsigned()->autoIncrement(); $table->addColumn('portfolio_id','int')->unsigned(); $table->addColumn('user_id','int')->unsigned();
-            $table->addColumn('username','varchar',50)->setDefault(''); $table->addColumn('message','text'); $table->addColumn('state','varchar',16)->setDefault('visible');
+            $table->addColumn('username','varchar',50)->setDefault(''); $table->addColumn('message','text'); $table->addColumn('attach_count','smallint')->unsigned()->setDefault(0); $table->addColumn('state','varchar',16)->setDefault('visible');
             $table->addColumn('created_date','int')->unsigned(); $table->addColumn('updated_date','int')->unsigned()->setDefault(0); $table->addColumn('deleted_date','int')->unsigned()->setDefault(0);
             $table->addPrimaryKey('comment_id'); $table->addKey(['portfolio_id','state','created_date']); $table->addKey(['user_id','created_date']);
         });
