@@ -8,9 +8,9 @@ use Warext\Portfolio\Entity\ModerationReport;
 
 class ModerationManager extends AbstractService
 {
-    private const REASONS = ['stolen_work', 'copyright', 'inappropriate', 'suspected_malicious', 'spam', 'wrong_category', 'other'];
+    private const REASONS = ['stolen_work', 'copyright', 'inappropriate', 'harassment', 'suspected_malicious', 'spam', 'wrong_category', 'other'];
 
-    public function createReport(Portfolio $portfolio, string $reasonCode, string $message = '', int $fileId = 0): ModerationReport
+    public function createReport(Portfolio $portfolio, string $reasonCode, string $message = '', int $fileId = 0, int $commentId = 0): ModerationReport
     {
         $visitor = \XF::visitor();
         if (!$visitor->user_id || !$visitor->hasPermission('wrxtPortfolio', 'report') || !$portfolio->canView())
@@ -21,38 +21,74 @@ class ModerationManager extends AbstractService
         {
             throw new \RuntimeException('wrxt_portfolio_report_reason_invalid');
         }
+
         $message = mb_substr(trim(preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $message) ?? ''), 0, 1500, 'UTF-8');
-        $lock = 'wrxtp_report_' . (int)$visitor->user_id . '_' . (int)$portfolio->portfolio_id;
+
+        if ($fileId)
+        {
+            $file = $this->em()->find('Warext\Portfolio:PortfolioFile', $fileId);
+            if (!$file || (int)$file->portfolio_id !== (int)$portfolio->portfolio_id)
+            {
+                throw new \RuntimeException('wrxt_portfolio_report_target_invalid');
+            }
+        }
+
+        if ($commentId)
+        {
+            $comment = $this->em()->find('Warext\Portfolio:Comment', $commentId);
+            if (!$comment || (int)$comment->portfolio_id !== (int)$portfolio->portfolio_id || (string)$comment->state !== 'visible')
+            {
+                throw new \RuntimeException('wrxt_portfolio_report_target_invalid');
+            }
+            // Yorum raporu bir dosya raporu değildir.
+            $fileId = 0;
+        }
+
+        $targetKey = $commentId ? 'c' . $commentId : ($fileId ? 'f' . $fileId : 'p');
+        $lock = 'wrxtp_report_' . (int)$visitor->user_id . '_' . (int)$portfolio->portfolio_id . '_' . $targetKey;
         if ((int)$this->db()->fetchOne('SELECT GET_LOCK(?, 5)', $lock) !== 1)
         {
             throw new \RuntimeException('wrxt_portfolio_report_duplicate');
         }
+
         try
         {
-            $daily = (int)$this->db()->fetchOne('SELECT COUNT(*) FROM xf_wrxt_portfolio_moderation_report WHERE reporter_user_id = ? AND created_date >= ?', [$visitor->user_id, \XF::$time - 86400]);
+            $daily = (int)$this->db()->fetchOne(
+                'SELECT COUNT(*) FROM xf_wrxt_portfolio_moderation_report WHERE reporter_user_id = ? AND created_date >= ?',
+                [$visitor->user_id, \XF::$time - 86400]
+            );
             if ($daily >= 20)
             {
                 throw new \RuntimeException('wrxt_portfolio_report_daily_limit');
             }
-            $duplicate = (bool)$this->db()->fetchOne("SELECT 1 FROM xf_wrxt_portfolio_moderation_report WHERE reporter_user_id = ? AND portfolio_id = ? AND reason_code = ? AND state IN ('open','reviewing') AND created_date >= ?", [$visitor->user_id, $portfolio->portfolio_id, $reasonCode, \XF::$time - 86400]);
+
+            $duplicate = (bool)$this->db()->fetchOne(
+                "SELECT 1
+                 FROM xf_wrxt_portfolio_moderation_report
+                 WHERE reporter_user_id = ?
+                   AND portfolio_id = ?
+                   AND file_id = ?
+                   AND comment_id = ?
+                   AND reason_code = ?
+                   AND state IN ('open','reviewing')
+                   AND created_date >= ?",
+                [$visitor->user_id, $portfolio->portfolio_id, $fileId, $commentId, $reasonCode, \XF::$time - 86400]
+            );
             if ($duplicate)
             {
                 throw new \RuntimeException('wrxt_portfolio_report_duplicate');
             }
-            if ($fileId)
-            {
-                $file = $this->em()->find('Warext\Portfolio:PortfolioFile', $fileId);
-                if (!$file || (int)$file->portfolio_id !== (int)$portfolio->portfolio_id) { $fileId = 0; }
-            }
+
             $report = $this->em()->create('Warext\Portfolio:ModerationReport');
             $report->portfolio_id = (int)$portfolio->portfolio_id;
             $report->file_id = $fileId;
+            $report->comment_id = $commentId;
             $report->reporter_user_id = (int)$visitor->user_id;
             $report->reporter_username = (string)$visitor->username;
             $report->reason_code = $reasonCode;
             $report->message = $message;
             $report->state = 'open';
-            $report->security_rescan_requested = ($reasonCode === 'suspected_malicious');
+            $report->security_rescan_requested = (!$commentId && $reasonCode === 'suspected_malicious');
             $report->created_date = \XF::$time;
             $report->save();
         }
@@ -60,11 +96,21 @@ class ModerationManager extends AbstractService
         {
             $this->db()->fetchOne('SELECT RELEASE_LOCK(?)', $lock);
         }
+
         if ($report->security_rescan_requested)
         {
             $this->enqueuePortfolioRescan($portfolio, 'user_security_report');
         }
-        $this->service('Warext\Portfolio:AuditLogger')->log('report_created', 'moderation_report', (int)$report->report_id, (int)$portfolio->portfolio_id, $fileId, $reasonCode);
+
+        $this->service('Warext\Portfolio:AuditLogger')->log(
+            'report_created',
+            $commentId ? 'portfolio_comment' : 'moderation_report',
+            $commentId ?: (int)$report->report_id,
+            (int)$portfolio->portfolio_id,
+            $fileId,
+            $reasonCode,
+            ['report_id' => (int)$report->report_id, 'comment_id' => $commentId]
+        );
         return $report;
     }
 
@@ -192,7 +238,15 @@ class ModerationManager extends AbstractService
         $report->updated_date = \XF::$time;
         $report->resolved_date = \XF::$time;
         $report->save();
-        $this->service('Warext\Portfolio:AuditLogger')->log('report_' . $state, 'moderation_report', (int)$report->report_id, (int)$report->portfolio_id, (int)$report->file_id, (string)$report->reason_code);
+        $this->service('Warext\Portfolio:AuditLogger')->log(
+            'report_' . $state,
+            $report->comment_id ? 'portfolio_comment' : 'moderation_report',
+            $report->comment_id ?: (int)$report->report_id,
+            (int)$report->portfolio_id,
+            (int)$report->file_id,
+            (string)$report->reason_code,
+            ['report_id' => (int)$report->report_id, 'comment_id' => (int)$report->comment_id]
+        );
     }
 
     public function enqueuePortfolioRescan(Portfolio $portfolio, string $reason = 'manual'): int
