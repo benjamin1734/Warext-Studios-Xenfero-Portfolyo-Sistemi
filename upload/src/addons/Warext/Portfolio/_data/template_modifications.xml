@@ -23,7 +23,7 @@
     <replace><![CDATA[<xf:title>{$portfolio.title}</xf:title><xf:css src="wrxt_portfolio.less" /><xf:css src="message.less" /><xf:css src="bb_code.less" /><xf:js src="xf/message.js" min="1" />]]></replace>
   </modification>
 
-  <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_native_comments" description="Portfolyo yorumlarını XenForo thread_view içindeki gerçek message block ve ayrı quick reply iskeletine geçirir" execution_order="10" enabled="1" action="str_replace">
+  <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_native_comments" description="Portfolyo yorumlarını XenForo thread_view message ve quick_reply_macros altyapısına bağlar" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<div class="block"><div class="block-container"><h2 class="block-header">Yorumlar <span class="label label--subtle">{$portfolio.comment_count}</span></h2><div class="block-body"><xf:if is="$comments is not empty"><xf:foreach loop="$comments" value="$comment"><div class="block-row"><div class="contentRow"><div class="contentRow-main"><div class="contentRow-title"><b>{$comment.username}</b></div><div class="contentRow-minor">{{ date_time($comment.created_date) }}</div><div style="margin-top:7px">{$comment.message}</div></div></div></div></xf:foreach><xf:else /><div class="block-row">Henüz yorum yapılmamış.</div></xf:if></div><xf:if is="$portfolio.status == 'published' AND $xf.visitor.user_id"><xf:form action="{{ link('portfolyo/calisma/comment',$portfolio) }}" ajax="true"><div class="block-body"><xf:textarearow name="message" rows="3" maxlength="1000" label="Yorumunuz" /></div><xf:submitrow submit="Yorum gönder" /></xf:form></xf:if></div></div>]]></find>
     <replace><![CDATA[<section class="wrxtPfComments" id="portfolio-comments">
     <div class="block">
@@ -78,6 +78,14 @@
                                             </div>
                                         </div>
 
+                                        <xf:if is="$comment.attach_count">
+                                            <xf:macro template="message_macros"
+                                                      name="attachments"
+                                                      arg-attachments="{$comment.Attachments}"
+                                                      arg-message="{$comment}"
+                                                      arg-canView="{$comment.canViewAttachments()}" />
+                                        </xf:if>
+
                                         <footer class="message-footer">
                                             <div class="message-actionBar actionBar">
                                                 <div class="actionBar-set actionBar-set--internal">
@@ -114,12 +122,14 @@
         <xf:form action="{{ link('portfolyo/calisma/comment', $portfolio) }}"
                  ajax="true"
                  class="block js-quickReply"
-                 data-xf-init="quick-reply ajax-submit"
+                 data-xf-init="attachment-manager quick-reply"
+                 data-message-container="div[data-type='comment'] .js-replyNewMessageContainer"
                  data-preview-url="{{ link('portfolyo-yorum-onizle', null, {'portfolio_id': $portfolio.portfolio_id}) }}">
             <div class="block-container">
                 <div class="block-body">
                     <xf:macro template="quick_reply_macros"
                               name="body"
+                              arg-attachmentData="{$attachmentData}"
                               arg-showPreviewButton="true"
                               arg-submitText="Yorum gönder"
                               arg-minHeight="140"
