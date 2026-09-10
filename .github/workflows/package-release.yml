@@ -86,6 +86,18 @@ jobs:
           print(f'Local template modification anchors OK ({checked})')
           PY
 
+      - name: Validate XenForo comment skeleton
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='upload/src/addons/Warext/Portfolio/_data/template_modifications.xml'
+          grep -q 'class="block block--messages"' "$FILE"
+          grep -q 'template="message_macros"' "$FILE"
+          grep -q 'name="user_info"' "$FILE"
+          grep -q 'class="block js-quickReply"' "$FILE"
+          grep -q 'message-attribution message-attribution--split' "$FILE"
+          echo 'Native XenForo comment skeleton OK'
+
       - name: Regenerate XenForo file hashes
         shell: bash
         run: |
@@ -141,7 +153,7 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Her portfolyo yorumu bağımsız XenForo message kartı olarak gösteriliyor\n- Yorumların tek ortak kutuda birleşmesi kaldırıldı\n- Hızlı cevap editörü yorum listesinden ayrılarak ayrı block js-quickReply yapısına taşındı\n- Quick reply içinde XenForo block-container/block-body/message--quickReply hiyerarşisi kullanılıyor\n- message.less ve bb_code.less ile 1.1.2 yorum backend/raporlama geliştirmeleri korunuyor\n- Manuel SQL gerekmiyor"
+          NOTES="Warext Studios XenForo Portfolyo Sistemi ${VERSION}\n\n- Yorum listesi XenForo thread_view içindeki block block--messages yapısına geçirildi\n- Her yorum gerçek message--post/js-post kartı olarak render ediliyor\n- Kullanıcı paneli message_macros::user_info ile XenForo'nun kendi postbit yapısından geliyor\n- Tarih/meta, mesaj içeriği ve action bar normal post sınıf hiyerarşisini kullanıyor\n- Raporla/Sil iç aksiyon grubuna, quick reply ayrı block js-quickReply alanına taşındı\n- Manuel SQL gerekmiyor"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
           else
