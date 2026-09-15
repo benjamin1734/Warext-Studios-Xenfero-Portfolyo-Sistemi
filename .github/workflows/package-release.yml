@@ -20,7 +20,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Read version
         id: version
         shell: bash
@@ -32,15 +31,11 @@ jobs:
           PY
           )
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
       - name: PHP syntax check
         shell: bash
         run: |
           set -euo pipefail
-          while IFS= read -r -d '' file; do
-            php -l "$file" >/dev/null
-          done < <(find upload/src/addons/Warext/Portfolio -type f -name '*.php' -print0)
-
+          while IFS= read -r -d '' file; do php -l "$file" >/dev/null; done < <(find upload/src/addons/Warext/Portfolio -type f -name '*.php' -print0)
       - name: Validate XML and JSON data
         shell: bash
         run: |
@@ -49,7 +44,6 @@ jobs:
           import json
           import xml.etree.ElementTree as ET
           from pathlib import Path
-
           root = Path('upload/src/addons/Warext/Portfolio')
           for path in root.rglob('*.json'):
               json.loads(path.read_text(encoding='utf-8'))
@@ -57,7 +51,6 @@ jobs:
               ET.parse(path)
           print('JSON/XML validation OK')
           PY
-
       - name: Validate local template modification anchors
         shell: bash
         run: |
@@ -65,7 +58,6 @@ jobs:
           python3 - <<'PY'
           import xml.etree.ElementTree as ET
           from pathlib import Path
-
           data = Path('upload/src/addons/Warext/Portfolio/_data')
           templates_root = ET.parse(data / 'templates.xml').getroot()
           modifications_root = ET.parse(data / 'template_modifications.xml').getroot()
@@ -85,7 +77,6 @@ jobs:
               raise SystemExit('Template modification anchor bulunamadı: ' + ', '.join(failed))
           print(f'Local template modification anchors OK ({checked})')
           PY
-
       - name: Validate XenForo native comments and quick reply
         shell: bash
         run: |
@@ -98,7 +89,6 @@ jobs:
           ENTITY='upload/src/addons/Warext/Portfolio/Entity/Comment.php'
           HANDLER='upload/src/addons/Warext/Portfolio/Attachment/Comment.php'
           MIGRATION='upload/src/addons/Warext/Portfolio/Setup/CommentAttachmentUpgradeTrait.php'
-
           grep -q 'class="block block--messages"' "$MOD"
           grep -q 'template="message_macros"' "$MOD"
           grep -q 'name="user_info"' "$MOD"
@@ -112,7 +102,6 @@ jobs:
           grep -q 'data-preview-url=' "$MOD"
           grep -q 'xf/message.js' "$MOD"
           grep -q 'message-attribution message-attribution--split' "$MOD"
-
           grep -q 'content_type="wrxt_portfolio_comment" field_name="attachment_handler_class"' "$TYPES"
           grep -q 'Warext\\Portfolio\\Attachment\\Comment' "$TYPES"
           grep -q 'controller="Warext\\Portfolio:ItemNative"' "$ROUTES"
@@ -125,24 +114,14 @@ jobs:
           grep -q "class Comment extends AbstractHandler" "$HANDLER"
           grep -q "upgrade1010107Step1" "$MIGRATION"
           grep -q "attach_count" "$MIGRATION"
-
-          if grep -q '<xf:editor name="message" placeholder="Yorumunuzu yazın..."' "$MOD"; then
-            echo 'Custom quick-reply editor is still present.' >&2
-            exit 1
-          fi
-          if grep -q 'data-xf-init="quick-reply ajax-submit"' "$MOD"; then
-            echo 'Legacy Portfolyo quick-reply init is still present.' >&2
-            exit 1
-          fi
-
+          if grep -q '<xf:editor name="message" placeholder="Yorumunuzu yazın..."' "$MOD"; then exit 1; fi
+          if grep -q 'data-xf-init="quick-reply ajax-submit"' "$MOD"; then exit 1; fi
           echo 'Native XenForo comments + quick reply + attachment manager OK'
-
       - name: Regenerate XenForo file hashes
         shell: bash
         run: |
           python3 - <<'PY'
-          import hashlib
-          import json
+          import hashlib, json
           from pathlib import Path
           upload = Path('upload')
           hash_file = upload / 'src/addons/Warext/Portfolio/hashes.json'
@@ -155,7 +134,6 @@ jobs:
                   hashes[path.relative_to(upload).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
           hash_file.write_text(json.dumps(hashes, ensure_ascii=False, indent=4) + '\n', encoding='utf-8')
           PY
-
       - name: Build XenForo install ZIP
         shell: bash
         run: |
@@ -167,7 +145,6 @@ jobs:
           zip -r -9 "$ZIP" README.md upload >/dev/null
           sha256sum "$ZIP" > dist/SHA256SUMS.txt
           unzip -t "$ZIP"
-
       - name: Commit packaged release
         shell: bash
         run: |
@@ -182,7 +159,6 @@ jobs:
             git commit -m "release: package Portfolyo ${VERSION}"
             git push
           fi
-
       - name: Publish GitHub Release
         shell: bash
         env:
@@ -192,35 +168,8 @@ jobs:
           VERSION='${{ steps.version.outputs.version }}'
           TAG="v${VERSION}"
           ZIP="dist/Warext-Studios-XenForo-Portfolyo-Sistemi-${VERSION}.zip"
-          cat > /tmp/release-notes.md <<EOF
-Warext Studios XenForo Portfolyo Sistemi ${VERSION}
-
-- Portfolyo yorum alanı normal XenForo attachment-manager quick-reply zincirine bağlandı
-- XenForo `quick_reply_macros::body` gerçek `attachmentData` ile çalışıyor
-- Dosya ekle kontrolü XenForo çekirdek attachment manager tarafından oluşturuluyor
-- `wrxt_portfolio_comment` için gerçek attachment content type ve handler eklendi
-- Geçici ekler gönderimde güvenli şekilde yoruma ilişkilendiriliyor
-- Önizleme geçici ekleri destekliyor
-- Gönderilmiş ekler `message_macros::attachments` ile gösteriliyor
-- Eski kurulumlarda `attach_count` alanı otomatik migration ile ekleniyor
-- Manuel SQL gerekmiyor
-
----
-
-## English
-
-Warext Studios XenForo Portfolio System ${VERSION}
-
-- The Portfolio comment area is connected to XenForo's normal attachment-manager quick-reply chain.
-- `quick_reply_macros::body` now works with real `attachmentData`.
-- The Add files control is generated by XenForo's core attachment manager.
-- A real attachment content type and handler were added for `wrxt_portfolio_comment`.
-- Temporary attachments are securely associated with the comment when it is submitted.
-- Preview supports temporary attachments.
-- Submitted attachments are rendered through `message_macros::attachments`.
-- Existing installations receive the `attach_count` field automatically through migration.
-- No manual SQL is required.
-EOF
+          echo 'V2FyZXh0IFN0dWRpb3MgWGVuRm9ybyBQb3J0Zm9seW8gU2lzdGVtaSAxLjEuNwoKLSBQb3J0Zm9seW8geW9ydW0gYWxhbsSxIG5vcm1hbCBYZW5Gb3JvIGF0dGFjaG1lbnQtbWFuYWdlciBxdWljay1yZXBseSB6aW5jaXJpbmUgYmHEn2xhbmTEsQotIFhlbkZvcm8gYHF1aWNrX3JlcGx5X21hY3Jvczo6Ym9keWAgZ2Vyw6dlayBgYXR0YWNobWVudERhdGFgIGlsZSDDp2FsxLHFn8SxeW9yCi0gRG9zeWEgZWtsZSBrb250cm9sw7wgWGVuRm9ybyDDp2VraXJkZWsgYXR0YWNobWVudCBtYW5hZ2VyIHRhcmFmxLFuZGFuIG9sdcWfdHVydWx1eW9yCi0gYHdyeHRfcG9ydGZvbGlvX2NvbW1lbnRgIGnDp2luIGdlcsOnZWsgYXR0YWNobWVudCBjb250ZW50IHR5cGUgdmUgaGFuZGxlciBla2xlbmRpCi0gR2XDp2ljaSBla2xlciBnw7ZuZGVyaW1kZSBnw7x2ZW5saSDFn2VraWxkZSB5b3J1bWEgaWxpxZ9raWxlbmRpcmlsaXlvcgotIMOWbml6bGVtZSBnZcOnaWNpIGVrbGVyaSBkZXN0ZWtsaXlvcgotIEfDtm5kZXJpbG1pxZ8gZWtsZXIgYG1lc3NhZ2VfbWFjcm9zOjphdHRhY2htZW50c2AgaWxlIGfDtnN0ZXJpbGl5b3IKLSBFc2tpIGt1cnVsdW1sYXJkYSBgYXR0YWNoX2NvdW50YCBhbGFuxLEgb3RvbWF0aWsgbWlncmF0aW9uIGlsZSBla2xlbml5b3IKLSBNYW51ZWwgU1FMIGdlcmVrbWl5b3IKCi0tLQoKIyMgRW5nbGlzaAoKV2FyZXh0IFN0dWRpb3MgWGVuRm9ybyBQb3J0Zm9saW8gU3lzdGVtIDEuMS43CgotIFRoZSBQb3J0Zm9saW8gY29tbWVudCBhcmVhIGlzIGNvbm5lY3RlZCB0byBYZW5Gb3JvJ3Mgbm9ybWFsIGF0dGFjaG1lbnQtbWFuYWdlciBxdWljay1yZXBseSBjaGFpbi4KLSBgcXVpY2tfcmVwbHlfbWFjcm9zOjpib2R5YCBub3cgd29ya3Mgd2l0aCByZWFsIGBhdHRhY2htZW50RGF0YWAuCi0gVGhlIEFkZCBmaWxlcyBjb250cm9sIGlzIGdlbmVyYXRlZCBieSBYZW5Gb3JvJ3MgY29yZSBhdHRhY2htZW50IG1hbmFnZXIuCi0gQSByZWFsIGF0dGFjaG1lbnQgY29udGVudCB0eXBlIGFuZCBoYW5kbGVyIHdlcmUgYWRkZWQgZm9yIGB3cnh0X3BvcnRmb2xpb19jb21tZW50YC4KLSBUZW1wb3JhcnkgYXR0YWNobWVudHMgYXJlIHNlY3VyZWx5IGFzc29jaWF0ZWQgd2l0aCB0aGUgY29tbWVudCB3aGVuIGl0IGlzIHN1Ym1pdHRlZC4KLSBQcmV2aWV3IHN1cHBvcnRzIHRlbXBvcmFyeSBhdHRhY2htZW50cy4KLSBTdWJtaXR0ZWQgYXR0YWNobWVudHMgYXJlIHJlbmRlcmVkIHRocm91Z2ggYG1lc3NhZ2VfbWFjcm9zOjphdHRhY2htZW50c2AuCi0gRXhpc3RpbmcgaW5zdGFsbGF0aW9ucyByZWNlaXZlIHRoZSBgYXR0YWNoX2NvdW50YCBmaWVsZCBhdXRvbWF0aWNhbGx5IHRocm91Z2ggbWlncmF0aW9uLgotIE5vIG1hbnVhbCBTUUwgaXMgcmVxdWlyZWQuCg==' | base64 --decode > /tmp/release-notes.md
+          sed -i "s/1.1.7/${VERSION}/g" /tmp/release-notes.md
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release edit "$TAG" --title "$VERSION" --notes-file /tmp/release-notes.md
             gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
