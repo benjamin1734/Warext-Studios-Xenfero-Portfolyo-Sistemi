@@ -63,3 +63,71 @@ Bu nedenle aktif tema veya XenForo'nun normal konu editörünü uyumlu biçimde 
 - Eski kurulumlar için `attach_count` migration'ı otomatik çalışır.
 - 1.1.6'daki native editör, postbit, BB code, raporlama ve güvenlik davranışları korunur.
 - Manuel SQL gerekmez.
+
+---
+
+# English
+
+Warext Studios XenForo Portfolio System is a XenForo 2.3+ add-on for publishing visual work and 3D projects.
+
+**Current version:** 1.1.7  
+**Add-on ID:** `Warext/Portfolio`
+
+## Installation / upgrade
+
+Upload `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.7.zip` from GitHub Releases through XenForo Admin CP → **Add-ons → Install/upgrade from archive** over the existing version.
+
+No manual SQL import is required for 1.1.7. On existing installations, the `attach_count` field required for comment attachments is created automatically during the add-on upgrade.
+
+## User-facing pages
+
+- Navbar **Portfolio** → `/portfolyo/`: public showcase of published work.
+- User menu **My Portfolio** → `/portfolyo/mine`
+- User menu **New Work** → `/portfolyo/add`
+- User menu **Saved Items** → `/portfolyo/saved`
+- Users can upload a cover image, multiple gallery images, and GLB 3D models when their group is allowed to do so.
+
+## Comment system
+
+Portfolio comments are connected directly to XenForo's normal thread-message and quick-reply infrastructure. The add-on does not create a separate editor that merely imitates XenForo.
+
+- The comment list uses `block block--messages`, and every comment uses the `message message--post js-post` structure.
+- User postbits are rendered with XenForo `message_macros::user_info`.
+- The quick-reply form uses the same `block js-quickReply` and `attachment-manager quick-reply` handlers as normal threads.
+- The editor body comes directly from XenForo's `quick_reply_macros::body` macro.
+- `attachmentData` is prepared by XenForo's `XF:Attachment` repository. This means **Attach files**, upload progress, attachment removal, and small/full image insertion are handled by XenForo's own attachment manager.
+- Comment attachments use the `wrxt_portfolio_comment` content type and `Warext\Portfolio\Attachment\Comment` handler and are stored through XenForo's attachment tables.
+- On submit, `attachment_hash` is validated and only temporary files uploaded by the logged-in user for that specific Portfolio comment are associated with the new comment.
+- Preview uses XenForo `XF:BbCodePreview` and supports temporary attachments that have not yet been submitted.
+- Submitted comment attachments are displayed using `message_macros::attachments`; attachments already embedded through `[ATTACH]` are not listed a second time.
+- Comment text is read as BBCode through `EditorPlugin::fromInput('message')` and rendered by XenForo's BBCode renderer.
+- **Report** and **Delete** actions are located in the comment message action bar.
+
+Because the same core DOM and macro infrastructure is used, active styles or compatible add-ons that modify XenForo's normal thread editor also see the same underlying structures in the Portfolio quick-reply area.
+
+## Publishing pipeline
+
+1. The uploaded file is quarantined.
+2. MIME type, magic bytes, file structure, size, and SHA-256 are validated.
+3. Malware scanning is performed when ClamAV is available.
+4. JPG/PNG/WebP images are converted into safe WebP output; if the isolated worker is unavailable, Imagick/GD fallback processing is attempted.
+5. GLB models are analyzed by an isolated worker.
+6. Processed output is stored in the blob store; if normal blob publishing fails, a validated direct-blob fallback may be used.
+7. After technical checks pass, the work is sent to **Portfolio Moderation**.
+8. Authorized staff can **Approve and publish** or **Reject** the submission.
+
+## Admin CP
+
+The **Portfolio System** section includes Portfolio Management, Portfolio Moderation, Security Center, Quarantine / processing queue, Blocked Files, Security Events, Audit Logs, SHA-256 Block List, and Portfolio Settings.
+
+## 1.1.7
+
+- The `attachment-manager quick-reply` chain used by normal XenForo thread replies is connected to Portfolio comments.
+- `quick_reply_macros::body` now receives real XenForo `attachmentData`; the **Attach files** control is created by the core attachment manager rather than a simulated UI.
+- A XenForo attachment content type and handler were added for `wrxt_portfolio_comment`.
+- Temporary attachments are securely associated with comments when submitted.
+- Preview supports temporary attachments.
+- Submitted attachments use the normal `message_macros::attachments` rendering flow.
+- The `attach_count` migration runs automatically for older installations.
+- Native editor, postbit, BBCode, reporting, and security behavior from 1.1.6 is retained.
+- No manual SQL is required.
