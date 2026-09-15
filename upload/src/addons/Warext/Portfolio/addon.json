@@ -3,7 +3,8 @@
     "description": "XenForo üyeleri için güvenli görsel ve 3D çalışma portfolyo sistemi.",
     "version_id": 1010107,
     "version_string": "1.1.7",
-    "dev": "Warext Studios",
+    "dev": "Warext Studios | Support Discord Server",
+    "dev_url": "https://discord.gg/tgsV5XMcFS",
     "require": {
         "XF": [
             2030000,
