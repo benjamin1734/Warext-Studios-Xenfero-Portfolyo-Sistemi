@@ -1,4 +1,6 @@
-# Warext Studios | XenForo Portfolyo Sistemi
+# Warext Studios | XenForo Portfolio System
+
+## Türkçe
 
 XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
@@ -64,9 +66,15 @@ Bu nedenle aktif tema veya XenForo'nun normal konu editörünü uyumlu biçimde 
 - 1.1.6'daki native editör, postbit, BB code, raporlama ve güvenlik davranışları korunur.
 - Manuel SQL gerekmez.
 
+## Destek
+
+Sorularınız, hata bildirimleriniz, kurulum desteği ve Warext Studios XenForo eklentileriyle ilgili yardım için destek Discord sunucumuza katılabilirsiniz:
+
+**Discord:** https://discord.gg/tgsV5XMcFS
+
 ---
 
-# English
+## English
 
 Warext Studios XenForo Portfolio System is a XenForo 2.3+ add-on for publishing visual work and 3D projects.
 
@@ -131,3 +139,9 @@ The **Portfolio System** section includes Portfolio Management, Portfolio Modera
 - The `attach_count` migration runs automatically for older installations.
 - Native editor, postbit, BBCode, reporting, and security behavior from 1.1.6 is retained.
 - No manual SQL is required.
+
+## Support
+
+For questions, bug reports, installation support, and help with Warext Studios XenForo add-ons, you can join our support Discord server:
+
+**Discord:** https://discord.gg/tgsV5XMcFS
