@@ -172,7 +172,7 @@ jobs:
           sed -i "s/1.1.7/${VERSION}/g" /tmp/release-notes.md
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release edit "$TAG" --title "$VERSION" --notes-file /tmp/release-notes.md
-            gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber
+            gh release upload "$TAG" "$ZIP" dist/SHA256SUMS.txt --clobber languages/Turkish.xml languages/English.xml --clobber
           else
-            gh release create "$TAG" "$ZIP" dist/SHA256SUMS.txt --target main --title "$VERSION" --notes-file /tmp/release-notes.md
+            gh release create "$TAG" "$ZIP languages/Turkish.xml languages/English.xml" dist/SHA256SUMS.txt --target main --title "$VERSION" --notes-file /tmp/release-notes.md
           fi
