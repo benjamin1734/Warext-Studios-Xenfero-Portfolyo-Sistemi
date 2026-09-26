@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language title="Warext Portfolio Türkçe (TR)" date_format="j F Y" time_format="H:i" decimal_point="," thousands_separator="." language_code="tr-TR" text_direction="LTR">
+  <phrase title="wrxt_portfolio" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo]]></phrase>
+  <phrase title="wrxt_portfolio_profile_button" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo]]></phrase>
+  <phrase title="wrxt_portfolio_invalid_category" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Geçerli bir portfolyo kategorisi seçin.]]></phrase>
+  <phrase title="wrxt_portfolio_type_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu kategori seçilen çalışma türünü kabul etmiyor.]]></phrase>
+  <phrase title="wrxt_portfolio_not_found" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo çalışması bulunamadı.]]></phrase>
+  <phrase title="wrxt_portfolio_upload_empty" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Boş dosya yüklenemez.]]></phrase>
+  <phrase title="wrxt_portfolio_model_upload_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu hesap veya çalışma için 3D model yükleme izni bulunmuyor.]]></phrase>
+  <phrase title="wrxt_portfolio_file_too_large" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Dosya, hesabınız için izin verilen tek dosya boyutu sınırını aşıyor.]]></phrase>
+  <phrase title="wrxt_portfolio_file_count_limit" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu çalışma için izin verilen dosya sayısı sınırına ulaşıldı.]]></phrase>
+  <phrase title="wrxt_portfolio_storage_quota_exceeded" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo depolama kotanız doldu.]]></phrase>
+  <phrase title="wrxt_portfolio_upload_rate_limit" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Çok fazla dosya yükleme isteği yapıldı. Daha sonra tekrar deneyin.]]></phrase>
+  <phrase title="wrxt_portfolio_storage_unavailable" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo depolama alanına şu anda erişilemiyor.]]></phrase>
+  <phrase title="wrxt_portfolio_storage_reserve" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Sunucu güvenli boş alan sınırına ulaştığı için yeni dosya yüklemeleri geçici olarak durduruldu.]]></phrase>
+  <phrase title="wrxt_portfolio_invalid_file_role" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Geçersiz dosya türü seçildi.]]></phrase>
+  <phrase title="wrxt_portfolio_upload_failed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Dosya yüklenemedi.]]></phrase>
+  <phrase title="wrxt_portfolio_extension_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu dosya uzantısına izin verilmiyor.]]></phrase>
+  <phrase title="wrxt_portfolio_model_requires_glb" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model dosyaları yalnızca GLB biçiminde yüklenebilir.]]></phrase>
+  <phrase title="wrxt_portfolio_image_required" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Kapak ve galeri alanlarında yalnızca desteklenen görsel dosyaları kullanılabilir.]]></phrase>
+  <phrase title="wrxt_portfolio_select_file" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yüklenecek bir dosya seçin.]]></phrase>
+  <phrase title="wrxt_portfolio_security_waiting" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Dosyanız güvenlik kontrolü bekliyor.]]></phrase>
+  <phrase title="wrxt_portfolio_security_failed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Dosya güvenlik kontrollerinden geçemedi.]]></phrase>
+  <phrase title="wrxt_portfolio_clamav_unavailable" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Zararlı yazılım tarama servisine şu anda erişilemiyor. Dosya yayınlanmayacak ve tarama otomatik olarak yeniden denenecek.]]></phrase>
+  <phrase title="wrxt_portfolio_like_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu çalışmayı beğenme izniniz yok.]]></phrase>
+  <phrase title="wrxt_portfolio_save_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu çalışmayı kaydetme izniniz yok.]]></phrase>
+  <phrase title="wrxt_portfolio_follow_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu kullanıcıyı takip edemezsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_comment_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yorum yapma izniniz yok.]]></phrase>
+  <phrase title="wrxt_portfolio_comment_empty" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yorum boş olamaz.]]></phrase>
+  <phrase title="wrxt_portfolio_comment_flood" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Çok hızlı yorum gönderiyorsunuz. Birkaç saniye sonra tekrar deneyin.]]></phrase>
+  <phrase title="wrxt_portfolio_comment_daily_limit" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Günlük yorum sınırına ulaştınız.]]></phrase>
+  <phrase title="wrxt_portfolio_comment_delete_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu yorumu silemezsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_report_not_allowed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Bu çalışmayı raporlayamazsınız.]]></phrase>
+  <phrase title="wrxt_portfolio_report_reason_invalid" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Geçerli bir rapor nedeni seçin.]]></phrase>
+  <phrase title="wrxt_portfolio_report_daily_limit" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Günlük rapor sınırına ulaştınız.]]></phrase>
+  <phrase title="wrxt_portfolio_report_duplicate" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Aynı çalışma için benzer açık bir raporunuz zaten bulunuyor.]]></phrase>
+  <phrase title="wrxt_portfolio_security_not_passed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Çalışma teknik güvenlik kontrollerini geçmediği için yayınlanamaz.]]></phrase>
+  <phrase title="wrxt_portfolio_blob_security_blocked" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Çalışmanın dosyalarından biri teknik güvenlik tarafından engellendi. Bu karar moderasyon tarafından aşılamaz.]]></phrase>
+  <phrase title="wrxt_portfolio_file_not_security_passed" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Tüm dosyalar güvenlik kontrolünden geçmeden çalışma yayınlanamaz.]]></phrase>
+  <phrase title="wrxt_portfolio_no_safe_files" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yayınlanabilecek güvenli dosya bulunmuyor.]]></phrase>
+  <phrase title="wrxt_portfolio_published_file_delete_requires_moderation" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yayınlanmış bir dosya doğrudan silinemez. Yeni bir dosya yükleyip moderasyon onayından sonra değiştirin.]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioAdmin" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo Sistemi]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioOverview" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo Yönetimi]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioModeration" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Moderasyon ve Raporlar]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioSecurity" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Güvenlik Merkezi]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioQuarantine" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Karantina]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioBlocked" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Engellenen Dosyalar]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioEvents" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Güvenlik Olayları]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioAudit" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Denetim Kayıtları]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioHashes" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[SHA-256 Engelleme Listesi]]></phrase>
+  <phrase title="admin_navigation.wrxtPortfolioSettings" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo Ayarları]]></phrase>
+  <phrase title="admin_permission.wrxtPortfolioManage" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo sistemini yönet]]></phrase>
+  <phrase title="admin_permission.wrxtPortfolioModerate" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo moderasyonunu yönet]]></phrase>
+  <phrase title="admin_permission.wrxtPortfolioSecurity" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo güvenlik merkezini yönet]]></phrase>
+  <phrase title="option_group.wrxtPortfolioSettings" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Warext Studios - Portfolyo Sistemi]]></phrase>
+  <phrase title="nav.wrxtPortfolioNav" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo]]></phrase>
+  <phrase title="permission.wrxtPortfolio_view" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyoları görüntüleyebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_create" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo oluşturabilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_editOwn" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Kendi portfolyosunu düzenleyebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_deleteOwn" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Kendi portfolyosunu silebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_like" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo çalışmalarını beğenebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_comment" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo çalışmalarına yorum yapabilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_save" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo çalışmalarını kaydedebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_follow" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo sahiplerini takip edebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_deleteOwnComment" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Kendi portfolyo yorumunu silebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_report" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo çalışmasını raporlayabilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_moderate" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Portfolyo içeriğini modere edebilir]]></phrase>
+  <phrase title="permission.wrxtPortfolio_manage" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Tüm portfolyoları yönetebilir]]></phrase>
+  <phrase title="option.wrxtPfDiskReserveMb" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Minimum boş disk alanı (MB)]]></phrase>
+  <phrase title="option_explain.wrxtPfDiskReserveMb" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yeni yükleme kabul edilirken sunucuda korunacak minimum boş alan.]]></phrase>
+  <phrase title="option.wrxtPfUploadMins" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yükleme oturumu süresi (dakika)]]></phrase>
+  <phrase title="option_explain.wrxtPfUploadMins" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Açık bir portfolyo yükleme oturumunun etkin kalacağı süre.]]></phrase>
+  <phrase title="option.wrxtPfQuarantineHrs" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Karantina bekleme süresi (saat)]]></phrase>
+  <phrase title="option_explain.wrxtPfQuarantineHrs" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Tamamlanmayan veya karantinada kalan geçici dosyaların temizlenmeden önce tutulacağı süre.]]></phrase>
+  <phrase title="option.wrxtPfImgMaxW" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Maksimum görsel genişliği (px)]]></phrase>
+  <phrase title="option.wrxtPfImgMaxH" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Maksimum görsel yüksekliği (px)]]></phrase>
+  <phrase title="option.wrxtPfImgMaxMp" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Maksimum görsel çözünürlüğü (MP)]]></phrase>
+  <phrase title="option.wrxtPfClamMode" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[ClamAV bağlantı türü]]></phrase>
+  <phrase title="option.wrxtPfClamSocket" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[ClamAV Unix socket yolu]]></phrase>
+  <phrase title="option.wrxtPfClamHost" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[ClamAV sunucu adresi]]></phrase>
+  <phrase title="option.wrxtPfClamPort" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[ClamAV portu]]></phrase>
+  <phrase title="option.wrxtPfClamConnTimeout" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[ClamAV bağlantı zaman aşımı (sn)]]></phrase>
+  <phrase title="option.wrxtPfClamReadTimeout" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[ClamAV okuma zaman aşımı (sn)]]></phrase>
+  <phrase title="option.wrxtPfWorkerPhp" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Worker PHP CLI yolu]]></phrase>
+  <phrase title="option_explain.wrxtPfWorkerPhp" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Boş bırakılırsa sistem uygun PHP CLI yolunu kullanmayı dener.]]></phrase>
+  <phrase title="option.wrxtPfWorkerMemMb" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Worker bellek sınırı (MB)]]></phrase>
+  <phrase title="option.wrxtPfWorkerTimeout" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Worker işlem zaman aşımı (sn)]]></phrase>
+  <phrase title="option.wrxtPfDisplayMaxDim" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[İşlenmiş görsel maksimum kenarı (px)]]></phrase>
+  <phrase title="option.wrxtPfThumbMaxDim" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Küçük resim maksimum kenarı (px)]]></phrase>
+  <phrase title="option.wrxtPfWebpQuality" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[WebP kalite değeri]]></phrase>
+  <phrase title="option.wrxtPfProcRetryMins" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[İşleme yeniden deneme süresi (dakika)]]></phrase>
+  <phrase title="option.wrxtPfModelVertices" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum vertex sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelTriangles" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum üçgen sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelMeshes" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum mesh sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelPrimitives" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum primitive sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelNodes" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum node sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelMaterials" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum materyal sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelTextures" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum texture sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelAnimations" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum animasyon sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelSkins" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum skin sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelJoints" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum joint sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelAccessors" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum accessor sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelBufViews" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum bufferView sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelAccElems" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum accessor elemanı]]></phrase>
+  <phrase title="option.wrxtPfModelTexDim" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D doku maksimum boyutu (px)]]></phrase>
+  <phrase title="option.wrxtPfModelTexBytes" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D doku maksimum dosya boyutu (bayt)]]></phrase>
+  <phrase title="option.wrxtPfModelAnimKeys" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D animasyon maksimum keyframe sayısı]]></phrase>
+  <phrase title="option.wrxtPfModelNodeDepth" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[3D model maksimum node derinliği]]></phrase>
+  <phrase title="option.wrxtPfBlobGcHours" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yetim dosya silme bekleme süresi (saat)]]></phrase>
+  <phrase title="option_explain.wrxtPfBlobGcHours" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Referansı kalmayan güvenli dosyanın fiziksel olarak silinmeden önce tutulacağı süre.]]></phrase>
+  <phrase title="option.wrxtPfRescanDays" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yayınlanmış dosyaları yeniden tarama aralığı (gün)]]></phrase>
+  <phrase title="option_explain.wrxtPfRescanDays" addon_id="Warext/Portfolio" global_cache="0" version_id="1000104" version_string="1.0.4"><![CDATA[Yayındaki dosyaların güvenlik taramasına yeniden alınacağı periyot.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_category" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kategori]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_type" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Tür]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_sort" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Sıralama]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_filter" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Filtrele]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_your_comment" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yorumunuz]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_post_comment" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yorum gönder]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_title" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Başlık]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_software" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Programlar]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_e_g_blender_photoshop_blockbench" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Örn. Blender, Photoshop, Blockbench]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_tags" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Etiketler]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_separate_tags_with_commas" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Etiketleri virgülle ayırabilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_description" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Açıklama]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_you_can_use_formatting_links_and_other_bb_codes_with" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[XenForo editörü ile biçimlendirme, bağlantı ve diğer BB kodlarını kullanabilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_cover_image" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kapak görseli]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_main_image_used_on_cards_and_the_work_page" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kartlarda ve çalışma sayfasında kullanılacak ana görsel.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_gallery_images" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Galeri görselleri]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_you_can_select_multiple_images" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Birden fazla görsel seçebilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_3d_model" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[3D model]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_you_can_upload_a_glb_file_for_the_3d_model_type" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[3D model türü için GLB dosyası yükleyebilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_create_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışmayı oluştur]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_save_changes" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Değişiklikleri kaydet]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_file_role" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosya görevi]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_file" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosya]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_upload" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yükle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_delete" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Sil]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_reason" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Neden]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_submit_report" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Raporu gönder]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışma]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_rejection_reason" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Red nedeni]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_staff_note" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yetkili notu]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_reject" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Reddet]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_sha_256" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[SHA-256]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_note" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Not]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_save" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kaydet]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_community_portfolio" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Topluluk Portfolyosu]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_discover_visual_designs_minecraft_creations_web_proj" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Üyelerin yayınladığı görsel tasarımları, Minecraft çalışmalarını, web projelerini ve 3D modelleri keşfedin.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_all_categories" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Tüm kategoriler]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_all" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Tümü]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_visual" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Görsel]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_newest" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[En yeni]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_most_liked" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[En beğenilen]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_most_viewed" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[En çok görüntülenen]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_most_commented" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[En çok yorumlanan]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_oldest" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[En eski]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_published_works_yet" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Henüz yayınlanmış çalışma yok]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_change_the_filters_or_check_again_later" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Filtreleri değiştirin veya daha sonra tekrar kontrol edin.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_this_work_is_not_public_yet" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Bu çalışma henüz herkese açık değil.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_files_are_undergoing_security_and_processing_checks" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosyalar güvenlik ve işleme kontrolünde.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_one_of_the_files_failed_security_checks" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosyalardan biri güvenlik kontrolünden geçemedi.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_technical_checks_are_complete_awaiting_staff_approva" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Teknik kontroller tamamlandı; yetkili onayı bekleniyor.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_work_is_being_prepared" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışma hazırlanıyor.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_gallery" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Galeri]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_creator" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Üretici]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_software_used" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanılan programlar]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_report" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Raporla]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_edit_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışmayı düzenle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_comments" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yorumlar]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_comments_yet" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Henüz yorum yapılmamış.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_add_portfolio_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Portfolyo çalışması ekle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_new_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yeni çalışma]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_add_work_information_and_media_files_in_one_step_upl" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışma bilgilerini ve medya dosyalarını tek adımda ekleyin. Yüklenen dosyalar yayınlanmadan önce güvenlik ve moderasyon sürecinden geçer.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_select_category" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kategori seçin]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_visual_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Görsel çalışma]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_3d_model_uploads_are_disabled_for_your_user_group" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanıcı grubunuz için 3D model yükleme izni kapalı.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_work_information" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışma bilgileri]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_files" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosyalar]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_issues" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Sorun yok]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_files_have_been_added_to_this_work_yet" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Bu çalışmaya henüz dosya eklenmemiş.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_add_new_file" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yeni dosya ekle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_cover" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kapak]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_delete_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışmayı sil]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_be_permanently_deleted" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[kalıcı olarak silinsin mi?]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_my_works" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışmalarım]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_add_new_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yeni çalışma ekle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_published" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yayında]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_awaiting_staff_approval" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yetkili onayı bekliyor]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_files_are_being_checked" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosyalar kontrol ediliyor]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_security_check_failed" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Güvenlik kontrolü başarısız]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_draft" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Taslak]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_edit" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Düzenle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_you_do_not_have_any_portfolio_content_yet" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Henüz portfolyo içeriğiniz yok]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_after_adding_your_first_work_you_can_track_its_statu" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İlk çalışmanızı eklediğinizde burada durumunu ve istatistiklerini takip edebilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_add_your_first_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İlk çalışmanı ekle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_this_user_has_no_public_portfolio_works" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Bu kullanıcının herkese açık bir portfolyo çalışması bulunmuyor.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_saved" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kaydedilenler]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_saved_works" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kaydedilmiş çalışma yok]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_works_you_save_will_appear_here" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Beğendiğiniz çalışmaları kaydettiğinizde burada görebilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_stolen_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalıntı çalışma]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_copyright" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Telif hakkı]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_inappropriate_content" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Uygunsuz içerik]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_suspicious_file" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Şüpheli dosya]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_spam" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Spam]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_wrong_category" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Yanlış kategori]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_other" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Diğer]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_portfolio_moderation" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Portfolyo Moderasyonu]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_preview" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Önizle]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_approve_and_publish" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Onayla ve yayınla]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_works_awaiting_approval" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Onay bekleyen çalışma yok]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_works_that_complete_technical_security_checks_appear" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Teknik güvenlik kontrollerini tamamlayan çalışmalar burada görünür.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_reject_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çalışmayı reddet]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_copyright_ownership" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Telif / sahiplik]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_does_not_meet_content_criteria" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İçerik kriterlerini karşılamıyor]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_portfolio_security_center" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Portfolyo Güvenlik Merkezi]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_pending_processing" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İşlem bekleyen]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_awaiting_moderation" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Moderasyon bekleyen]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_blocked" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Engellenen]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_critical_events_in_last_24_hours" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Son 24 saat kritik olay]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_server_diagnostics" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Sunucu tanılaması]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_clamav" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[ClamAV:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_isolated_worker_proc_open" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İzole worker (proc_open):]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_image_engine" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Görsel motoru:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_clamav_connection" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[ClamAV bağlantısı yok.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_files_may_wait_at_the_scanning_step_after_structural" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Dosyalar teknik yapısal kontrolden sonra tarama adımında bekleyebilir. Karantina ekranından yeniden deneyebilir veya yalnızca doğrulaması geçmiş dosyalarda yetkili olarak “ClamAV olmadan devam” seçeneğini kullanabilirsiniz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_quarantine_processing_queue" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Karantina / işlem kuyruğu]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_moderation" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Moderasyon]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_blocked_1" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Engellenenler]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_reports" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Raporlar]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_events" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Olaylar]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_audit" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Denetim]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_portfolio_reports" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Portfolyo Raporları]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_resolved" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Çözüldü]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_reject_report" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Raporu reddet]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_quarantine_and_processing_queue" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Karantina ve İşlem Kuyruğu]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_status" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Durum:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_validation" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Doğrulama:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_scanning" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Tarama:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_processing" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İşleme:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_reason_2" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Neden:]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_retry_processing" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[İşlemi yeniden dene]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_continue_without_clamav" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[ClamAV olmadan devam]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_no_pending_files" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Bekleyen dosya yok]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_security_and_processing_queue_is_clear" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Güvenlik ve işleme kuyruğu temiz.]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_portfolio_audit_logs" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Portfolyo Denetim Kayıtları]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_3d_model_3" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[3D MODEL]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_image" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[GÖRSEL]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_unlike" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Beğeniyi kaldır]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_like" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Beğen]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_remove_saved_item" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kaydı kaldır]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_unfollow" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Takibi bırak]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_follow" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Takip et]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_available" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Erişilebilir]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_unavailable" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Erişilemiyor]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_available_4" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kullanılabilir]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_off_disabled" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kapalı / devre dışı]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_active" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Aktif]]></phrase>
+  <phrase title="wrxt_portfolio_i18n_inactive" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Pasif]]></phrase>
+</language>
