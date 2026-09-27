@@ -260,4 +260,6 @@
   <phrase title="wrxt_portfolio_alert_commented" addon_id="Warext/Portfolio" global_cache="0" version_id="1020010" version_string="1.2.1"><![CDATA[commented on your work.]]></phrase>
   <phrase title="wrxt_portfolio_alert_new_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020010" version_string="1.2.1"><![CDATA[published a new work.]]></phrase>
   <phrase title="wrxt_portfolio_comment_placeholder" addon_id="Warext/Portfolio" global_cache="0" version_id="1020020" version_string="1.2.2"><![CDATA[Write your comment...]]></phrase>
+  <phrase title="wrxt_portfolio_comment_delete_confirm" addon_id="Warext/Portfolio" global_cache="0" version_id="1020020" version_string="1.2.2"><![CDATA[Are you sure you want to delete this comment?]]></phrase>
+  <phrase title="wrxt_portfolio_comment_login_required" addon_id="Warext/Portfolio" global_cache="0" version_id="1020020" version_string="1.2.2"><![CDATA[You must be logged in to post a comment.]]></phrase>
 </language>

@@ -263,4 +263,6 @@
   <phrase title="wrxt_portfolio_alert_commented" version_id="1020010" version_string="1.2.1"><![CDATA[çalışmanıza yorum yaptı.]]></phrase>
   <phrase title="wrxt_portfolio_alert_new_work" version_id="1020010" version_string="1.2.1"><![CDATA[yeni bir çalışma yayınladı.]]></phrase>
   <phrase title="wrxt_portfolio_comment_placeholder" version_id="1020020" version_string="1.2.2"><![CDATA[Yorumunuzu yazın...]]></phrase>
+  <phrase title="wrxt_portfolio_comment_delete_confirm" version_id="1020020" version_string="1.2.2">Bu yorumu silmek istediğinize emin misiniz?</phrase>
+  <phrase title="wrxt_portfolio_comment_login_required" version_id="1020020" version_string="1.2.2">Yorum yapmak için giriş yapmalısınız.</phrase>
 </phrases>
