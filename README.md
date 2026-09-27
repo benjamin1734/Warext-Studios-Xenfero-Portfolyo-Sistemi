@@ -4,12 +4,11 @@
 
 Warext Studios XenForo Portfolio System is a XenForo 2.3+ add-on for publishing visual work and 3D projects.
 
-**Current version:** 1.1.7  
 **Add-on ID:** `Warext/Portfolio`
 
 ## Installation / upgrade
 
-Upload `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.7.zip` from GitHub Releases through XenForo Admin CP → **Add-ons → Install/upgrade from archive** over the existing version.
+Download the latest package from [GitHub Releases](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases) and install it through XenForo Admin CP → **Add-ons → Install/upgrade from archive**.
 
 No manual SQL import is required for 1.1.7. On existing installations, the `attach_count` field required for comment attachments is created automatically during the add-on upgrade.
 
@@ -54,18 +53,6 @@ Because the same core DOM and macro infrastructure is used, active styles or com
 
 The **Portfolio System** section includes Portfolio Management, Portfolio Moderation, Security Center, Quarantine / processing queue, Blocked Files, Security Events, Audit Logs, SHA-256 Block List, and Portfolio Settings.
 
-## 1.1.7
-
-- The `attachment-manager quick-reply` chain used by normal XenForo thread replies is connected to Portfolio comments.
-- `quick_reply_macros::body` now receives real XenForo `attachmentData`; the **Attach files** control is created by the core attachment manager rather than a simulated UI.
-- A XenForo attachment content type and handler were added for `wrxt_portfolio_comment`.
-- Temporary attachments are securely associated with comments when submitted.
-- Preview supports temporary attachments.
-- Submitted attachments use the normal `message_macros::attachments` rendering flow.
-- The `attach_count` migration runs automatically for older installations.
-- Native editor, postbit, BBCode, reporting, and security behavior from 1.1.6 is retained.
-- No manual SQL is required.
-
 ## Support
 
 For questions, bug reports, installation support, and help with Warext Studios XenForo add-ons, you can join our support Discord server:
@@ -78,12 +65,11 @@ For questions, bug reports, installation support, and help with Warext Studios X
 
 XenForo 2.3+ için görsel ve 3D çalışmaların yayınlanabildiği portfolyo eklentisi.
 
-**Güncel sürüm:** 1.1.7  
 **Add-on ID:** `Warext/Portfolio`
 
 ## Kurulum / yükseltme
 
-GitHub Releases bölümündeki `Warext-Studios-XenForo-Portfolyo-Sistemi-1.1.7.zip` paketini XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden mevcut sürümün üzerine yükleyin.
+En güncel paketi [GitHub Releases](https://github.com/benjamin1734/Warext-Studios-Xenfero-Portfolyo-Sistemi/releases) bölümünden indirip XenForo Admin CP → **Add-ons → Install/upgrade from archive** üzerinden kurun.
 
 1.1.7 için manuel SQL import gerekmez. Mevcut kurulumlarda yorum ekleri için gereken `attach_count` alanı eklenti yükseltmesi sırasında otomatik oluşturulur.
 
@@ -146,14 +132,5 @@ Sorularınız, hata bildirimleriniz, kurulum desteği ve Warext Studios XenForo 
 
 **Discord:** https://discord.gg/tgsV5XMcFS
 
-
 ## Language support / Dil desteği
 
-Version 1.2.0 adds native Turkish/English XenForo language packs under `languages/` and phrase-backed interface text. See `LANGUAGE.md`.
-
-
-### 1.2.1 language hotfix
-
-- Phrase-backed dynamic portfolio type labels and alerts.
-- Phrase-safe local template-modification anchors.
-- Release workflow publishes Turkish and English XML language packs as separate assets.
