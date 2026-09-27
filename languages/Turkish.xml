@@ -256,4 +256,7 @@
   <phrase title="wrxt_portfolio_i18n_off_disabled" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Kapalı / devre dışı]]></phrase>
   <phrase title="wrxt_portfolio_i18n_active" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Aktif]]></phrase>
   <phrase title="wrxt_portfolio_i18n_inactive" addon_id="Warext/Portfolio" global_cache="0" version_id="1020000" version_string="1.2.0"><![CDATA[Pasif]]></phrase>
+  <phrase title="wrxt_portfolio_alert_liked" addon_id="Warext/Portfolio" global_cache="0" version_id="1020010" version_string="1.2.1"><![CDATA[çalışmanızı beğendi.]]></phrase>
+  <phrase title="wrxt_portfolio_alert_commented" addon_id="Warext/Portfolio" global_cache="0" version_id="1020010" version_string="1.2.1"><![CDATA[çalışmanıza yorum yaptı.]]></phrase>
+  <phrase title="wrxt_portfolio_alert_new_work" addon_id="Warext/Portfolio" global_cache="0" version_id="1020010" version_string="1.2.1"><![CDATA[yeni bir çalışma yayınladı.]]></phrase>
 </language>
