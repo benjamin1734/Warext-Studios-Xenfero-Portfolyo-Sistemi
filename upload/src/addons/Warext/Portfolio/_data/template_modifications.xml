@@ -24,7 +24,7 @@
   </modification>
 
   <modification type="public" template="wrxt_portfolio_view" modification_key="wrxt_pf_native_comments" description="Portfolyo yorumlarını XenForo thread_view message ve quick_reply_macros altyapısına bağlar" execution_order="10" enabled="1" action="str_replace">
-    <find><![CDATA[<div class="block"><div class="block-container"><h2 class="block-header">Yorumlar <span class="label label--subtle">{$portfolio.comment_count}</span></h2><div class="block-body"><xf:if is="$comments is not empty"><xf:foreach loop="$comments" value="$comment"><div class="block-row"><div class="contentRow"><div class="contentRow-main"><div class="contentRow-title"><b>{$comment.username}</b></div><div class="contentRow-minor">{{ date_time($comment.created_date) }}</div><div style="margin-top:7px">{$comment.message}</div></div></div></div></xf:foreach><xf:else /><div class="block-row">{{ phrase('wrxt_portfolio_i18n_no_comments_yet') }}</div></xf:if></div><xf:if is="$portfolio.status == 'published' AND $xf.visitor.user_id"><xf:form action="{{ link('portfolyo/calisma/comment',$portfolio) }}" ajax="true"><div class="block-body"><xf:textarearow name="message" rows="3" maxlength="1000" label="Yorumunuz" /></div><xf:submitrow submit="Yorum gönder" /></xf:form></xf:if></div></div>]]></find>
+    <find><![CDATA[<div class="block"><div class="block-container"><h2 class="block-header">{{ phrase('wrxt_portfolio_i18n_comments') }} <span class="label label--subtle">{$portfolio.comment_count}</span></h2><div class="block-body"><xf:if is="$comments is not empty"><xf:foreach loop="$comments" value="$comment"><div class="block-row"><div class="contentRow"><div class="contentRow-main"><div class="contentRow-title"><b>{$comment.username}</b></div><div class="contentRow-minor">{{ date_time($comment.created_date) }}</div><div style="margin-top:7px">{$comment.message}</div></div></div></div></xf:foreach><xf:else /><div class="block-row">{{ phrase('wrxt_portfolio_i18n_no_comments_yet') }}</div></xf:if></div><xf:if is="$portfolio.status == 'published' AND $xf.visitor.user_id"><xf:form action="{{ link('portfolyo/calisma/comment',$portfolio) }}" ajax="true"><div class="block-body"><xf:textarearow name="message" rows="3" maxlength="1000" label="{{ phrase('wrxt_portfolio_i18n_your_comment') }}" /></div><xf:submitrow submit="{{ phrase('wrxt_portfolio_i18n_post_comment') }}" /></xf:form></xf:if></div></div>]]></find>
     <replace><![CDATA[<section class="wrxtPfComments" id="portfolio-comments">
     <div class="block">
         <div class="block-container">
@@ -131,9 +131,9 @@
                               name="body"
                               arg-attachmentData="{$attachmentData}"
                               arg-showPreviewButton="true"
-                              arg-submitText="Yorum gönder"
+                              arg-submitText="{{ phrase('wrxt_portfolio_i18n_post_comment') }}"
                               arg-minHeight="140"
-                              arg-placeholder="Yorumunuzu yazın..." />
+                              arg-placeholder="{{ phrase('wrxt_portfolio_comment_placeholder') }}" />
                 </div>
             </div>
         </xf:form>
