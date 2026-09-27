@@ -150,3 +150,10 @@ Sorularınız, hata bildirimleriniz, kurulum desteği ve Warext Studios XenForo 
 ## Language support / Dil desteği
 
 Version 1.2.0 adds native Turkish/English XenForo language packs under `languages/` and phrase-backed interface text. See `LANGUAGE.md`.
+
+
+### 1.2.1 language hotfix
+
+- Phrase-backed dynamic portfolio type labels and alerts.
+- Phrase-safe local template-modification anchors.
+- Release workflow publishes Turkish and English XML language packs as separate assets.
