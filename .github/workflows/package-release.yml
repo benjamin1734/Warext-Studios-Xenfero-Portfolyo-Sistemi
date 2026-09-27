@@ -53,6 +53,36 @@ jobs:
               ET.parse(path)
           print('JSON/XML validation OK')
           PY
+      - name: Validate language-pack coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          data_root = ET.parse('upload/src/addons/Warext/Portfolio/_data/phrases.xml').getroot()
+          en_root = ET.parse('languages/English.xml').getroot()
+          tr_root = ET.parse('languages/Turkish.xml').getroot()
+
+          base = {node.attrib['title'] for node in data_root.findall('phrase')}
+          en = {node.attrib['title'] for node in en_root.findall('phrase')}
+          tr = {node.attrib['title'] for node in tr_root.findall('phrase')}
+
+          missing_en = sorted(base - en)
+          missing_tr = sorted(base - tr)
+          extra_en = sorted(en - base)
+          extra_tr = sorted(tr - base)
+
+          if missing_en or missing_tr or extra_en or extra_tr:
+              raise SystemExit(
+                  'Language pack mismatch\n'
+                  f'missing_en={missing_en}\nmissing_tr={missing_tr}\n'
+                  f'extra_en={extra_en}\nextra_tr={extra_tr}'
+              )
+
+          print(f'Language coverage OK: {len(base)} phrases')
+          PY
       - name: Validate local template modification anchors
         shell: bash
         run: |
